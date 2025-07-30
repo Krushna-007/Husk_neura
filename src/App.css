@@ -1,0 +1,221 @@
+/* Layer node specific styling */
+.layer-node {
+  position: relative;
+}
+
+/* Delete button styling for layer nodes */
+.layer-node .delete-button {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.layer-node:hover .delete-button {
+  opacity: 1;
+}
+
+/* Remove any default styling that might interfere */
+#root {
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ReactFlow handle styling */
+.layer-node .react-flow__handle {
+  width: 12px;
+  height: 12px;
+  border: 2px solid #18181b;
+  border-radius: 50%;
+}
+
+.layer-node .react-flow__handle-top {
+  top: -6px;
+}
+
+.layer-node .react-flow__handle-bottom {
+  bottom: -6px;
+}
+
+/* Node selection styling */
+.react-flow__node.selected .layer-node {
+  outline: 2px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+/* React Flow Controls Dark Theme */
+.react-flow__controls {
+  background-color: #18181b !important;
+  border: 1px solid #3f3f46 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+.react-flow__controls button {
+  background-color: #27272a !important;
+  border: 1px solid #3f3f46 !important;
+  color: #e4e4e7 !important;
+  border-radius: 4px !important;
+  transition: all 0.2s ease-in-out !important;
+}
+
+.react-flow__controls button:hover {
+  background-color: #3f3f46 !important;
+  border-color: #52525b !important;
+  color: #f4f4f5 !important;
+}
+
+.react-flow__controls button:active {
+  background-color: #52525b !important;
+}
+
+.react-flow__controls button svg {
+  fill: #e4e4e7 !important;
+}
+
+.react-flow__controls button:hover svg {
+  fill: #f4f4f5 !important;
+}
+
+/* React Flow MiniMap Dark Theme */
+.react-flow__minimap {
+  background-color: #18181b !important;
+  border: 1px solid #3f3f46 !important;
+  border-radius: 8px !important;
+}
+
+.react-flow__minimap-mask {
+  fill: rgba(0, 0, 0, 0.1) !important;
+}
+
+.react-flow__minimap-node {
+  fill: #3f3f46 !important;
+  stroke: #52525b !important;
+}
+
+.react-flow__minimap-node:hover {
+  fill: #52525b !important;
+}
+
+/* React Flow Background */
+.react-flow__background {
+  background-color: #000000 !important;
+}
+
+.react-flow__background-pattern {
+  color: #18181b !important;
+}
+
+/* Dark Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #18181b;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 6px;
+  border: 2px solid #18181b;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+::-webkit-scrollbar-corner {
+  background: #18181b;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3f3f46 #18181b;
+}
+
+/* CodeMirror Dark Theme Overrides */
+.cm-editor {
+  background-color: #0a0a0a !important;
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-scroller {
+  background-color: #0a0a0a !important;
+}
+
+.cm-editor .cm-content {
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-line {
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-gutters {
+  background-color: #18181b !important;
+  color: #71717a !important;
+  border-right: 1px solid #3f3f46 !important;
+}
+
+.cm-editor .cm-activeLine {
+  background-color: #27272a !important;
+}
+
+.cm-editor .cm-activeLineGutter {
+  background-color: #27272a !important;
+}
+
+.cm-editor .cm-selectionBackground {
+  background-color: #3f3f46 !important;
+}
+
+.cm-editor .cm-cursor {
+  border-left-color: #f59e0b !important;
+}
+
+/* CodeMirror syntax highlighting for Python */
+.cm-editor .cm-keyword {
+  color: #f59e0b !important;
+}
+
+.cm-editor .cm-string {
+  color: #10b981 !important;
+}
+
+.cm-editor .cm-number {
+  color: #3b82f6 !important;
+}
+
+.cm-editor .cm-comment {
+  color: #71717a !important;
+}
+
+.cm-editor .cm-operator {
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-variable {
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-variable-2 {
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-property {
+  color: #e4e4e7 !important;
+}
+
+.cm-editor .cm-definition {
+  color: #8b5cf6 !important;
+}
+
+.cm-editor .cm-builtin {
+  color: #f59e0b !important;
+}

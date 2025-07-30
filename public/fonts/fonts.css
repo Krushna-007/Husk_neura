@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap");
+
+@font-face {
+  font-family: "Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("DepartureMono-Regular.otf");
+}
+
+@font-face {
+  font-family: "Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("OverusedGrotesk-Book.otf");
+}
+
+@font-face {
+  font-family: "Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("OverusedGrotesk-Medium.otf");
+}
