@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { Check, Copy, Download } from "lucide-react";
@@ -64,10 +64,7 @@ export function CodeViewer({ className }: CodeViewerProps) {
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
 
-  const code = useMemo(() => {
-    const generateCode = (): string => {
-      if (nodes.length === 0) {
-        return `# HUSKML - Advanced Neural Network Builder
+  const [code, setCode] = useState(`# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
 # Welcome to HUSKML! 🚀
@@ -79,7 +76,25 @@ from tensorflow import keras
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`;
+print("✨ Ready to create something amazing with HUSKML!")`);
+
+  useEffect(() => {
+    const generateCode = async () => {
+      if (nodes.length === 0) {
+        setCode(`# HUSKML - Advanced Neural Network Builder
+# https://huskml.maverickspectrum.com
+
+# Welcome to HUSKML! 🚀
+# Start building your neural network by dragging and dropping layers from the left panel
+
+import tensorflow as tf
+from tensorflow import keras
+
+# Your HUSKML model will appear here once you add layers
+model = None
+
+print("✨ Ready to create something amazing with HUSKML!")`);
+        return;
       }
 
       try {
@@ -87,7 +102,7 @@ print("✨ Ready to create something amazing with HUSKML!")`;
         const dagResult = parseGraphToDAG(nodes, edges);
         
         if (!dagResult.isValid) {
-          return `# Error: Invalid network structure
+          setCode(`# Error: Invalid network structure
 
 # Please fix the following issues:
 ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
@@ -95,25 +110,26 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
 # Make sure your network has:
 # - At least one Input layer
 # - At least one Output layer  
-# - No cycles in the connections`;
+# - No cycles in the connections`);
+          return;
         }
 
         // Check if we need Functional API
         if (checkIfFunctionalAPINeeded(dagResult)) {
-          const code = generateFunctionalKerasCode(dagResult);
-          return typeof code === 'string' ? code : String(code);
+          const generatedCode = await generateFunctionalKerasCode(dagResult);
+          setCode(generatedCode);
         } else {
           // Use Sequential API
-          const code = generateKerasCode(dagResult.orderedNodes);
-          return typeof code === 'string' ? code : String(code);
+          const generatedCode = generateKerasCode(dagResult.orderedNodes);
+          setCode(generatedCode);
         }
       } catch (error) {
         console.error("Error generating code:", error);
-        return `# Error generating code: ${error}`;
+        setCode(`# Error generating code: ${error}`);
       }
     };
 
-    return generateCode();
+    generateCode();
   }, [nodes, edges]);
 
   const handleCopy = () => {

@@ -94,9 +94,12 @@ export function LayerNode({ id, data }: LayerNodeProps) {
             <SelectTrigger className="h-8">
               <SelectValue placeholder={`Select ${label.toLowerCase()}`} />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="!bg-zinc-950 border-zinc-700 [&>div]:!bg-zinc-950 [&>*]:!bg-zinc-950">
               {options?.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
+                <SelectItem 
+                  key={option.value} 
+                  value={option.value}
+                  className="!text-zinc-200 data-[highlighted]:!bg-zinc-800 data-[highlighted]:!text-zinc-200 !cursor-pointer">
                   {option.label}
                 </SelectItem>
               ))}

@@ -5,7 +5,7 @@
  * Uses React Flow with Zustand for state management.
  */
 
-import { useCallback, useState, useEffect, useRef } from "react";
+import { useCallback, useState, useEffect } from "react";
 
 import {
   ReactFlow,
@@ -22,7 +22,6 @@ import type {
   EdgeTypes,
   ReactFlowInstance,
   XYPosition,
-  Connection,
 } from "@xyflow/react";
 
 import "@xyflow/react/dist/style.css";
@@ -260,7 +259,7 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
           nodeStrokeWidth={3}
           nodeBorderRadius={2}
           maskColor="rgba(0, 0, 0, 0.7)"
-          onClick={(event, position) => {
+          onClick={(_event, position) => {
             if (reactFlowInstance) {
               const transform = reactFlowInstance.getViewport();
               reactFlowInstance.setViewport({

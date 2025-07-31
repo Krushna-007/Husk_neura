@@ -1,9 +1,22 @@
 import { useState, useEffect, useCallback } from "react";
 import { Search, X, Layers, Grid3X3 } from "lucide-react";
 import { Input } from "./ui/input";
-import { useLayerCategories } from "../lib/categories";
-import { useTemplates } from "../lib/templates";
-import type { LayerType, CategoryType } from "../lib/categories";
+// Layer and Category type definitions
+interface LayerType {
+  type: string;
+  description: string;
+  icon: string;
+}
+
+interface CategoryType {
+  name: string;
+  color: string;
+  bgColor: string;
+  borderColor: string;
+  textColor: string;
+  description: string;
+  layerTypes: string[];
+}
 import type { NetworkTemplate } from "../lib/templates";
 import { getLayerTypes } from "../lib/layer-definitions";
 import { getLayerCategories } from "../lib/categories";
@@ -12,7 +25,7 @@ import {
   templateCategories,
   getTemplateCategoryColors,
 } from "../lib/templates";
-import { groupBy } from "lodash";
+
 
 const CONFIG = {
   TABS: {
@@ -265,7 +278,7 @@ export default function BlockPalette({
                     {category.name}
                   </h3>
                   <div className="space-y-2">
-                    {category.layers.map((layer, layerIndex) => (
+                    {category.layers.map((layer: LayerType, layerIndex: number) => (
                       <div
                         key={layer.type}
                         className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${category.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent shadow-[0_0_10px_-3px_rgba(245,158,11,0.3)]`}

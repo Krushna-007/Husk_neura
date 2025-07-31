@@ -1,4 +1,5 @@
-import { BaseEdge, EdgeProps, getBezierPath, useReactFlow } from "@xyflow/react";
+import type { EdgeProps } from "@xyflow/react";
+import { BaseEdge, getBezierPath, useReactFlow } from "@xyflow/react";
 import { useCallback, useEffect, useState } from "react";
 
 export function DeletableEdge({
@@ -10,7 +11,7 @@ export function DeletableEdge({
   sourcePosition,
   targetPosition,
   style = {},
-  markerEnd,
+
   selected,
 }: EdgeProps) {
   const [edgePath] = getBezierPath({
