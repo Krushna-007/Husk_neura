@@ -35,6 +35,20 @@ import { getTemplateById } from "../lib/templates";
 import { useFlowStore } from "../lib/flow-store";
 import { cn } from "../lib/utils";
 
+// Custom HuskML attribution component
+const HuskMLAttribution = () => {
+  return (
+    <a 
+      href="https://huskml.maverickspectrum.com"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="absolute top-2 right-2 select-none font-mono text-sm text-zinc-500 opacity-70 transition-opacity hover:opacity-100 hover:text-zinc-300"
+    >
+      HuskML
+    </a>
+  );
+};
+
 // Flow editor configuration
 const FLOW_CONFIG = {
   BACKGROUND: { 
@@ -211,7 +225,7 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         fitView
-        attributionPosition="top-right"
+        proOptions={{ hideAttribution: true }}
         deleteKeyCode={[]}
         multiSelectionKeyCode={["Control", "Meta"]}
         connectionLineType={ConnectionLineType.SmoothStep}
@@ -258,6 +272,7 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
           }}
         />
         <CopyPasteControls />
+        <HuskMLAttribution />
         <Background
           variant={BackgroundVariant.Lines}
           gap={FLOW_CONFIG.BACKGROUND.GAP}
