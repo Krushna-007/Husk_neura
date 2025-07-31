@@ -10,15 +10,15 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-sm hover:from-blue-600 hover:to-blue-700 active:from-blue-700 active:to-blue-800",
+          "border-2 border-blue-500 bg-transparent text-blue-400 hover:border-blue-400 hover:text-blue-300",
         destructive:
-          "bg-gradient-to-r from-red-500 to-red-600 text-white shadow-sm hover:from-red-600 hover:to-red-700 active:from-red-700 active:to-red-800",
+          "border-2 border-red-500 bg-transparent text-red-400 hover:border-red-400 hover:text-red-300",
         outline:
-          "border-2 border-gray-300 dark:border-gray-600 bg-transparent text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-800 active:bg-gray-100 dark:active:bg-gray-700",
+          "border-2 border-gray-600 bg-transparent text-gray-200 hover:border-gray-500 hover:text-gray-300",
         secondary:
-          "bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800 text-gray-900 dark:text-gray-100 shadow-sm hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-600 dark:hover:to-gray-700",
+          "border-2 border-gray-500 bg-transparent text-gray-300 hover:border-gray-400 hover:text-gray-200",
         ghost:
-          "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 active:bg-gray-200 dark:active:bg-gray-700",
+          "text-gray-300 hover:text-gray-200 bg-transparent",
         link: "text-blue-500 dark:text-blue-400 underline-offset-4 hover:underline decoration-2",
       },
       size: {

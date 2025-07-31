@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { Check, Copy, Download } from "lucide-react";
 
 import { Button } from "./ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "./ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
 import { parseGraphToDAG, type DAGResult } from "../lib/dag-parser";
 import {
@@ -14,15 +14,7 @@ import {
 import { useFlowStore } from "../lib/flow-store";
 import { cn } from "../lib/utils";
 
-const UI_CONFIG = {
-  COPY_TIMEOUT: 2000,
-  BUTTON_HEIGHT: "h-9",
-  BORDER_RADIUS: "rounded-lg",
-  SPACING: {
-    CARD: "px-4 sm:px-6",
-    PADDING: "p-4 sm:p-6",
-  },
-} as const;
+
 
 // Helper functions
 function checkIfFunctionalAPINeeded(dagResult: DAGResult): boolean {
@@ -60,124 +52,7 @@ function fallbackCopyToClipboard(text: string): void {
   document.body.removeChild(textArea);
 }
 
-// Sub-components
-interface APIBadgeProps {
-  codeType: "sequential" | "functional";
-}
 
-function APIBadge({ codeType }: APIBadgeProps) {
-  const isFunctional = codeType === "functional";
-
-  return (
-    <span
-      className={cn(
-        "text-xs px-3 py-1.5 rounded-full font-medium border",
-        isFunctional
-          ? "bg-blue-900/20 text-blue-300 border-blue-600"
-          : "bg-amber-900/20 text-amber-300 border-amber-500"
-      )}
-    >
-      {isFunctional ? "Functional API" : "Sequential API"}
-    </span>
-  );
-}
-
-interface ActionButtonsProps {
-  onDownload: () => void;
-  onCopy: () => void;
-  isDisabled: boolean;
-  isCopied: boolean;
-}
-
-function ActionButtons({
-  onDownload,
-  onCopy,
-  isDisabled,
-  isCopied,
-}: ActionButtonsProps) {
-  const baseButtonClass = cn(
-    UI_CONFIG.BUTTON_HEIGHT,
-    "px-4",
-    UI_CONFIG.BORDER_RADIUS,
-    "transition-all duration-200 shadow-sm"
-  );
-
-  return (
-    <div className="flex items-center justify-between mt-3 pt-3 border-t border-zinc-800">
-      <div className="flex items-center gap-2">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onDownload}
-          disabled={isDisabled}
-          className={cn(
-            baseButtonClass,
-            "border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 hover:shadow-md text-zinc-300"
-          )}
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Download .py
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={onCopy}
-          disabled={isDisabled}
-          className={cn(
-            baseButtonClass,
-            isCopied
-              ? "border-amber-600 bg-amber-900/20 text-amber-300 hover:bg-amber-900/30 shadow-md"
-              : "border-zinc-700 hover:bg-zinc-800 hover:border-zinc-600 hover:shadow-md text-zinc-300"
-          )}
-        >
-          {isCopied ? (
-            <>
-              <Check className="h-4 w-4 mr-2" />
-              Copied!
-            </>
-          ) : (
-            <>
-              <Copy className="h-4 w-4 mr-2" />
-              Copy Code
-            </>
-          )}
-        </Button>
-      </div>
-    </div>
-  );
-}
-
-interface CodeEditorProps {
-  code: string;
-}
-
-function CodeEditor({ code }: CodeEditorProps) {
-  return (
-    <div className="rounded-xl border border-zinc-800 shadow-inner bg-black flex-1 min-h-0">
-      <div className="w-full h-full overflow-auto">
-        <CodeMirror
-          value={code}
-          height="100%"
-          extensions={[python()]}
-          editable={false}
-          basicSetup={{
-            lineNumbers: true,
-            foldGutter: true,
-            dropCursor: false,
-            allowMultipleSelections: false,
-            indentOnInput: false,
-            bracketMatching: true,
-            closeBrackets: false,
-            autocompletion: false,
-            highlightSelectionMatches: false,
-            searchKeymap: false,
-          }}
-          theme="dark"
-        />
-      </div>
-    </div>
-  );
-}
 
 interface CodeViewerProps {
   className?: string;
@@ -190,27 +65,29 @@ export function CodeViewer({ className }: CodeViewerProps) {
   const [downloaded, setDownloaded] = useState(false);
 
   const code = useMemo(() => {
-    if (nodes.length === 0) {
-      return `# HuskML - Neural Network Builder
+    const generateCode = (): string => {
+      if (nodes.length === 0) {
+        return `# HUSKML - Advanced Neural Network Builder
+# https://huskml.maverickspectrum.com
 
-# No layers added yet
-# Drag and drop layers from the left panel to start building your network
+# Welcome to HUSKML! 🚀
+# Start building your neural network by dragging and dropping layers from the left panel
 
 import tensorflow as tf
 from tensorflow import keras
 
-# Your model will appear here once you add layers
+# Your HUSKML model will appear here once you add layers
 model = None
 
-print("Add some layers to generate code!")`;
-    }
+print("✨ Ready to create something amazing with HUSKML!")`;
+      }
 
-    try {
-      // Parse the graph to get the DAG structure
-      const dagResult = parseGraphToDAG(nodes, edges);
-      
-      if (!dagResult.isValid) {
-        return `# Error: Invalid network structure
+      try {
+        // Parse the graph to get the DAG structure
+        const dagResult = parseGraphToDAG(nodes, edges);
+        
+        if (!dagResult.isValid) {
+          return `# Error: Invalid network structure
 
 # Please fix the following issues:
 ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
@@ -219,26 +96,38 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
 # - At least one Input layer
 # - At least one Output layer  
 # - No cycles in the connections`;
-      }
+        }
 
-      // Check if we need Functional API
-      if (checkIfFunctionalAPINeeded(dagResult)) {
-        return generateFunctionalKerasCode(dagResult);
-      } else {
-        // Use Sequential API
-        return generateKerasCode(dagResult.orderedNodes);
+        // Check if we need Functional API
+        if (checkIfFunctionalAPINeeded(dagResult)) {
+          const code = generateFunctionalKerasCode(dagResult);
+          return typeof code === 'string' ? code : String(code);
+        } else {
+          // Use Sequential API
+          const code = generateKerasCode(dagResult.orderedNodes);
+          return typeof code === 'string' ? code : String(code);
+        }
+      } catch (error) {
+        console.error("Error generating code:", error);
+        return `# Error generating code: ${error}`;
       }
-    } catch (error) {
-      console.error("Error generating code:", error);
-      return `# Error generating code: ${error}`;
-    }
+    };
+
+    return generateCode();
   }, [nodes, edges]);
 
-  const handleCopy = async () => {
+  const handleCopy = () => {
     try {
-      await navigator.clipboard.writeText(code);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      navigator.clipboard.writeText(code).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch((error) => {
+        console.error("Failed to copy code:", error);
+        // Fallback for older browsers
+        fallbackCopyToClipboard(code);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
     } catch (error) {
       console.error("Failed to copy code:", error);
       // Fallback for older browsers
@@ -267,7 +156,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
 
   return (
     <div className={cn("h-full flex flex-col bg-zinc-900/80", className)}>
-      <Card className="border-zinc-800 bg-zinc-900 shadow-sm rounded-xl flex-1 flex flex-col min-h-0 animate-fade-in">
+      <Card className="border-zinc-800 bg-zinc-900 shadow-sm rounded-xl flex-1 flex flex-col animate-fade-in relative" style={{ height: 'calc(100vh - 57px)' }}>
         <CardHeader className="pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl text-zinc-200 font-semibold font-grotesk">
@@ -288,8 +177,8 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 flex flex-col min-h-0 p-0">
-          <div className="flex-1 relative">
+        <CardContent className="flex-1 p-0 overflow-hidden">
+          <div className="h-[calc(100vh-300px)] overflow-auto">
             <CodeMirror
               value={code}
               height="100%"
@@ -305,50 +194,71 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
           </div>
         </CardContent>
 
-        <CardFooter className="pt-3">
-          <div className="flex gap-2 w-full">
-            <Button
-              onClick={handleCopy}
-              variant="outline"
-              size="sm"
-              className={`flex-1 ${UI_CONFIG.BORDER_RADIUS} border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 transition-all duration-200 ${
-                copied ? "bg-green-900/20 text-green-300 border-green-500" : ""
-              }`}
-            >
-              {copied ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" />
-                  Copied!
-                </>
-              ) : (
-                <>
-                  <Copy className="h-4 w-4 mr-2" />
-                  Copy Code
-                </>
-              )}
-            </Button>
-            <Button
-              onClick={handleDownload}
-              variant="outline"
-              size="sm"
-              className={`flex-1 ${UI_CONFIG.BORDER_RADIUS} border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 transition-all duration-200 ${
-                downloaded ? "bg-green-900/20 text-green-300 border-green-500" : ""
-              }`}
-            >
-              {downloaded ? (
-                <>
-                  <Check className="h-4 w-4 mr-2" />
-                  Downloaded!
-                </>
-              ) : (
-                <>
-                  <Download className="h-4 w-4 mr-2" />
-                  Download
-                </>
-              )}
-            </Button>
+        <div className="absolute bottom-[80px] left-0 right-0 flex justify-center gap-4 pb-4 px-6">
+          <Button
+            onClick={handleCopy}
+            variant="outline"
+            size="sm"
+            className={`flex-1 max-w-[200px] bg-transparent border-[1px] border-zinc-700 text-zinc-300 hover:bg-transparent hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${
+              copied ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
+            }`}
+          >
+            {copied ? (
+              <>
+                <Check className="h-4 w-4 mr-2" />
+                Copied!
+              </>
+            ) : (
+              <>
+                <Copy className="h-4 w-4 mr-2" />
+                Copy Code
+              </>
+            )}
+          </Button>
+          <Button
+            onClick={handleDownload}
+            variant="outline"
+            size="sm"
+            className={`flex-1 max-w-[200px] bg-transparent border-[1px] border-zinc-700 text-zinc-300 hover:bg-transparent hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${
+              downloaded ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
+            }`}
+          >
+            {downloaded ? (
+              <>
+                <Check className="h-4 w-4 mr-2" />
+                Downloaded!
+              </>
+            ) : (
+              <>
+                <Download className="h-4 w-4 mr-2" />
+                Download
+              </>
+            )}
+          </Button>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 text-center py-4 bg-gradient-to-r from-zinc-900/90 via-black/95 to-zinc-900/90 backdrop-blur-md border-t border-zinc-800/50">
+          <div className="flex items-center justify-center gap-4 group">
+            <div className="flex items-center gap-2">
+              <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Powered by</span>
+              <a 
+                href="https://huskml.maverickspectrum.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 group"
+              >
+                <span className="text-blue-400 group-hover:text-blue-300 font-semibold tracking-wider text-sm">
+                  HUSKML
+                </span>
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
+              </a>
+            </div>
+            <span className="text-zinc-600">|</span>
+            <div className="flex items-center gap-2">
+              <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Built with</span>
+              <span className="text-red-500/80 group-hover:text-red-400 animate-pulse transition-colors duration-300">❤</span>
+            </div>
           </div>
-        </CardFooter>
+        </div>
       </Card>
     </div>
   );

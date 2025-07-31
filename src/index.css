@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @custom-variant dark (&:is(.dark *));
 
@@ -115,35 +117,27 @@
   }
   body {
     @apply bg-black text-zinc-100;
-    font-family: "Adobe Clean", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Departure Mono", monospace;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
   
   /* Custom Font Classes */
   .font-display {
-    font-family: "Adobe Clean", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-family: "Departure Mono", monospace;
   }
   
   .font-mono {
-    font-family: "Adobe Clean Mono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+    font-family: "Departure Mono", monospace;
   }
   
   /* Enhanced Layer Node Styling */
   .layer-node {
-    @apply transition-transform duration-200 ease-out;
-  }
-  
-  .layer-node:hover {
-    transform: translateY(-2px);
+    @apply transition-colors duration-200 ease-out;
   }
   
   .layer-node .node-handle {
-    @apply transition-all duration-200;
-  }
-  
-  .layer-node:hover .node-handle {
-    @apply scale-110;
+    @apply transition-colors duration-200;
   }
   
   /* Enhanced Template Card Styling */
@@ -277,6 +271,161 @@
       opacity: 1;
       transform: scale(1);
     }
+  }
+
+  @keyframes backgroundScroll {
+    0% {
+      background-position: 0 0, 25px 25px;
+    }
+    100% {
+      background-position: -50px -50px, -25px -25px;
+    }
+  }
+
+  /* Enhanced React Flow Styles */
+  .react-flow__node {
+    @apply transition-colors duration-200;
+  }
+
+  .react-flow__edge {
+    @apply transition-colors duration-200;
+  }
+
+  .react-flow__edge-path {
+    @apply transition-colors duration-200;
+  }
+
+  .react-flow__controls {
+    @apply !shadow-lg !bg-transparent;
+  }
+
+  .react-flow__controls-button {
+    @apply transition-colors duration-200 !border-zinc-700 !bg-transparent text-zinc-400 hover:!bg-zinc-800/50;
+  }
+
+  .react-flow__minimap {
+    @apply !shadow-lg !bg-transparent;
+  }
+
+  .react-flow__attribution {
+    @apply !bg-transparent text-zinc-600;
+  }
+
+  .react-flow__background {
+    @apply !bg-transparent;
+  }
+
+  .react-flow__panel {
+    @apply !bg-transparent;
+  }
+
+  /* Remove selection highlight */
+  .react-flow__node-layerNode.selected,
+  .react-flow__node-layerNode:focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  .react-flow__node {
+    outline: none !important;
+  }
+
+  /* Make ReactFlow watermark transparent and replace text */
+  .react-flow__attribution {
+    @apply !text-zinc-600 hover:!text-zinc-400;
+    right: 10px !important;
+    left: auto !important;
+  }
+  
+  .react-flow__attribution a {
+    @apply !text-zinc-600 hover:!text-zinc-400;
+    pointer-events: none;
+  }
+
+  .react-flow__attribution::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  .react-flow__attribution::before {
+    content: "HUSKML";
+    position: absolute;
+    right: 0;
+    font-family: "Departure Mono", monospace;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  /* Create a clickable link over the text */
+  .react-flow__attribution:hover {
+    @apply text-zinc-400;
+  }
+
+  .react-flow__attribution:hover::before {
+    text-decoration: underline;
+  }
+
+  /* Add an actual link that covers the text */
+  .react-flow__attribution::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+  }
+
+  .react-flow__attribution {
+    cursor: pointer;
+  }
+
+  .react-flow__attribution:hover {
+    cursor: pointer;
+  }
+
+  /* Make the entire attribution clickable */
+  .react-flow__attribution {
+    position: relative !important;
+    z-index: 5;
+    cursor: pointer;
+    padding: 5px !important;
+  }
+
+  .react-flow__attribution:hover {
+    @apply text-zinc-400;
+  }
+
+  /* Create the actual clickable link */
+  .react-flow__attribution::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    cursor: pointer;
+  }
+
+  .react-flow__attribution {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Make it actually clickable by overlaying a real link */
+  .react-flow__attribution {
+    position: relative !important;
+  }
+
+  .react-flow__attribution a {
+    opacity: 0;
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .react-flow__attribution a[href] {
+    pointer-events: all !important;
   }
 }
 

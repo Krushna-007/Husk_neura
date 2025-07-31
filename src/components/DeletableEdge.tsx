@@ -1,36 +1,19 @@
-/**
- * Custom edge component with hover delete functionality
- * Shows an X button when hovering over connections between blocks
- */
+import { BaseEdge, EdgeProps, getBezierPath, useReactFlow } from "@xyflow/react";
+import { useCallback, useEffect, useState } from "react";
 
-import { useState, useCallback } from "react";
-import {
-  BaseEdge,
-  EdgeLabelRenderer,
-  getSmoothStepPath,
-  useReactFlow,
-  type EdgeProps,
-} from "@xyflow/react";
-import { X } from "lucide-react";
-import { Button } from "./ui/button";
-
-export function DeletableEdge(props: EdgeProps) {
-  const { 
-    id, 
-    sourceX, 
-    sourceY, 
-    targetX, 
-    targetY, 
-    sourcePosition, 
-    targetPosition,
-    style = {},
-    markerEnd
-  } = props;
-  
-  const { deleteElements } = useReactFlow();
-  const [isHovered, setIsHovered] = useState(false);
-
-  const [edgePath, labelX, labelY] = getSmoothStepPath({
+export function DeletableEdge({
+  id,
+  sourceX,
+  sourceY,
+  targetX,
+  targetY,
+  sourcePosition,
+  targetPosition,
+  style = {},
+  markerEnd,
+  selected,
+}: EdgeProps) {
+  const [edgePath] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
@@ -39,73 +22,57 @@ export function DeletableEdge(props: EdgeProps) {
     targetPosition,
   });
 
-  const handleDelete = useCallback((event: React.MouseEvent) => {
-    event.stopPropagation();
-    event.preventDefault();
+  const [offset, setOffset] = useState(0);
+  const { deleteElements } = useReactFlow();
+
+  // Animate the flow effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOffset((offset) => (offset + 1) % 15);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
+  const onEdgeClick = useCallback((evt: React.MouseEvent<SVGGElement, MouseEvent>, id: string) => {
+    evt.stopPropagation();
     deleteElements({ edges: [{ id }] });
-  }, [id, deleteElements]);
-
-  const handleMouseEnter = useCallback(() => {
-    console.log("Edge hover enter", id);
-    setIsHovered(true);
-  }, [id]);
-  
-  const handleMouseLeave = useCallback(() => {
-    console.log("Edge hover leave", id);
-    setIsHovered(false);
-  }, [id]);
-
-  const edgeStyle = {
-    ...style,
-    strokeWidth: isHovered ? 3 : (style.strokeWidth || 2),
-    stroke: isHovered ? "#ef4444" : (style.stroke || "#a1a1aa"),
-  };
+  }, [deleteElements]);
 
   return (
-    <g
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{ cursor: isHovered ? "pointer" : "default" }}
-    >
-      {/* Debug: Visible wider path to see if it's working */}
-      <path
-        d={edgePath}
-        fill="none"
-        stroke={isHovered ? "rgba(239,68,68,0.2)" : "rgba(161,161,170,0.08)"}
-        strokeWidth={10}
-        style={{ pointerEvents: "all" }}
-      />
-      
-      {/* Visible edge */}
+    <>
+      {/* Base edge with glow effect */}
       <BaseEdge
         path={edgePath}
-        markerEnd={markerEnd}
-        style={edgeStyle}
+        style={{
+          ...style,
+          strokeWidth: selected ? 3 : 2,
+          stroke: selected ? 'rgba(99, 102, 241, 0.8)' : 'rgba(161, 161, 170, 0.6)',
+          filter: selected ? 'drop-shadow(0 0 8px rgba(99, 102, 241, 0.5))' : undefined,
+        }}
+        onClick={(e) => onEdgeClick(e, id)}
       />
       
-      <EdgeLabelRenderer>
-        {isHovered && (
-          <div
-            style={{
-              position: "absolute",
-              transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
-              pointerEvents: "all",
-              zIndex: 1000,
-            }}
-            className="nodrag nopan"
-          >
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={handleDelete}
-              className="h-6 w-6 p-0 rounded-full shadow-lg hover:scale-110 transition-all duration-200 bg-red-500 hover:bg-red-600 border-2 border-zinc-900"
-              title="Delete connection"
-            >
-              <X className="h-3 w-3 text-white" />
-            </Button>
-          </div>
-        )}
-      </EdgeLabelRenderer>
-    </g>
+      {/* Animated flow effect */}
+      <BaseEdge
+        path={edgePath}
+        style={{
+          strokeWidth: 2,
+          stroke: 'url(#flowGradient)',
+          strokeDasharray: '5 10',
+          strokeDashoffset: -offset,
+          opacity: 0.6,
+        }}
+        onClick={(e) => onEdgeClick(e, id)}
+      />
+
+      {/* Gradient definition */}
+      <defs>
+        <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stopColor="rgba(99, 102, 241, 0)" />
+          <stop offset="50%" stopColor="rgba(99, 102, 241, 0.8)" />
+          <stop offset="100%" stopColor="rgba(99, 102, 241, 0)" />
+        </linearGradient>
+      </defs>
+    </>
   );
 }

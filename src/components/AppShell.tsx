@@ -51,7 +51,7 @@ export function AppShell({
 
       <div className="flex flex-1 overflow-hidden">
         <aside
-          className="bg-zinc-900 border-r border-zinc-800 flex-shrink-0 shadow-sm"
+          className="bg-black border-r border-zinc-800 flex-shrink-0 shadow-sm"
           style={{ width: LAYOUT_CONFIG.SIDEBAR_WIDTH }}
         >
           <div className="h-full overflow-hidden">{palette}</div>

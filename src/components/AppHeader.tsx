@@ -1,10 +1,11 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { Node, Edge } from "@xyflow/react";
-import { Download, Upload, HelpCircle, Trash2 } from "lucide-react";
+import { Download, Upload, Trash2, GraduationCap } from "lucide-react";
 
 import { Button } from "./ui/button";
-import { Logo } from "./Logo";
+
 import { UndoRedoControls } from "./UndoRedoControls";
+import { TutorialGuide } from "./TutorialGuide";
 import {
   Dialog,
   DialogContent,
@@ -42,7 +43,16 @@ export function AppHeader({
   onImportProject,
   onClearAll,
 }: AppHeaderProps) {
-  const [showHelpDialog, setShowHelpDialog] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(false);
+  
+  // Check if it's the first visit
+  useEffect(() => {
+    const hasSeenTutorial = localStorage.getItem('huskml_has_seen_tutorial');
+    if (!hasSeenTutorial) {
+      setShowTutorial(true);
+      localStorage.setItem('huskml_has_seen_tutorial', 'true');
+    }
+  }, []);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const [showErrorDialog, setShowErrorDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -65,7 +75,7 @@ export function AppHeader({
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = `blockdl-project-${Date.now()}.json`;
+    link.download = `huskml-project-${Date.now()}.json`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -110,11 +120,11 @@ export function AppHeader({
   }, [onClearAll]);
 
   return (
-    <header className="bg-zinc-900 border-b border-zinc-800 shadow-sm px-6 py-3 flex items-center justify-between">
+    <header className="bg-black border-b border-zinc-800 shadow-sm px-6 py-3 flex items-center justify-between">
       <div className="flex items-center gap-3">
-        <div className="flex items-center gap-1">
-          <Logo className="h-8 w-8 text-amber-400" />
-          <h1 className="text-xl font-bold text-zinc-100">HuskML</h1>
+        <div className="flex items-center gap-2">
+          <img src="/favicon_new.svg" alt="Icon" className="h-5 w-5" />
+          <span className="text-zinc-100 font-medium">Neural Network Builder</span>
         </div>
       </div>
 
@@ -166,7 +176,7 @@ export function AppHeader({
           disabled={!hasContent}
           className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
         >
-          <Download className="h-4 w-4" />
+          <Upload className="h-4 w-4" />
           Export
         </Button>
 
@@ -176,81 +186,22 @@ export function AppHeader({
           onClick={handleImportProject}
           className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
         >
-          <Upload className="h-4 w-4" />
+          <Download className="h-4 w-4" />
           Import
         </Button>
         </div>
 
-        <Dialog open={showHelpDialog} onOpenChange={setShowHelpDialog}>
-          <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-            >
-              <HelpCircle className="h-4 w-4" />
-              Help
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl bg-zinc-900 border-zinc-800">
-            <DialogHeader>
-              <DialogTitle className="text-zinc-100">HuskML Help & Instructions</DialogTitle>
-              <DialogDescription className="text-zinc-300">
-                Learn how to use HuskML to build neural network architectures
-                visually
-              </DialogDescription>
-            </DialogHeader>
-            <div className="space-y-4 text-sm">
-              <div>
-                <h3 className="font-semibold text-zinc-200 mb-2">
-                  🧱 Building Your Network
-                </h3>
-                <ul className="space-y-1 text-zinc-300 ml-4">
-                  <li>• Drag blocks from the left palette onto the canvas</li>
-                  <li>
-                    • Connect blocks by dragging from output handles to input
-                    handles
-                  </li>
-                  <li>• Double-click blocks to edit their parameters</li>
-                  <li>• Use the trash icon to delete blocks</li>
-                </ul>
-              </div>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShowTutorial(true)}
+          className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+        >
+          <GraduationCap className="h-4 w-4" />
+          Tutorial
+        </Button>
 
-              <div>
-                <h3 className="font-semibold text-zinc-200 mb-2">
-                  📂 Project Management
-                </h3>
-                <ul className="space-y-1 text-zinc-300 ml-4">
-                  <li>
-                    • <strong>Export:</strong> Save your project as a JSON file
-                  </li>
-                  <li>
-                    • <strong>Import:</strong> Load a previously saved project
-                  </li>
-                  <li>
-                    • <strong>Clear All:</strong> Remove all blocks from the
-                    canvas
-                  </li>
-                </ul>
-              </div>
-
-              <div>
-                <h3 className="font-semibold text-zinc-200 mb-2">
-                  💻 Code Generation
-                </h3>
-                <ul className="space-y-1 text-zinc-300 ml-4">
-                  <li>
-                    • The right panel shows generated TensorFlow/Keras code
-                  </li>
-                  <li>
-                    • Code updates automatically as you modify your network
-                  </li>
-                  <li>• Copy the code to use in your Python projects</li>
-                </ul>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <TutorialGuide isOpen={showTutorial} onClose={() => setShowTutorial(false)} />
 
         <Dialog open={showErrorDialog} onOpenChange={setShowErrorDialog}>
           <DialogContent className="bg-zinc-900 border-zinc-800">

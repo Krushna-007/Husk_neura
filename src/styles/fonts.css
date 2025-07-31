@@ -1,30 +1,6 @@
 @font-face {
-  font-family: 'Adobe Clean';
-  src: url('/fonts/AdobeClean-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Adobe Clean';
-  src: url('/fonts/AdobeClean-Medium.woff2') format('woff2');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Adobe Clean';
-  src: url('/fonts/AdobeClean-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Adobe Clean Mono';
-  src: url('/fonts/AdobeCleanMono-Regular.woff2') format('woff2');
+  font-family: 'Departure Mono';
+  src: url('/fonts/DepartureMono-Regular.otf') format('opentype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;

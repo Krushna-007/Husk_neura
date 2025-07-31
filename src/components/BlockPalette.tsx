@@ -169,16 +169,16 @@ export default function BlockPalette({
 
   return (
     <div
-      className={`space-y-6 p-6 h-full overflow-y-auto bg-zinc-900/80 ${className}`}
+      className={`space-y-6 p-6 h-full overflow-y-auto bg-transparent ${className}`}
     >
       {/* Tab Navigation */}
-      <div className="flex space-x-2 bg-zinc-800 rounded-lg p-1 border border-zinc-700">
+      <div className="flex space-x-2">
         <button
           onClick={() => setActiveTab(CONFIG.TABS.LAYERS)}
           className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${
             activeTab === CONFIG.TABS.LAYERS
-              ? "bg-amber-600 text-black shadow-md"
-              : "text-zinc-300 hover:text-zinc-100 hover:bg-zinc-700"
+              ? "bg-transparent border-2 border-blue-500 text-blue-400 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] animate-pulse"
+              : "bg-transparent border-2 border-blue-500/30 text-blue-400/70 hover:border-blue-400 hover:text-blue-300 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.3)]"
           }`}
         >
           <Layers className="h-4 w-4" />
@@ -188,8 +188,8 @@ export default function BlockPalette({
           onClick={() => setActiveTab(CONFIG.TABS.TEMPLATES)}
           className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${
             activeTab === CONFIG.TABS.TEMPLATES
-              ? "bg-amber-600 text-black shadow-md"
-              : "text-zinc-300 hover:text-zinc-100 hover:bg-zinc-700"
+              ? "bg-transparent border-2 border-purple-500 text-purple-400 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)] animate-pulse"
+              : "bg-transparent border-2 border-purple-500/30 text-purple-400/70 hover:border-purple-400 hover:text-purple-300 hover:shadow-[0_0_10px_-3px_rgba(168,85,247,0.3)]"
           }`}
         >
           <Grid3X3 className="h-4 w-4" />
@@ -199,7 +199,11 @@ export default function BlockPalette({
 
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-zinc-400" />
+        <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-pulse ${
+          activeTab === CONFIG.TABS.LAYERS
+            ? "text-blue-400 shadow-[0_0_10px_-1px_rgba(59,130,246,0.5)]"
+            : "text-purple-400 shadow-[0_0_10px_-1px_rgba(168,85,247,0.5)]"
+        }`} />
         <Input
           type="text"
           placeholder={
@@ -209,12 +213,20 @@ export default function BlockPalette({
           }
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="pl-10 pr-10 bg-zinc-800 border-zinc-700 text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-200"
+                        className={`pl-10 pr-10 bg-transparent border-2 text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:border-transparent backdrop-blur-sm transition-all duration-200 ${
+                          activeTab === CONFIG.TABS.LAYERS 
+                            ? "border-blue-500/50 focus:ring-blue-500/50 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)]"
+                            : "border-purple-500/50 focus:ring-purple-500/50 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)]"
+                        }`}
         />
         {searchTerm && (
           <button
             onClick={clearSearch}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-200 transition-colors duration-200"
+            className={`absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${
+              activeTab === CONFIG.TABS.LAYERS
+                ? "text-blue-400/70 hover:text-blue-300"
+                : "text-purple-400/70 hover:text-purple-300"
+            }`}
           >
             <X className="h-4 w-4" />
           </button>
@@ -256,7 +268,7 @@ export default function BlockPalette({
                     {category.layers.map((layer, layerIndex) => (
                       <div
                         key={layer.type}
-                        className={`cursor-move hover:shadow-lg transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${category.borderColor} ${category.bgColor} rounded-xl shadow-sm border-2 p-3 backdrop-blur-sm bg-gradient-to-br from-zinc-900/50 to-zinc-800/50`}
+                        className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${category.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent shadow-[0_0_10px_-3px_rgba(245,158,11,0.3)]`}
                         style={{ 
                           cursor: CONFIG.DRAG_CURSOR.GRAB,
                           animationDelay: `${(index * 0.1) + (layerIndex * 0.05)}s`
@@ -303,7 +315,7 @@ export default function BlockPalette({
                     {categoryData.templates.map((template, templateIndex) => (
                       <div
                         key={template.id}
-                        className={`cursor-move hover:shadow-lg transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${categoryData.borderColor} ${categoryData.bgColor} rounded-xl shadow-sm border-2 p-3 backdrop-blur-sm bg-gradient-to-br from-zinc-900/50 to-zinc-800/50`}
+                        className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${categoryData.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent`}
                         style={{ 
                           cursor: CONFIG.DRAG_CURSOR.GRAB,
                           animationDelay: `${(index * 0.1) + (templateIndex * 0.05)}s`
@@ -357,3 +369,6 @@ export default function BlockPalette({
     </div>
   );
 }
+
+
+

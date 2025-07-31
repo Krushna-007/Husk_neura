@@ -37,8 +37,21 @@ import { cn } from "../lib/utils";
 
 // Flow editor configuration
 const FLOW_CONFIG = {
-  BACKGROUND: { GAP: 25, SIZE: 1, COLOR: "#18181b" },
-  EDGE: { STROKE_WIDTH: 2, STROKE_COLOR: "#a1a1aa" },
+  BACKGROUND: { 
+    GAP: 25, 
+    SIZE: 1, 
+    COLOR: "#18181b",
+    SECONDARY_COLOR: "#27272a",
+    PATTERN_COLOR: "#3f3f46",
+    ANIMATION_DURATION: "20s"
+  },
+  EDGE: { 
+    STROKE_WIDTH: 2, 
+    STROKE_COLOR: "#a1a1aa",
+    ANIMATED_STROKE: "rgba(99, 102, 241, 0.5)",
+    SELECTED_STROKE: "rgba(99, 102, 241, 0.8)",
+    HOVER_STROKE: "rgba(129, 140, 248, 0.7)"
+  },
 } as const;
 
 const nodeTypes: NodeTypes = { layerNode: LayerNode };
@@ -207,12 +220,20 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
           style: {
             strokeWidth: FLOW_CONFIG.EDGE.STROKE_WIDTH,
             stroke: FLOW_CONFIG.EDGE.STROKE_COLOR,
+            transition: 'all 0.3s ease-in-out',
           },
+          animated: true,
         }}
+        className="animate-[fadeIn_0.5s_ease-in-out]"
       >
-        <Controls className="bg-zinc-900 border-zinc-800 text-zinc-100" />
+        <Controls 
+          className="bg-zinc-900/90 border-zinc-800 text-zinc-100 rounded-xl backdrop-blur-sm transition-transform duration-300 hover:scale-105" 
+          showZoom={true}
+          showFitView={true}
+          fitViewOptions={{ duration: 800, padding: 0.2 }}
+        />
         <MiniMap 
-          className="bg-zinc-900/80 border border-zinc-800 rounded-lg backdrop-blur-sm"
+          className="bg-zinc-900/80 border border-zinc-800 rounded-lg backdrop-blur-sm transition-all duration-300 hover:bg-zinc-900/90 hover:shadow-lg"
           nodeColor={(node) => {
             const type = (node.data as any)?.type?.toLowerCase() || '';
             if (type.includes('input')) return '#3B82F6';
@@ -242,6 +263,16 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
           gap={FLOW_CONFIG.BACKGROUND.GAP}
           size={FLOW_CONFIG.BACKGROUND.SIZE}
           color={FLOW_CONFIG.BACKGROUND.COLOR}
+          style={{
+            backgroundColor: FLOW_CONFIG.BACKGROUND.SECONDARY_COLOR,
+            backgroundImage: `
+              radial-gradient(${FLOW_CONFIG.BACKGROUND.PATTERN_COLOR} 1px, transparent 1px),
+              radial-gradient(${FLOW_CONFIG.BACKGROUND.PATTERN_COLOR} 1px, transparent 1px)
+            `,
+            backgroundSize: '50px 50px',
+            backgroundPosition: '0 0, 25px 25px',
+            animation: `backgroundScroll ${FLOW_CONFIG.BACKGROUND.ANIMATION_DURATION} linear infinite`,
+          }}
         />
       </ReactFlow>
     </div>

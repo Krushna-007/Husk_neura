@@ -126,6 +126,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
             updateParam(value);
           }}
           className="h-8"
+          autoFocus={false}
         />
       </div>
     );
@@ -133,23 +134,23 @@ export function LayerNode({ id, data }: LayerNodeProps) {
 
   const getNodeClasses = () => {
     const base =
-      "layer-node flex flex-col px-4 py-3 rounded-xl shadow-lg border-2 transition-all duration-300 cursor-pointer min-w-[160px] max-w-[280px] backdrop-blur-sm";
+      "layer-node flex flex-col px-4 py-3 rounded-xl shadow-lg border-2 transition-colors duration-200 cursor-pointer min-w-[160px] max-w-[280px] backdrop-blur-sm";
 
     if (hasShapeError) {
-      return `${base} border-red-500 hover:border-red-600 hover:shadow-red-300/30 bg-gradient-to-br from-red-900/20 to-red-800/20`;
+      return `${base} border-red-500 hover:border-red-600 bg-gradient-to-br from-red-900/20 to-red-800/20 animate-pulse`;
     }
 
     const gradientBg = categoryColors.bg.replace('bg-', 'from-').replace('/20', '/30');
     const gradientTo = categoryColors.bg.replace('bg-', 'to-').replace('/20', '/20');
     
-    return `${base} ${categoryColors.border} ${categoryColors.hover} bg-gradient-to-br ${gradientBg} ${gradientTo}`;
+    return `${base} ${categoryColors.border} ${categoryColors.hover} bg-gradient-to-br ${gradientBg} ${gradientTo} hover:backdrop-blur-lg`;
   };
 
   const getHandleClasses = (isError: boolean, color: string) =>
-    `node-handle w-4 h-4 border-2 border-zinc-800 shadow-md rounded-full transition-all duration-200 ${
+    `node-handle w-3 h-3 border border-zinc-800 shadow-sm rounded-full transition-colors duration-200 ${
       isError 
-        ? "!bg-gradient-to-br from-red-500 to-red-600" 
-        : color.replace('!bg-', '!bg-gradient-to-br !from-').replace('-500', '-500 !to-') + '-600'
+        ? "!bg-red-500" 
+        : color
     }`;
 
   return (
