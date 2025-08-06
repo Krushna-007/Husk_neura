@@ -1,5 +1,5 @@
 /**
- * Keras code generation utilities for both Sequential and Functional API
+ * Neural network code generation utilities for Keras and PyTorch
  */
 
 import type { DAGResult, LayerObject } from "./dag-parser";
@@ -9,6 +9,11 @@ import {
   getMergeLayerImports,
   getLayerDefinition,
 } from "./layer-definitions";
+import {
+  generatePyTorchCode,
+  generatePyTorchTrainingCode,
+  type PyTorchCodeOptions,
+} from "./code-generation-pytorch";
 
 /**
  * Common compilation and summary code for both Sequential and Functional API
@@ -340,3 +345,31 @@ export async function generateFunctionalKerasCode(
 
   return [...codeLines, ...COMPILATION_TEMPLATE].join("\n");
 }
+
+// ============================================================================
+// PYTORCH CODE GENERATION EXPORTS
+// ============================================================================
+
+/**
+ * Generate PyTorch code from DAG result
+ */
+export async function generatePyTorchCodeFromDAG(
+  dagResult: DAGResult,
+  options: PyTorchCodeOptions = {}
+): Promise<string> {
+  return generatePyTorchCode(dagResult, options);
+}
+
+/**
+ * Generate PyTorch code with training loop
+ */
+export async function generatePyTorchCodeWithTraining(
+  dagResult: DAGResult,
+  options: PyTorchCodeOptions = {}
+): Promise<string> {
+  const modelCode = generatePyTorchCode(dagResult, options);
+  return generatePyTorchTrainingCode(modelCode, options);
+}
+
+// Re-export PyTorch utilities for external use
+export { generatePyTorchCode, generatePyTorchTrainingCode, type PyTorchCodeOptions } from "./code-generation-pytorch";

@@ -6,10 +6,12 @@ import { Check, Copy, Download } from "lucide-react";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { parseGraphToDAG, type DAGResult } from "../lib/dag-parser";
 import {
   generateKerasCode,
   generateFunctionalKerasCode,
+  generatePyTorchCodeFromDAG,
 } from "../lib/code-generation";
 import { useFlowStore } from "../lib/flow-store";
 import { cn } from "../lib/utils";
@@ -58,11 +60,12 @@ interface CodeViewerProps {
   className?: string;
 }
 
-// Generates Keras code from visual neural network graph
+// Generates neural network code from visual graph (Keras or PyTorch)
 export function CodeViewer({ className }: CodeViewerProps) {
   const { nodes, edges } = useFlowStore();
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+  const [framework, setFramework] = useState<'keras' | 'pytorch'>('keras');
 
   const [code, setCode] = useState(`# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
@@ -81,7 +84,8 @@ print("✨ Ready to create something amazing with HUSKML!")`);
   useEffect(() => {
     const generateCode = async () => {
       if (nodes.length === 0) {
-        setCode(`# HUSKML - Advanced Neural Network Builder
+        const welcomeMessage = framework === 'keras' 
+          ? `# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
 # Welcome to HUSKML! 🚀
@@ -93,7 +97,23 @@ from tensorflow import keras
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`);
+print("✨ Ready to create something amazing with HUSKML!")`
+          : `# HUSKML - Advanced Neural Network Builder
+# https://huskml.maverickspectrum.com
+
+# Welcome to HUSKML! 🚀
+# Start building your neural network by dragging and dropping layers from the left panel
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+# Your HUSKML model will appear here once you add layers
+model = None
+
+print("✨ Ready to create something amazing with HUSKML!")`;
+        
+        setCode(welcomeMessage);
         return;
       }
 
@@ -114,14 +134,20 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
           return;
         }
 
-        // Check if we need Functional API
-        if (checkIfFunctionalAPINeeded(dagResult)) {
-          const generatedCode = await generateFunctionalKerasCode(dagResult);
+        // Generate code based on selected framework
+        if (framework === 'pytorch') {
+          const generatedCode = await generatePyTorchCodeFromDAG(dagResult);
           setCode(generatedCode);
         } else {
-          // Use Sequential API
-          const generatedCode = generateKerasCode(dagResult.orderedNodes);
-          setCode(generatedCode);
+          // Keras generation (existing logic)
+          if (checkIfFunctionalAPINeeded(dagResult)) {
+            const generatedCode = await generateFunctionalKerasCode(dagResult);
+            setCode(generatedCode);
+          } else {
+            // Use Sequential API
+            const generatedCode = generateKerasCode(dagResult.orderedNodes);
+            setCode(generatedCode);
+          }
         }
       } catch (error) {
         console.error("Error generating code:", error);
@@ -130,7 +156,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
     };
 
     generateCode();
-  }, [nodes, edges]);
+  }, [nodes, edges, framework]);
 
   const handleCopy = () => {
     try {
@@ -178,16 +204,31 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             <CardTitle className="text-xl text-zinc-200 font-semibold font-grotesk">
               Generated Code
             </CardTitle>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
+              <Select value={framework} onValueChange={(value: 'keras' | 'pytorch') => setFramework(value)}>
+                <SelectTrigger className="w-[120px] h-8 bg-zinc-800/50 border-zinc-700 text-zinc-300">
+                  <SelectValue placeholder="Framework" />
+                </SelectTrigger>
+                <SelectContent className="bg-zinc-800 border-zinc-700">
+                  <SelectItem value="keras" className="text-zinc-300 hover:bg-zinc-700">
+                    Keras
+                  </SelectItem>
+                  <SelectItem value="pytorch" className="text-zinc-300 hover:bg-zinc-700">
+                    PyTorch
+                  </SelectItem>
+                </SelectContent>
+              </Select>
               <Badge
                 variant="outline"
                 className={
                   hasContent
-                    ? "bg-amber-900/20 text-amber-300 border-amber-500"
+                    ? framework === 'pytorch' 
+                      ? "bg-orange-900/20 text-orange-300 border-orange-500"
+                      : "bg-amber-900/20 text-amber-300 border-amber-500"
                     : "bg-blue-900/20 text-blue-300 border-blue-600"
                 }
               >
-                {hasContent ? "Keras" : "Ready"}
+                {hasContent ? (framework === 'pytorch' ? 'PyTorch' : 'Keras') : "Ready"}
               </Badge>
             </div>
           </div>
@@ -252,26 +293,47 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             )}
           </Button>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 text-center py-4 bg-gradient-to-r from-zinc-900/90 via-black/95 to-zinc-900/90 backdrop-blur-md border-t border-zinc-800/50">
-          <div className="flex items-center justify-center gap-4 group">
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Powered by</span>
-              <a 
-                href="https://huskml.maverickspectrum.com" 
+        <div className="absolute bottom-0 left-0 right-0 text-center py-3 bg-gradient-to-r from-zinc-900/90 via-black/95 to-zinc-900/90 backdrop-blur-md border-t border-zinc-800/50">
+          <div className="flex flex-col items-center justify-center gap-2 group">
+            <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center gap-2">
+                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Powered by</span>
+                <a 
+                  href="https://huskml.maverickspectrum.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 group"
+                >
+                  <span className="text-blue-400 group-hover:text-blue-300 font-semibold tracking-wider text-sm">
+                    HUSKML
+                  </span>
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
+                </a>
+              </div>
+              <span className="text-zinc-600">|</span>
+              <div className="flex items-center gap-2">
+                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Built with</span>
+                <span className="text-red-500/80 group-hover:text-red-400 animate-pulse transition-colors duration-300">❤</span>
+                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">by</span>
+                <a 
+                  href="https://www.blockdl.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-orange-400 hover:text-orange-300 font-semibold transition-colors duration-300"
+                >
+                  BlockDL
+                </a>
+              </div>
+            </div>
+            <div className="text-zinc-500 text-xs">
+              Original creator: <a 
+                href="https://www.blockdl.com" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 group"
+                className="text-zinc-400 hover:text-zinc-300 underline transition-colors duration-300"
               >
-                <span className="text-blue-400 group-hover:text-blue-300 font-semibold tracking-wider text-sm">
-                  HUSKML
-                </span>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
-              </a>
-            </div>
-            <span className="text-zinc-600">|</span>
-            <div className="flex items-center gap-2">
-              <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Built with</span>
-              <span className="text-red-500/80 group-hover:text-red-400 animate-pulse transition-colors duration-300">❤</span>
+                BlockDL
+              </a> - Please support them too! ✨
             </div>
           </div>
         </div>

@@ -94,8 +94,15 @@ export interface LayerMetadata {
   };
 }
 
+export interface PyTorchCodeResult {
+  init: string;      // Code for __init__ method
+  forward: string;   // Code for forward method
+  imports: string[]; // Required imports
+}
+
 export interface CodeGenerator {
   keras: (params: Record<string, unknown>) => string;
+  pytorch?: (params: Record<string, unknown>) => PyTorchCodeResult;
 }
 
 export interface LayerDefinition {
@@ -328,6 +335,89 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
           }
         }
       },
+      pytorch: (params: Record<string, unknown>) => {
+        const inputType = String(params.inputType || "image_grayscale");
+        
+        // For PyTorch, Input layers provide shape documentation and input validation
+        let shapeComment = "";
+        let forwardComment = "";
+        let validationCode = "";
+        
+        switch (inputType) {
+          case "image_grayscale": {
+            const h = Number(params.height) || 28;
+            const w = Number(params.width) || 28;
+            shapeComment = `# Input shape: (batch_size, 1, ${h}, ${w}) - Grayscale images`;
+            forwardComment = `# Expected input: x.shape = (batch_size, 1, ${h}, ${w})`;
+            validationCode = `assert x.dim() == 4, f"Expected 4D input (batch, channels, height, width), got {x.dim()}D"
+        assert x.size(1) == 1, f"Expected 1 channel for grayscale, got {x.size(1)}"
+        assert x.size(2) == ${h} and x.size(3) == ${w}, f"Expected size ({h}, ${w}), got ({x.size(2)}, {x.size(3)})"`;
+            break;
+          }
+          case "image_color": {
+            const h = Number(params.height) || 28;
+            const w = Number(params.width) || 28;
+            shapeComment = `# Input shape: (batch_size, 3, ${h}, ${w}) - RGB color images`;
+            forwardComment = `# Expected input: x.shape = (batch_size, 3, ${h}, ${w})`;
+            validationCode = `assert x.dim() == 4, f"Expected 4D input (batch, channels, height, width), got {x.dim()}D"
+        assert x.size(1) == 3, f"Expected 3 channels for RGB, got {x.size(1)}"
+        assert x.size(2) == ${h} and x.size(3) == ${w}, f"Expected size ({h}, ${w}), got ({x.size(2)}, {x.size(3)})"`;
+            break;
+          }
+          case "image_custom": {
+            const h = Number(params.height) || 28;
+            const w = Number(params.width) || 28;
+            const c = Number(params.channels) || 1;
+            shapeComment = `# Input shape: (batch_size, ${c}, ${h}, ${w}) - Custom ${c}-channel images`;
+            forwardComment = `# Expected input: x.shape = (batch_size, ${c}, ${h}, ${w})`;
+            validationCode = `assert x.dim() == 4, f"Expected 4D input (batch, channels, height, width), got {x.dim()}D"
+        assert x.size(1) == ${c}, f"Expected ${c} channels, got {x.size(1)}"
+        assert x.size(2) == ${h} and x.size(3) == ${w}, f"Expected size ({h}, ${w}), got ({x.size(2)}, {x.size(3)})"`;
+            break;
+          }
+          case "flat_data": {
+            const size = Number(params.flatSize) || 784;
+            shapeComment = `# Input shape: (batch_size, ${size}) - Flattened feature vector`;
+            forwardComment = `# Expected input: x.shape = (batch_size, ${size})`;
+            validationCode = `assert x.dim() == 2, f"Expected 2D input (batch, features), got {x.dim()}D"
+        assert x.size(1) == ${size}, f"Expected ${size} features, got {x.size(1)}"`;
+            break;
+          }
+          case "sequence": {
+            const seqLen = Number(params.seqLength) || 100;
+            const features = Number(params.features) || 128;
+            shapeComment = `# Input shape: (batch_size, ${seqLen}, ${features}) - Sequential data`;
+            forwardComment = `# Expected input: x.shape = (batch_size, ${seqLen}, ${features})`;
+            validationCode = `assert x.dim() == 3, f"Expected 3D input (batch, sequence, features), got {x.dim()}D"
+        assert x.size(1) == ${seqLen}, f"Expected sequence length ${seqLen}, got {x.size(1)}"
+        assert x.size(2) == ${features}, f"Expected ${features} features, got {x.size(2)}"`;
+            break;
+          }
+          case "sequence_indices": {
+            const seqLen = Number(params.seqIndicesLength) || 784;
+            shapeComment = `# Input shape: (batch_size, ${seqLen}) - Token indices for embedding`;
+            forwardComment = `# Expected input: x.shape = (batch_size, ${seqLen}) - Integer indices`;
+            validationCode = `assert x.dim() == 2, f"Expected 2D input (batch, sequence), got {x.dim()}D"
+        assert x.size(1) == ${seqLen}, f"Expected sequence length ${seqLen}, got {x.size(1)}"
+        assert x.dtype in [torch.long, torch.int], f"Expected integer indices, got {x.dtype}"`;
+            break;
+          }
+          default: {
+            shapeComment = `# Input shape: (batch_size, 1, 28, 28) - Default grayscale images`;
+            forwardComment = `# Expected input: x.shape = (batch_size, 1, 28, 28)`;
+            validationCode = `assert x.dim() == 4, f"Expected 4D input, got {x.dim()}D"`;
+          }
+        }
+
+        return {
+          init: shapeComment,
+          forward: `${forwardComment}
+        # Input validation (remove in production for speed)
+        ${validationCode}
+        # x is now validated and ready for processing`,
+          imports: ["torch"]
+        };
+      },
     },
   },
 
@@ -455,6 +545,41 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
 
         return `Dense(${units}, activation='${activation}')`;
       },
+      pytorch: (params) => {
+        const outputType = String(params.outputType || "multiclass");
+        let units: number;
+
+        switch (outputType) {
+          case "multiclass":
+            units = Number(params.numClasses) || 10;
+            break;
+          case "binary":
+            units = 1;
+            break;
+          case "regression":
+            units = Number(params.units) || 1;
+            break;
+          case "multilabel":
+            units = Number(params.units) || 1;
+            break;
+          default:
+            units = 10;
+        }
+
+        // Use computed input dimension
+        const inputDim = Number(params._inputDim) || 128;
+        
+        const initCode = `self.output = nn.Linear(${inputDim}, ${units})`;
+        const forwardCode = "x = self.output(x)";
+
+        const imports = ["torch.nn"];
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports
+        };
+      },
     },
   },
 
@@ -543,6 +668,31 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         }
         code += ")";
         return code;
+      },
+      pytorch: (params: Record<string, unknown>) => {
+        const units = Number(params.units) || 128;
+        const activation = String(params.activation) || "linear";
+        const useBias = String(params.use_bias) !== "false";
+
+        // Use computed input dimension or fallback
+        const inputDim = Number(params._inputDim) || 784;
+        
+        const initCode = `self.fc = nn.Linear(${inputDim}, ${units}, bias=${useBias ? 'True' : 'False'})`;
+        
+        let forwardCode = "x = self.fc(x)";
+        // For PyTorch best practices, don't include activation in forward for Sequential
+        // Activation will be handled separately
+        
+        const imports = ["torch.nn"];
+        if (activation !== "linear" && activation !== "none") {
+          imports.push("torch.nn.functional");
+        }
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports
+        };
       },
     },
     supportsMultiplier: true,
@@ -697,6 +847,39 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         code += ")";
 
         return code;
+      },
+      pytorch: (params) => {
+        const filters = Number(params.filters) || 32;
+        const kernelSizeStr = String(params.kernel_size) || "(3,3)";
+        const stridesStr = String(params.strides) || "(1,1)";
+        const padding = String(params.padding) || "same";
+        const useBias = String(params.use_bias) !== "false";
+
+        // Parse kernel size and strides from string format "(3,3)" to number
+        const kernelSize = kernelSizeStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()))[0] || 3;
+        const stride = stridesStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()))[0] || 1;
+        
+        // Convert Keras padding to PyTorch padding
+        let paddingValue: number;
+        if (padding === "same") {
+          paddingValue = Math.floor(kernelSize / 2);
+        } else {
+          paddingValue = 0;
+        }
+
+        // Use computed input channels or fallback
+        const inChannels = Number(params._inputChannels) || 3;
+        
+        const initCode = `self.conv2d = nn.Conv2d(${inChannels}, ${filters}, kernel_size=${kernelSize}, stride=${stride}, padding=${paddingValue}, bias=${useBias ? 'True' : 'False'})`;
+        const forwardCode = "x = self.conv2d(x)";
+
+        const imports = ["torch.nn"];
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports
+        };
       },
     },
     supportsMultiplier: true,
@@ -1098,6 +1281,30 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
 
         return `MaxPool2D(pool_size=${poolSize}${strides}, padding='${padding}')`;
       },
+      pytorch: (params) => {
+        const poolSizeStr = String(params.pool_size) || "(2,2)";
+        const stridesStr = String(params.strides) || poolSizeStr;
+        const padding = String(params.padding) || "valid";
+
+        // Parse pool size and strides
+        const poolSize = poolSizeStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()))[0] || 2;
+        const stride = stridesStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()))[0] || poolSize;
+        
+        // Convert padding
+        let paddingValue = 0;
+        if (padding === "same") {
+          paddingValue = Math.floor(poolSize / 2);
+        }
+
+        const initCode = `self.maxpool2d = nn.MaxPool2d(kernel_size=${poolSize}, stride=${stride}, padding=${paddingValue})`;
+        const forwardCode = "x = self.maxpool2d(x)";
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn"]
+        };
+      },
     },
   },
 
@@ -1200,6 +1407,30 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
 
         return `AveragePooling2D(pool_size=${poolSize}${strides}, padding='${padding}')`;
       },
+      pytorch: (params) => {
+        const poolSizeStr = String(params.pool_size) || "(2,2)";
+        const stridesStr = String(params.strides) || poolSizeStr;
+        const padding = String(params.padding) || "valid";
+
+        // Parse pool size and strides
+        const poolSize = poolSizeStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()))[0] || 2;
+        const stride = stridesStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()))[0] || poolSize;
+        
+        // Convert padding
+        let paddingValue = 0;
+        if (padding === "same") {
+          paddingValue = Math.floor(poolSize / 2);
+        }
+
+        const initCode = `self.avgpool2d = nn.AvgPool2d(kernel_size=${poolSize}, stride=${stride}, padding=${paddingValue})`;
+        const forwardCode = "x = self.avgpool2d(x)";
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn"]
+        };
+      },
     },
   },
 
@@ -1247,6 +1478,99 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
     },
     generateCode: {
       keras: () => "GlobalAveragePooling2D()",
+      pytorch: () => {
+        const initCode = "self.global_avgpool = nn.AdaptiveAvgPool2d(1)";
+        const forwardCode = "x = self.global_avgpool(x)\n        x = torch.flatten(x, 1)";
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn", "torch"]
+        };
+      },
+    },
+  },
+
+  // TRANSFORMATION LAYERS
+  // ============================================================================
+  
+  Reshape: {
+    metadata: {
+      category: "transformation",
+      icon: "🔄",
+      description: "Reshapes input tensor to a new shape",
+      tags: ["reshape", "transform", "tensor", "shape"],
+      performance: {
+        complexity: "O(1) - just changes view",
+        memory: "None - no data copying",
+        usage: "Change tensor dimensions without copying data",
+      },
+    },
+    parameters: [
+      {
+        key: "target_shape",
+        type: "text",
+        label: "Target Shape",
+        description: "New shape for the tensor (comma-separated, use -1 for auto)",
+        default: "-1, 784",
+        validation: { required: true },
+        ui: { tooltip: "e.g., '-1, 784' or '28, 28, 1'. Use -1 for automatic dimension" },
+      },
+    ],
+    validateInputs: (inputShapes, params) => {
+      void params; // Explicitly mark as intentionally unused
+      if (inputShapes.length !== 1) {
+        return {
+          isValid: false,
+          errorMessage: "Reshape layer requires exactly one input",
+        };
+      }
+      return { isValid: true };
+    },
+    computeShape: (inputShapes, params) => {
+      if (inputShapes.length !== 1) return null;
+      const inputShape = inputShapes[0];
+      const targetShapeStr = String(params.target_shape) || "-1, 784";
+      
+      try {
+        const targetShape = targetShapeStr.split(',').map(s => {
+          const trimmed = s.trim();
+          return trimmed === '-1' ? -1 : parseInt(trimmed);
+        });
+        
+        // Calculate total input elements
+        const inputElements = inputShape.reduce((acc, dim) => acc * dim, 1);
+        
+        // Handle -1 (auto dimension)
+        const autoIndex = targetShape.indexOf(-1);
+        if (autoIndex !== -1) {
+          const knownElements = targetShape.reduce((acc, dim, idx) => 
+            idx === autoIndex ? acc : acc * dim, 1);
+          targetShape[autoIndex] = inputElements / knownElements;
+        }
+        
+        return targetShape;
+      } catch {
+        return null;
+      }
+    },
+    generateCode: {
+      keras: (params) => {
+        const targetShape = String(params.target_shape) || "-1, 784";
+        return `Reshape((${targetShape}))`;
+      },
+      pytorch: (params) => {
+        const targetShape = String(params.target_shape) || "-1, 784";
+        
+        const initCode = `# Reshape will be done in forward pass`;
+        const forwardCode = `x = x.view(x.size(0), ${targetShape})  # Keep batch dimension`;
+        
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: []
+        };
+      },
     },
   },
 
@@ -1576,6 +1900,25 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
 
         return code;
       },
+      pytorch: (params) => {
+        const inputDim = Number(params.input_dim) || 10000;
+        const outputDim = Number(params.output_dim) || 128;
+        const maskZero = String(params.mask_zero) === "true";
+
+        let initCode = `self.embedding = nn.Embedding(${inputDim}, ${outputDim}`;
+        if (maskZero) {
+          initCode += ", padding_idx=0";
+        }
+        initCode += ")";
+
+        const forwardCode = "x = self.embedding(x)";
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn"]
+        };
+      },
     },
   },
 
@@ -1773,6 +2116,32 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         code += ")";
 
         return code;
+      },
+      pytorch: (params) => {
+        const units = Number(params.units) || 50;
+        const dropout = Number(params.dropout) || 0.0;
+        const returnSequences = String(params.return_sequences) === "true";
+        
+        // Get input features from previous layer
+        const inputSize = Number(params._inputDims?.[1]) || Number(params._inputDim) || 128;
+        
+        // PyTorch LSTM parameters
+        let initCode = `self.lstm = nn.LSTM(input_size=${inputSize}, hidden_size=${units}, batch_first=True`;
+        if (dropout > 0) {
+          initCode += `, dropout=${dropout}`;
+        }
+        initCode += ")";
+        
+        let forwardCode = "x, (hidden, cell) = self.lstm(x)";
+        if (!returnSequences) {
+          forwardCode += "\n        x = x[:, -1, :]  # Take last timestep";
+        }
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn"]
+        };
       },
     },
   },
@@ -1999,6 +2368,32 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         code += ")";
 
         return code;
+      },
+      pytorch: (params) => {
+        const units = Number(params.units) || 50;
+        const dropout = Number(params.dropout) || 0.0;
+        const returnSequences = String(params.return_sequences) === "true";
+        
+        // Get input features from previous layer
+        const inputSize = Number(params._inputDims?.[1]) || Number(params._inputDim) || 128;
+        
+        // PyTorch GRU parameters
+        let initCode = `self.gru = nn.GRU(input_size=${inputSize}, hidden_size=${units}, batch_first=True`;
+        if (dropout > 0) {
+          initCode += `, dropout=${dropout}`;
+        }
+        initCode += ")";
+        
+        let forwardCode = "x, hidden = self.gru(x)";
+        if (!returnSequences) {
+          forwardCode += "\n        x = x[:, -1, :]  # Take last timestep";
+        }
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn"]
+        };
       },
     },
   },
@@ -2430,6 +2825,13 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
     },
     generateCode: {
       keras: () => "Flatten()",
+      pytorch: () => {
+        return {
+          init: "# Flatten layer - no parameters needed",
+          forward: "x = torch.flatten(x, 1)  # Flatten all dims except batch",
+          imports: ["torch"]
+        };
+      },
     },
   },
 
@@ -2777,6 +3179,106 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
             return `Concatenate()`;
         }
       },
+      pytorch: (params) => {
+        const mode = String(params.mode) || "concat";
+        
+        switch (mode) {
+          case "concat": {
+            const axis = Number(params.axis) || -1;
+            // Convert Keras axis to PyTorch dim (handle negative indexing)
+            const dim = axis === -1 ? 1 : axis + 1; // +1 because PyTorch includes batch dimension
+            
+            const initCode = `# Concatenation will be done in forward pass`;
+            const forwardCode = `x = torch.cat(inputs, dim=${dim})`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "add": {
+            const initCode = `# Element-wise addition will be done in forward pass`;
+            const forwardCode = `x = torch.stack(inputs, dim=0).sum(dim=0)`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "multiply": {
+            const initCode = `# Element-wise multiplication will be done in forward pass`;
+            const forwardCode = `x = torch.stack(inputs, dim=0).prod(dim=0)`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "average": {
+            const initCode = `# Element-wise averaging will be done in forward pass`;
+            const forwardCode = `x = torch.stack(inputs, dim=0).mean(dim=0)`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "maximum": {
+            const initCode = `# Element-wise maximum will be done in forward pass`;
+            const forwardCode = `x = torch.stack(inputs, dim=0).max(dim=0)[0]`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "minimum": {
+            const initCode = `# Element-wise minimum will be done in forward pass`;
+            const forwardCode = `x = torch.stack(inputs, dim=0).min(dim=0)[0]`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "subtract": {
+            const initCode = `# Element-wise subtraction will be done in forward pass`;
+            const forwardCode = `x = inputs[0] - inputs[1]  # First input minus second input`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          case "dot": {
+            const initCode = `# Dot product will be done in forward pass`;
+            const forwardCode = `x = torch.sum(inputs[0] * inputs[1], dim=-1, keepdim=True)`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+          default: {
+            const initCode = `# Default concatenation will be done in forward pass`;
+            const forwardCode = `x = torch.cat(inputs, dim=1)`;
+            
+            return {
+              init: initCode,
+              forward: forwardCode,
+              imports: ["torch"]
+            };
+          }
+        }
+      },
     },
   },
 
@@ -2825,6 +3327,53 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         const activation = String(params.activation_function) || "relu";
         return `Activation('${activation}')`;
       },
+      pytorch: (params) => {
+        const activation = String(params.activation_function) || "relu";
+        
+        let initCode = "";
+        let forwardCode = "";
+        const imports = ["torch.nn", "torch.nn.functional"];
+
+        switch (activation) {
+          case "relu":
+            initCode = "self.activation = nn.ReLU()";
+            forwardCode = "x = self.activation(x)";
+            break;
+          case "sigmoid":
+            initCode = "self.activation = nn.Sigmoid()";
+            forwardCode = "x = self.activation(x)";
+            break;
+          case "tanh":
+            initCode = "self.activation = nn.Tanh()";
+            forwardCode = "x = self.activation(x)";
+            break;
+          case "softmax":
+            initCode = "self.activation = nn.Softmax(dim=1)";
+            forwardCode = "x = self.activation(x)";
+            break;
+          case "leaky_relu":
+            initCode = "self.activation = nn.LeakyReLU()";
+            forwardCode = "x = self.activation(x)";
+            break;
+          case "elu":
+            initCode = "self.activation = nn.ELU()";
+            forwardCode = "x = self.activation(x)";
+            break;
+          case "linear":
+            initCode = "# Linear activation (identity)";
+            forwardCode = "# x = x  # Identity - no change";
+            break;
+          default:
+            initCode = `# TODO: Implement ${activation} activation`;
+            forwardCode = `# TODO: Apply ${activation} activation`;
+        }
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: activation === "linear" ? [] : imports
+        };
+      },
     },
   },
 
@@ -2872,6 +3421,14 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
       keras: (params) => {
         const rate = Number(params.rate) || 0.5;
         return `Dropout(${rate})`;
+      },
+      pytorch: (params) => {
+        const rate = Number(params.rate) || 0.5;
+        return {
+          init: `self.dropout = nn.Dropout(p=${rate})`,
+          forward: "x = self.dropout(x)",
+          imports: ["torch.nn"]
+        };
       },
     },
   },
@@ -2988,6 +3545,36 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         code += ")";
 
         return code;
+      },
+      pytorch: (params) => {
+        const momentum = Number(params.momentum) || 0.99;
+        const epsilon = Number(params.epsilon) || 0.001;
+        const center = String(params.center) !== "false";
+        const scale = String(params.scale) !== "false";
+        
+        // PyTorch momentum is 1 - Keras momentum (running average vs decay)
+        const pytorchMomentum = 1 - momentum;
+        
+        // Get number of features from input channels
+        const numFeatures = Number(params._inputChannels) || Number(params._inputDim) || 128;
+        
+        // Determine BatchNorm type based on input dimensions
+        let batchNormType = "BatchNorm1d";
+        if (params._inputDims && Array.isArray(params._inputDims)) {
+          const inputDims = params._inputDims as number[];
+          if (inputDims.length >= 3) {
+            batchNormType = "BatchNorm2d";
+          }
+        }
+        
+        const initCode = `self.batchnorm = nn.${batchNormType}(${numFeatures}, eps=${epsilon}, momentum=${pytorchMomentum}, affine=${center && scale ? 'True' : 'False'})`;
+        const forwardCode = "x = self.batchnorm(x)";
+
+        return {
+          init: initCode,
+          forward: forwardCode,
+          imports: ["torch.nn"]
+        };
       },
     },
   },
