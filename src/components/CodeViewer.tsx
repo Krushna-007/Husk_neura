@@ -228,7 +228,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
                     : "bg-blue-900/20 text-blue-300 border-blue-600"
                 }
               >
-                {hasContent ? (framework === 'pytorch' ? 'PyTorch' : 'Keras') : "Ready"}
+                {hasContent ? (framework === 'pytorch' ? 'PyTorch Beta' : 'Keras') : "Ready"}
               </Badge>
             </div>
           </div>
