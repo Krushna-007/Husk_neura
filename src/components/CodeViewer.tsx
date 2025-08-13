@@ -312,28 +312,28 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
               </div>
               <span className="text-zinc-600">|</span>
               <div className="flex items-center gap-2">
-                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Built with</span>
+                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Enhanced with</span>
                 <span className="text-red-500/80 group-hover:text-red-400 animate-pulse transition-colors duration-300">❤</span>
-                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">by</span>
                 <a 
-                  href="https://www.blockdl.com" 
+                  href="https://huskml.maverickspectrum.com" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="text-orange-400 hover:text-orange-300 font-semibold transition-colors duration-300"
                 >
-                  BlockDL
+                  HUSKML
                 </a>
               </div>
             </div>
             <div className="text-zinc-500 text-xs">
-              Original creator: <a 
+              Inspired by the original works of 
+              <a 
                 href="https://www.blockdl.com" 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="text-zinc-400 hover:text-zinc-300 underline transition-colors duration-300"
+                className="text-zinc-400 hover:text-zinc-300 underline transition-colors duration-300 ml-1"
               >
-                BlockDL
-              </a> - Please support them too! ✨
+                BlockDl
+              </a>, Support them✨!
             </div>
           </div>
         </div>

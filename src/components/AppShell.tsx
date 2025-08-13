@@ -6,6 +6,10 @@ import type { Node, Edge } from "@xyflow/react";
 
 import { cn } from "@/lib/utils";
 import { AppHeader } from "./AppHeader";
+import { CourseSelector } from "./CourseSelector";
+import { LessonViewer } from "./LessonViewer";
+import { CoursePrompt } from "./CoursePrompt";
+import { useCourseStore } from "../lib/course-store";
 
 const LAYOUT_CONFIG = {
   MIN_WIDTH: 1280,
@@ -34,6 +38,11 @@ export function AppShell({
   onImportProject,
   onClearAll,
 }: AppShellProps) {
+  const { 
+    isCourseMode, 
+    showLessonViewer, 
+    currentCourse 
+  } = useCourseStore();
   return (
     <div
       className={cn(
@@ -54,7 +63,9 @@ export function AppShell({
           className="bg-black border-r border-zinc-800 flex-shrink-0 shadow-sm"
           style={{ width: LAYOUT_CONFIG.SIDEBAR_WIDTH }}
         >
-          <div className="h-full overflow-hidden">{palette}</div>
+          <div className="h-full overflow-hidden">
+            {isCourseMode && !currentCourse ? <CourseSelector /> : palette}
+          </div>
         </aside>
 
         <main className="flex-grow bg-black min-w-0">
@@ -65,7 +76,13 @@ export function AppShell({
           className="bg-zinc-900 border-l border-zinc-800 flex-shrink-0 shadow-sm"
           style={{ width: LAYOUT_CONFIG.CODE_VIEWER_WIDTH }}
         >
-          <div className="h-full overflow-hidden">{codeViewer}</div>
+          <div className="h-full overflow-hidden">
+            {isCourseMode ? (
+              showLessonViewer ? <LessonViewer /> : <CoursePrompt />
+            ) : (
+              codeViewer
+            )}
+          </div>
         </aside>
       </div>
     </div>

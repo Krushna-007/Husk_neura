@@ -1,11 +1,12 @@
 import { useState, useCallback, useEffect } from "react";
 import type { Node, Edge } from "@xyflow/react";
-import { Download, Upload, Trash2, GraduationCap } from "lucide-react";
+import { Download, Upload, Trash2, GraduationCap, X, BookOpen } from "lucide-react";
 
 import { Button } from "./ui/button";
 
 import { UndoRedoControls } from "./UndoRedoControls";
 import { TutorialGuide } from "./TutorialGuide";
+import { useCourseStore } from "../lib/course-store";
 import {
   Dialog,
   DialogContent,
@@ -44,6 +45,15 @@ export function AppHeader({
   onClearAll,
 }: AppHeaderProps) {
   const [showTutorial, setShowTutorial] = useState(false);
+  
+  // Course store
+  const { 
+    isCourseMode, 
+    currentCourse, 
+    currentLesson,
+    toggleCourseMode,
+    exitCourse 
+  } = useCourseStore();
   
   // Check if it's the first visit
   useEffect(() => {
@@ -121,19 +131,85 @@ export function AppHeader({
 
   return (
     <header className="bg-black border-b border-zinc-800 shadow-sm px-6 py-3 flex items-center justify-between">
+      {/* Left Side - Logo & Title */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <img src="/favicon_new.svg" alt="Icon" className="h-5 w-5" />
-          <span className="text-zinc-100 font-medium">Neural Network Builder</span>
+          <span className="text-zinc-100 font-medium">
+            {isCourseMode && currentCourse ? currentCourse.title : "Neural Network Builder"}
+          </span>
+          {isCourseMode && currentLesson && (
+            <span className="text-zinc-500 text-sm">• {currentLesson.title}</span>
+          )}
         </div>
       </div>
 
+      {/* Right Side - Contextual Controls */}
       <div className="flex items-center gap-2">
-        {/* Undo/Redo Controls */}
-        <UndoRedoControls />
-        
-        {/* Project Controls */}
-        <div className="flex items-center gap-2 border-l border-zinc-700 pl-2">
+        {isCourseMode && currentCourse ? (
+          // Course Mode Controls
+          <>
+            {/* Undo/Redo Controls */}
+            <UndoRedoControls />
+            
+            {/* Clear All for Course */}
+            <div className="flex items-center gap-2 border-l border-zinc-700 pl-2">
+              <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={!hasContent}
+                    className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Clear Canvas
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-zinc-900 border-zinc-800">
+                  <DialogHeader>
+                    <DialogTitle className="text-zinc-100">Clear Canvas</DialogTitle>
+                    <DialogDescription className="text-zinc-300">
+                      Clear all layers from the canvas? You can rebuild them as part of your learning.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowClearDialog(false)}
+                      className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="destructive" onClick={handleClearConfirm}>
+                      Clear Canvas
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+
+
+            
+            {/* Exit Course */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={exitCourse}
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-red-800 hover:border-red-500 hover:text-red-300 ml-2"
+            >
+              <X className="h-4 w-4" />
+              Exit Course
+            </Button>
+          </>
+        ) : (
+          // Normal Mode Controls
+          <>
+            {/* Undo/Redo Controls */}
+            <UndoRedoControls />
+            
+            {/* Project Controls */}
+            <div className="flex items-center gap-2 border-l border-zinc-700 pl-2">
         <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
           <DialogTrigger asChild>
             <Button
@@ -189,17 +265,30 @@ export function AppHeader({
           <Download className="h-4 w-4" />
           Import
         </Button>
-        </div>
+            </div>
 
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setShowTutorial(true)}
-          className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-        >
-          <GraduationCap className="h-4 w-4" />
-          Tutorial
-        </Button>
+            {/* Tutorial & Learn Buttons */}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowTutorial(true)}
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+            >
+              <GraduationCap className="h-4 w-4" />
+              Tutorial
+            </Button>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleCourseMode}
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-blue-800 hover:border-blue-500 hover:text-blue-300"
+            >
+              <BookOpen className="h-4 w-4" />
+              Learn
+            </Button>
+          </>
+        )}
 
         <TutorialGuide isOpen={showTutorial} onClose={() => setShowTutorial(false)} />
 

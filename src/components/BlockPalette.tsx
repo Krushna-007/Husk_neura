@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Search, X, Layers, Grid3X3 } from "lucide-react";
+import { Search, X, Layers, Grid3X3, GraduationCap } from "lucide-react";
 import { Input } from "./ui/input";
+import { useCourseStore } from "../lib/course-store";
 // Layer and Category type definitions
 interface LayerType {
   type: string;
@@ -67,6 +68,13 @@ export default function BlockPalette({
   const [layerCategories, setLayerCategories] = useState<CategoryType[]>([]);
   const [templates, setTemplates] = useState<NetworkTemplate[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  
+  // Course store for filtering layers based on current lesson
+  const { 
+    isCourseMode, 
+    currentLesson, 
+    getCurrentAllowedLayers 
+  } = useCourseStore();
 
   const updateData = useCallback(() => {
     const types = getLayerTypes();
@@ -127,25 +135,37 @@ export default function BlockPalette({
     return () => clearInterval(interval);
   }, [layerTypes.length, layerCategories.length, templates.length, updateData]);
 
-  // Filter layers by search term
+  // Get allowed layers for current lesson (if in course mode)
+  const allowedLayers = isCourseMode ? getCurrentAllowedLayers() : [];
+  
+  // Filter layers by search term and course restrictions
   const filteredCategories = layerCategories
     .map((category) => {
       const matchingLayers = layerTypes.filter(
-        (layer) =>
-          category.layerTypes.includes(layer.type) &&
-          (layer.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            layer.description.toLowerCase().includes(searchTerm.toLowerCase()))
+        (layer) => {
+          // Check if layer is in category
+          const inCategory = category.layerTypes.includes(layer.type);
+          
+          // Check search term match
+          const searchMatch = layer.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                             layer.description.toLowerCase().includes(searchTerm.toLowerCase());
+          
+          // Check course restrictions (if in course mode)
+          const courseAllowed = !isCourseMode || allowedLayers.length === 0 || allowedLayers.includes(layer.type);
+          
+          return inCategory && searchMatch && courseAllowed;
+        }
       );
 
       return { ...category, layers: matchingLayers };
     })
     .filter((category) => category.layers.length > 0);
 
-  // Group templates by category and filter by search term
+  // Group templates by category and filter by search term and course restrictions
   const templatesByCategory: TemplatesByCategory = {};
 
   Object.entries(templateCategories).forEach(([key, category]) => {
-    const categoryTemplates = templates.filter(
+    let categoryTemplates = templates.filter(
       (template) =>
         template.category === key &&
         (searchTerm === "" ||
@@ -157,6 +177,17 @@ export default function BlockPalette({
             tag.toLowerCase().includes(searchTerm.toLowerCase())
           ))
     );
+
+    // Filter templates based on course mode - only show relevant templates
+    if (isCourseMode && allowedLayers.length > 0) {
+      categoryTemplates = categoryTemplates.filter(template => {
+        // Check if template uses only allowed layers
+        // This is a simplified check - in a real implementation, you'd parse the template structure
+        const templateLayers = template.tags || [];
+        return templateLayers.some(tag => allowedLayers.includes(tag)) || 
+               allowedLayers.some(layer => template.name.toLowerCase().includes(layer.toLowerCase()));
+      });
+    }
 
     if (categoryTemplates.length > 0) {
       const colors = getTemplateCategoryColors(key);
@@ -175,6 +206,10 @@ export default function BlockPalette({
     }
   });
 
+  // Check if templates are restricted in course mode
+  const templatesRestricted = isCourseMode && allowedLayers.length > 0 && 
+    activeTab === CONFIG.TABS.TEMPLATES && Object.keys(templatesByCategory).length === 0;
+
   const hasNoResults =
     (activeTab === CONFIG.TABS.LAYERS
       ? filteredCategories.length === 0
@@ -184,6 +219,24 @@ export default function BlockPalette({
     <div
       className={`space-y-6 p-6 h-full overflow-y-auto bg-transparent ${className}`}
     >
+      {/* Course Mode Indicator */}
+      {isCourseMode && currentLesson && (
+        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+          <div className="flex items-center gap-2 mb-1">
+            <GraduationCap className="h-4 w-4 text-blue-400" />
+            <span className="text-sm font-medium text-blue-300">Course Mode</span>
+          </div>
+          <p className="text-xs text-blue-200">
+            {currentLesson.title}
+          </p>
+          {allowedLayers.length > 0 && (
+            <p className="text-xs text-blue-300/70 mt-1">
+              Only lesson layers available ({allowedLayers.length} types)
+            </p>
+          )}
+        </div>
+      )}
+      
       {/* Tab Navigation */}
       <div className="flex space-x-2">
         <button
@@ -246,7 +299,20 @@ export default function BlockPalette({
         )}
       </div>
 
-      {hasNoResults ? (
+      {templatesRestricted ? (
+        <div className="text-center py-8 text-zinc-400 animate-fade-in">
+          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-500/10 rounded-full border border-purple-500/20">
+            <GraduationCap className="h-8 w-8 text-purple-400" />
+          </div>
+          <h3 className="text-zinc-200 font-medium mb-2">Templates Not Available</h3>
+          <p className="text-sm text-zinc-400 leading-relaxed max-w-sm mx-auto mb-4">
+            Templates are limited during guided lessons. Focus on building with individual layers to master the fundamentals.
+          </p>
+          <div className="text-xs text-purple-300/70 bg-purple-500/10 rounded-lg p-3 max-w-xs mx-auto">
+            💡 Complete the course to unlock all templates
+          </div>
+        </div>
+      ) : hasNoResults ? (
         <div className="text-center py-8 text-zinc-400 animate-fade-in">
           <Search className="h-8 w-8 mx-auto mb-2 opacity-50" />
           <p>
