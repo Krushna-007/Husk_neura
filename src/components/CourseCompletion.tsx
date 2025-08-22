@@ -1,4 +1,3 @@
-import React from 'react';
 import { Trophy, Share2, RotateCcw, ExternalLink, CheckCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -16,7 +15,6 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
   }
 
   const handleLinkedInShare = () => {
-    const courseTitle = encodeURIComponent(currentCourse.title);
     const text = encodeURIComponent(
       `🎉 Just completed "${currentCourse.title}" on BlockDL! Built my first neural network from scratch and learned AI fundamentals. Excited to dive deeper into machine learning! #AI #MachineLearning #NeuralNetworks #BlockDL`
     );

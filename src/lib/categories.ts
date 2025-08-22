@@ -193,6 +193,7 @@ const layerCategoryMap: Record<string, string> = {
 
   // Transformation
   Flatten: "transformation",
+  ReshapeFlat: "transformation",
   Reshape: "transformation",
   Permute: "transformation",
   Merge: "transformation",
