@@ -45,16 +45,16 @@ export function AppHeader({
   onClearAll,
 }: AppHeaderProps) {
   const [showTutorial, setShowTutorial] = useState(false);
-  
+
   // Course store
-  const { 
-    isCourseMode, 
-    currentCourse, 
+  const {
+    isCourseMode,
+    currentCourse,
     currentLesson,
     toggleCourseMode,
-    exitCourse 
+    exitCourse
   } = useCourseStore();
-  
+
   // Check if it's the first visit
   useEffect(() => {
     const hasSeenTutorial = localStorage.getItem('huskml_has_seen_tutorial');
@@ -151,7 +151,7 @@ export function AppHeader({
           <>
             {/* Undo/Redo Controls */}
             <UndoRedoControls />
-            
+
             {/* Clear All for Course */}
             <div className="flex items-center gap-2 border-l border-zinc-700 pl-2">
               <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
@@ -190,7 +190,7 @@ export function AppHeader({
             </div>
 
 
-            
+
             {/* Exit Course */}
             <Button
               variant="outline"
@@ -207,64 +207,64 @@ export function AppHeader({
           <>
             {/* Undo/Redo Controls */}
             <UndoRedoControls />
-            
+
             {/* Project Controls */}
             <div className="flex items-center gap-2 border-l border-zinc-700 pl-2">
-        <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
-          <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              disabled={!hasContent}
-              className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
-            >
-              <Trash2 className="h-4 w-4" />
-              Clear All
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="bg-zinc-900 border-zinc-800">
-            <DialogHeader>
-              <DialogTitle className="text-zinc-100">Clear All Blocks</DialogTitle>
-              <DialogDescription className="text-zinc-300">
-                Are you sure you want to clear all blocks from the canvas? This
-                action cannot be undone.
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter>
+              <Dialog open={showClearDialog} onOpenChange={setShowClearDialog}>
+                <DialogTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={!hasContent}
+                    className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Clear All
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="bg-zinc-900 border-zinc-800">
+                  <DialogHeader>
+                    <DialogTitle className="text-zinc-100">Clear All Blocks</DialogTitle>
+                    <DialogDescription className="text-zinc-300">
+                      Are you sure you want to clear all blocks from the canvas? This
+                      action cannot be undone.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <DialogFooter>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowClearDialog(false)}
+                      className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                    >
+                      Cancel
+                    </Button>
+                    <Button variant="destructive" onClick={handleClearConfirm}>
+                      Clear All
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+
               <Button
                 variant="outline"
-                onClick={() => setShowClearDialog(false)}
-                className="border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+                size="sm"
+                onClick={handleExportProject}
+                disabled={!hasContent}
+                className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
               >
-                Cancel
+                <Upload className="h-4 w-4" />
+                Export
               </Button>
-              <Button variant="destructive" onClick={handleClearConfirm}>
-                Clear All
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleImportProject}
+                className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
+              >
+                <Download className="h-4 w-4" />
+                Import
               </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleExportProject}
-          disabled={!hasContent}
-          className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-        >
-          <Upload className="h-4 w-4" />
-          Export
-        </Button>
-
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handleImportProject}
-          className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-zinc-800"
-        >
-          <Download className="h-4 w-4" />
-          Import
-        </Button>
             </div>
 
             {/* Tutorial & Learn Buttons */}
@@ -278,7 +278,7 @@ export function AppHeader({
               Tutorial
             </Button>
 
-            <Button
+            {/* <Button
               variant="outline"
               size="sm"
               onClick={toggleCourseMode}
@@ -286,7 +286,7 @@ export function AppHeader({
             >
               <BookOpen className="h-4 w-4" />
               Learn
-            </Button>
+            </Button> */}
           </>
         )}
 

@@ -96,8 +96,8 @@ export function LayerNode({ id, data }: LayerNodeProps) {
             </SelectTrigger>
             <SelectContent className="!bg-zinc-950 border-zinc-700 [&>div]:!bg-zinc-950 [&>*]:!bg-zinc-950">
               {options?.map((option) => (
-                <SelectItem 
-                  key={option.value} 
+                <SelectItem
+                  key={option.value}
                   value={option.value}
                   className="!text-zinc-200 data-[highlighted]:!bg-zinc-800 data-[highlighted]:!text-zinc-200 !cursor-pointer">
                   {option.label}
@@ -145,15 +145,14 @@ export function LayerNode({ id, data }: LayerNodeProps) {
 
     const gradientBg = categoryColors.bg.replace('bg-', 'from-').replace('/20', '/30');
     const gradientTo = categoryColors.bg.replace('bg-', 'to-').replace('/20', '/20');
-    
+
     return `${base} ${categoryColors.border} ${categoryColors.hover} bg-gradient-to-br ${gradientBg} ${gradientTo} hover:backdrop-blur-lg`;
   };
 
   const getHandleClasses = (isError: boolean, color: string) =>
-    `node-handle w-3 h-3 border border-zinc-800 shadow-sm rounded-full transition-colors duration-200 ${
-      isError 
-        ? "!bg-red-500" 
-        : color
+    `node-handle w-3 h-3 border border-zinc-800 shadow-sm rounded-full transition-colors duration-200 ${isError
+      ? "!bg-red-500"
+      : color
     }`;
 
   return (
@@ -191,19 +190,17 @@ export function LayerNode({ id, data }: LayerNodeProps) {
               }
             >
               <div
-                className={`flex items-center gap-2 ${
-                  visibleParams.length === 0 && !hasShapeError
-                    ? "justify-center"
-                    : ""
-                }`}
+                className={`flex items-center gap-2 ${visibleParams.length === 0 && !hasShapeError
+                  ? "justify-center"
+                  : ""
+                  }`}
               >
                 <span className="text-base group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
                   {icon}
                 </span>
                 <span
-                  className={`font-semibold text-sm truncate ${
-                    hasShapeError ? "text-red-400" : "text-zinc-200"
-                  }`}
+                  className={`font-semibold text-sm truncate ${hasShapeError ? "text-red-400" : "text-zinc-200"
+                    }`}
                 >
                   {type}
                 </span>

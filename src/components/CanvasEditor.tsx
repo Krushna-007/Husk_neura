@@ -37,7 +37,7 @@ import { cn } from "../lib/utils";
 // Custom HuskML attribution component
 const HuskMLAttribution = () => {
   return (
-    <a 
+    <a
       href="https://huskml.maverickspectrum.com"
       target="_blank"
       rel="noopener noreferrer"
@@ -50,16 +50,16 @@ const HuskMLAttribution = () => {
 
 // Flow editor configuration
 const FLOW_CONFIG = {
-  BACKGROUND: { 
-    GAP: 25, 
-    SIZE: 1, 
+  BACKGROUND: {
+    GAP: 25,
+    SIZE: 1,
     COLOR: "#18181b",
     SECONDARY_COLOR: "#27272a",
     PATTERN_COLOR: "#3f3f46",
     ANIMATION_DURATION: "20s"
   },
-  EDGE: { 
-    STROKE_WIDTH: 2, 
+  EDGE: {
+    STROKE_WIDTH: 2,
     STROKE_COLOR: "#a1a1aa",
     ANIMATED_STROKE: "rgba(99, 102, 241, 0.5)",
     SELECTED_STROKE: "rgba(99, 102, 241, 0.8)",
@@ -68,7 +68,7 @@ const FLOW_CONFIG = {
 } as const;
 
 const nodeTypes: NodeTypes = { layerNode: LayerNode };
-const edgeTypes: EdgeTypes = { 
+const edgeTypes: EdgeTypes = {
   smoothstep: DeletableEdge,
 };
 
@@ -239,13 +239,13 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
         }}
         className="animate-[fadeIn_0.5s_ease-in-out]"
       >
-        <Controls 
-          className="bg-zinc-900/90 border-zinc-800 text-zinc-100 rounded-xl backdrop-blur-sm transition-transform duration-300 hover:scale-105" 
+        <Controls
+          className="bg-zinc-900/90 border-zinc-800 text-zinc-100 rounded-xl backdrop-blur-sm transition-transform duration-300 hover:scale-105"
           showZoom={true}
           showFitView={true}
           fitViewOptions={{ duration: 800, padding: 0.2 }}
         />
-        <MiniMap 
+        <MiniMap
           className="bg-zinc-900/80 border border-zinc-800 rounded-lg backdrop-blur-sm transition-all duration-300 hover:bg-zinc-900/90 hover:shadow-lg"
           nodeColor={(node) => {
             const type = (node.data as any)?.type?.toLowerCase() || '';

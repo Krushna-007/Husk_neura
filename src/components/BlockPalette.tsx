@@ -68,12 +68,12 @@ export default function BlockPalette({
   const [layerCategories, setLayerCategories] = useState<CategoryType[]>([]);
   const [templates, setTemplates] = useState<NetworkTemplate[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  
+
   // Course store for filtering layers based on current lesson
-  const { 
-    isCourseMode, 
-    currentLesson, 
-    getCurrentAllowedLayers 
+  const {
+    isCourseMode,
+    currentLesson,
+    getCurrentAllowedLayers
   } = useCourseStore();
 
   const updateData = useCallback(() => {
@@ -137,7 +137,7 @@ export default function BlockPalette({
 
   // Get allowed layers for current lesson (if in course mode)
   const allowedLayers = isCourseMode ? getCurrentAllowedLayers() : [];
-  
+
   // Filter layers by search term and course restrictions
   const filteredCategories = layerCategories
     .map((category) => {
@@ -145,14 +145,14 @@ export default function BlockPalette({
         (layer) => {
           // Check if layer is in category
           const inCategory = category.layerTypes.includes(layer.type);
-          
+
           // Check search term match
           const searchMatch = layer.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                             layer.description.toLowerCase().includes(searchTerm.toLowerCase());
-          
+            layer.description.toLowerCase().includes(searchTerm.toLowerCase());
+
           // Check course restrictions (if in course mode)
           const courseAllowed = !isCourseMode || allowedLayers.length === 0 || allowedLayers.includes(layer.type);
-          
+
           return inCategory && searchMatch && courseAllowed;
         }
       );
@@ -184,8 +184,8 @@ export default function BlockPalette({
         // Check if template uses only allowed layers
         // This is a simplified check - in a real implementation, you'd parse the template structure
         const templateLayers = template.tags || [];
-        return templateLayers.some(tag => allowedLayers.includes(tag)) || 
-               allowedLayers.some(layer => template.name.toLowerCase().includes(layer.toLowerCase()));
+        return templateLayers.some(tag => allowedLayers.includes(tag)) ||
+          allowedLayers.some(layer => template.name.toLowerCase().includes(layer.toLowerCase()));
       });
     }
 
@@ -207,7 +207,7 @@ export default function BlockPalette({
   });
 
   // Check if templates are restricted in course mode
-  const templatesRestricted = isCourseMode && allowedLayers.length > 0 && 
+  const templatesRestricted = isCourseMode && allowedLayers.length > 0 &&
     activeTab === CONFIG.TABS.TEMPLATES && Object.keys(templatesByCategory).length === 0;
 
   const hasNoResults =
@@ -236,27 +236,25 @@ export default function BlockPalette({
           )}
         </div>
       )}
-      
+
       {/* Tab Navigation */}
       <div className="flex space-x-2">
         <button
           onClick={() => setActiveTab(CONFIG.TABS.LAYERS)}
-          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${
-            activeTab === CONFIG.TABS.LAYERS
+          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${activeTab === CONFIG.TABS.LAYERS
               ? "bg-transparent border-2 border-blue-500 text-blue-400 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] animate-pulse"
               : "bg-transparent border-2 border-blue-500/30 text-blue-400/70 hover:border-blue-400 hover:text-blue-300 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.3)]"
-          }`}
+            }`}
         >
           <Layers className="h-4 w-4" />
           Layers
         </button>
         <button
           onClick={() => setActiveTab(CONFIG.TABS.TEMPLATES)}
-          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${
-            activeTab === CONFIG.TABS.TEMPLATES
+          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${activeTab === CONFIG.TABS.TEMPLATES
               ? "bg-transparent border-2 border-purple-500 text-purple-400 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)] animate-pulse"
               : "bg-transparent border-2 border-purple-500/30 text-purple-400/70 hover:border-purple-400 hover:text-purple-300 hover:shadow-[0_0_10px_-3px_rgba(168,85,247,0.3)]"
-          }`}
+            }`}
         >
           <Grid3X3 className="h-4 w-4" />
           Templates
@@ -265,11 +263,10 @@ export default function BlockPalette({
 
       {/* Search */}
       <div className="relative">
-        <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-pulse ${
-          activeTab === CONFIG.TABS.LAYERS
+        <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-pulse ${activeTab === CONFIG.TABS.LAYERS
             ? "text-blue-400 shadow-[0_0_10px_-1px_rgba(59,130,246,0.5)]"
             : "text-purple-400 shadow-[0_0_10px_-1px_rgba(168,85,247,0.5)]"
-        }`} />
+          }`} />
         <Input
           type="text"
           placeholder={
@@ -279,20 +276,18 @@ export default function BlockPalette({
           }
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-                        className={`pl-10 pr-10 bg-transparent border-2 text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:border-transparent backdrop-blur-sm transition-all duration-200 ${
-                          activeTab === CONFIG.TABS.LAYERS 
-                            ? "border-blue-500/50 focus:ring-blue-500/50 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)]"
-                            : "border-purple-500/50 focus:ring-purple-500/50 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)]"
-                        }`}
+          className={`pl-10 pr-10 bg-transparent border-2 text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:border-transparent backdrop-blur-sm transition-all duration-200 ${activeTab === CONFIG.TABS.LAYERS
+              ? "border-blue-500/50 focus:ring-blue-500/50 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)]"
+              : "border-purple-500/50 focus:ring-purple-500/50 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)]"
+            }`}
         />
         {searchTerm && (
           <button
             onClick={clearSearch}
-            className={`absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${
-              activeTab === CONFIG.TABS.LAYERS
+            className={`absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${activeTab === CONFIG.TABS.LAYERS
                 ? "text-blue-400/70 hover:text-blue-300"
                 : "text-purple-400/70 hover:text-purple-300"
-            }`}
+              }`}
           >
             <X className="h-4 w-4" />
           </button>
@@ -321,10 +316,10 @@ export default function BlockPalette({
           </p>
         </div>
       ) : (
-          activeTab === CONFIG.TABS.LAYERS
-            ? filteredCategories.length === 0
-            : Object.keys(templatesByCategory).length === 0
-        ) ? (
+        activeTab === CONFIG.TABS.LAYERS
+          ? filteredCategories.length === 0
+          : Object.keys(templatesByCategory).length === 0
+      ) ? (
         <div className="text-center py-8 text-zinc-400 animate-fade-in">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-zinc-500 mx-auto mb-2"></div>
           <p>
@@ -336,113 +331,113 @@ export default function BlockPalette({
         <div className="space-y-6">
           {activeTab === CONFIG.TABS.LAYERS
             ? // Layers View
-              filteredCategories.map((category, index) => (
-                <div key={category.name} className="space-y-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <h3
-                    className={`text-sm font-medium ${category.textColor} border-b border-zinc-700 pb-1`}
-                  >
-                    {category.name}
-                  </h3>
-                  <div className="space-y-2">
-                    {category.layers.map((layer: LayerType, layerIndex: number) => (
+            filteredCategories.map((category, index) => (
+              <div key={category.name} className="space-y-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                <h3
+                  className={`text-sm font-medium ${category.textColor} border-b border-zinc-700 pb-1`}
+                >
+                  {category.name}
+                </h3>
+                <div className="space-y-2">
+                  {category.layers.map((layer: LayerType, layerIndex: number) => (
+                    <div
+                      key={layer.type}
+                      className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${category.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent shadow-[0_0_10px_-3px_rgba(245,158,11,0.3)]`}
+                      style={{
+                        cursor: CONFIG.DRAG_CURSOR.GRAB,
+                        animationDelay: `${(index * 0.1) + (layerIndex * 0.05)}s`
+                      }}
+                      draggable
+                      onDragStart={(event) =>
+                        handleDragStart(event, layer.type)
+                      }
+                      onMouseDown={(e) =>
+                      (e.currentTarget.style.cursor =
+                        CONFIG.DRAG_CURSOR.GRABBING)
+                      }
+                      onMouseUp={(e) =>
+                      (e.currentTarget.style.cursor =
+                        CONFIG.DRAG_CURSOR.GRAB)
+                      }
+                    >
                       <div
-                        key={layer.type}
-                        className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${category.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent shadow-[0_0_10px_-3px_rgba(245,158,11,0.3)]`}
-                        style={{ 
-                          cursor: CONFIG.DRAG_CURSOR.GRAB,
-                          animationDelay: `${(index * 0.1) + (layerIndex * 0.05)}s`
-                        }}
-                        draggable
-                        onDragStart={(event) =>
-                          handleDragStart(event, layer.type)
-                        }
-                        onMouseDown={(e) =>
-                          (e.currentTarget.style.cursor =
-                            CONFIG.DRAG_CURSOR.GRABBING)
-                        }
-                        onMouseUp={(e) =>
-                          (e.currentTarget.style.cursor =
-                            CONFIG.DRAG_CURSOR.GRAB)
-                        }
+                        className={`flex items-center gap-2 mb-1 ${category.textColor}`}
                       >
-                        <div
-                          className={`flex items-center gap-2 mb-1 ${category.textColor}`}
-                        >
-                          <span className="text-base">{layer.icon}</span>
-                          <span className="font-medium text-sm">
-                            {layer.type}
-                          </span>
-                        </div>
-                        <p className="text-xs text-zinc-300 leading-relaxed">
-                          {layer.description}
-                        </p>
+                        <span className="text-base">{layer.icon}</span>
+                        <span className="font-medium text-sm">
+                          {layer.type}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <p className="text-xs text-zinc-300 leading-relaxed">
+                        {layer.description}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-              ))
+              </div>
+            ))
             : // Templates View
-              Object.values(templatesByCategory).map((categoryData, index) => (
-                <div key={categoryData.category} className="space-y-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
-                  <h3
-                    className={`text-sm font-medium ${categoryData.textColor} border-b border-zinc-700 pb-1 flex items-center gap-2`}
-                  >
-                    <span>{categoryData.icon}</span>
-                    {categoryData.name}
-                  </h3>
-                  <div className="space-y-2">
-                    {categoryData.templates.map((template, templateIndex) => (
+            Object.values(templatesByCategory).map((categoryData, index) => (
+              <div key={categoryData.category} className="space-y-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+                <h3
+                  className={`text-sm font-medium ${categoryData.textColor} border-b border-zinc-700 pb-1 flex items-center gap-2`}
+                >
+                  <span>{categoryData.icon}</span>
+                  {categoryData.name}
+                </h3>
+                <div className="space-y-2">
+                  {categoryData.templates.map((template, templateIndex) => (
+                    <div
+                      key={template.id}
+                      className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${categoryData.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent`}
+                      style={{
+                        cursor: CONFIG.DRAG_CURSOR.GRAB,
+                        animationDelay: `${(index * 0.1) + (templateIndex * 0.05)}s`
+                      }}
+                      draggable
+                      onDragStart={(event) =>
+                        handleTemplateDragStart(event, template.id)
+                      }
+                      onMouseDown={(e) =>
+                      (e.currentTarget.style.cursor =
+                        CONFIG.DRAG_CURSOR.GRABBING)
+                      }
+                      onMouseUp={(e) =>
+                      (e.currentTarget.style.cursor =
+                        CONFIG.DRAG_CURSOR.GRAB)
+                      }
+                    >
                       <div
-                        key={template.id}
-                        className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${categoryData.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent`}
-                        style={{ 
-                          cursor: CONFIG.DRAG_CURSOR.GRAB,
-                          animationDelay: `${(index * 0.1) + (templateIndex * 0.05)}s`
-                        }}
-                        draggable
-                        onDragStart={(event) =>
-                          handleTemplateDragStart(event, template.id)
-                        }
-                        onMouseDown={(e) =>
-                          (e.currentTarget.style.cursor =
-                            CONFIG.DRAG_CURSOR.GRABBING)
-                        }
-                        onMouseUp={(e) =>
-                          (e.currentTarget.style.cursor =
-                            CONFIG.DRAG_CURSOR.GRAB)
-                        }
+                        className={`flex items-center gap-2 mb-1 ${categoryData.textColor}`}
                       >
-                        <div
-                          className={`flex items-center gap-2 mb-1 ${categoryData.textColor}`}
-                        >
-                          <span className="text-base">{template.icon}</span>
-                          <span className="font-medium text-sm">
-                            {template.name}
-                          </span>
-                        </div>
-                        <p className="text-xs text-zinc-300 leading-relaxed mb-2">
-                          {template.description}
-                        </p>
-                        <div className="flex gap-1 flex-wrap">
-                          {template.tags.slice(0, 3).map((tag) => (
-                            <span
-                              key={tag}
-                              className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                          {template.tags.length > 3 && (
-                            <span className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm">
-                              +{template.tags.length - 3}
-                            </span>
-                          )}
-                        </div>
+                        <span className="text-base">{template.icon}</span>
+                        <span className="font-medium text-sm">
+                          {template.name}
+                        </span>
                       </div>
-                    ))}
-                  </div>
+                      <p className="text-xs text-zinc-300 leading-relaxed mb-2">
+                        {template.description}
+                      </p>
+                      <div className="flex gap-1 flex-wrap">
+                        {template.tags.slice(0, 3).map((tag) => (
+                          <span
+                            key={tag}
+                            className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm"
+                          >
+                            {tag}
+                          </span>
+                        ))}
+                        {template.tags.length > 3 && (
+                          <span className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm">
+                            +{template.tags.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+            ))}
         </div>
       )}
     </div>

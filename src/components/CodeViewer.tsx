@@ -15,6 +15,8 @@ import {
 } from "../lib/code-generation";
 import { useFlowStore } from "../lib/flow-store";
 import { cn } from "../lib/utils";
+import RetroGrid from "./ui/RetroGrid";
+import ShinyButton from "./ui/ShinyButton";
 
 
 
@@ -84,7 +86,7 @@ print("✨ Ready to create something amazing with HUSKML!")`);
   useEffect(() => {
     const generateCode = async () => {
       if (nodes.length === 0) {
-        const welcomeMessage = framework === 'keras' 
+        const welcomeMessage = framework === 'keras'
           ? `# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
@@ -112,7 +114,7 @@ import torch.nn.functional as F
 model = None
 
 print("✨ Ready to create something amazing with HUSKML!")`;
-        
+
         setCode(welcomeMessage);
         return;
       }
@@ -120,7 +122,7 @@ print("✨ Ready to create something amazing with HUSKML!")`;
       try {
         // Parse the graph to get the DAG structure
         const dagResult = parseGraphToDAG(nodes, edges);
-        
+
         if (!dagResult.isValid) {
           setCode(`# Error: Invalid network structure
 
@@ -189,7 +191,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+
     setDownloaded(true);
     setTimeout(() => setDownloaded(false), 2000);
   };
@@ -198,8 +200,8 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
 
   return (
     <div className={cn("h-full flex flex-col bg-zinc-900/80", className)}>
-      <Card className="border-zinc-800 bg-zinc-900 shadow-sm rounded-xl flex-1 flex flex-col animate-fade-in relative" style={{ height: 'calc(100vh - 57px)' }}>
-        <CardHeader className="pb-3">
+      <Card className="border-zinc-800 bg-zinc-900 shadow-sm rounded-xl flex-1 flex flex-col animate-fade-in relative overflow-hidden" style={{ height: 'calc(100vh - 57px)' }}>
+        <CardHeader className="pb-3 shrink-0 z-10 bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-800/50">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl text-zinc-200 font-semibold font-grotesk">
               Generated Code
@@ -222,7 +224,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
                 variant="outline"
                 className={
                   hasContent
-                    ? framework === 'pytorch' 
+                    ? framework === 'pytorch'
                       ? "bg-orange-900/20 text-orange-300 border-orange-500"
                       : "bg-amber-900/20 text-amber-300 border-amber-500"
                     : "bg-blue-900/20 text-blue-300 border-blue-600"
@@ -234,31 +236,28 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
           </div>
         </CardHeader>
 
-        <CardContent className="flex-1 p-0 overflow-hidden">
-          <div className="h-[calc(100vh-300px)] overflow-auto">
-            <CodeMirror
-              value={code}
-              height="100%"
-              extensions={[python()]}
-              theme="dark"
-              editable={false}
-              className="h-full"
-              style={{
-                fontSize: "14px",
-                fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace",
-              }}
-            />
-          </div>
+        <CardContent className="flex-1 p-0 overflow-hidden relative z-0">
+          <CodeMirror
+            value={code}
+            height="100%"
+            extensions={[python()]}
+            theme="dark"
+            editable={false}
+            className="h-full"
+            style={{
+              fontSize: "14px",
+              fontFamily: "ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace",
+            }}
+          />
         </CardContent>
 
-        <div className="absolute bottom-[80px] left-0 right-0 flex justify-center gap-4 pb-4 px-6">
+        <div className="shrink-0 z-10 bg-zinc-900/95 backdrop-blur-sm border-t border-zinc-800/50 p-4 pb-0 flex justify-center gap-4">
           <Button
             onClick={handleCopy}
             variant="outline"
             size="sm"
-            className={`flex-1 max-w-[200px] bg-transparent border-[1px] border-zinc-700 text-zinc-300 hover:bg-transparent hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${
-              copied ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
-            }`}
+            className={`flex-1 max-w-[200px] bg-zinc-900 border-[1px] border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${copied ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
+              }`}
           >
             {copied ? (
               <>
@@ -276,9 +275,8 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             onClick={handleDownload}
             variant="outline"
             size="sm"
-            className={`flex-1 max-w-[200px] bg-transparent border-[1px] border-zinc-700 text-zinc-300 hover:bg-transparent hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${
-              downloaded ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
-            }`}
+            className={`flex-1 max-w-[200px] bg-zinc-900 border-[1px] border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${downloaded ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
+              }`}
           >
             {downloaded ? (
               <>
@@ -293,49 +291,43 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             )}
           </Button>
         </div>
-        <div className="absolute bottom-0 left-0 right-0 text-center py-3 bg-gradient-to-r from-zinc-900/90 via-black/95 to-zinc-900/90 backdrop-blur-md border-t border-zinc-800/50">
-          <div className="flex flex-col items-center justify-center gap-2 group">
-            <div className="flex items-center justify-center gap-4">
-              <div className="flex items-center gap-2">
-                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Powered by</span>
-                <a 
-                  href="https://huskml.maverickspectrum.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="relative inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 hover:border-blue-400/40 transition-all duration-300 group"
-                >
-                  <span className="text-blue-400 group-hover:text-blue-300 font-semibold tracking-wider text-sm">
-                    HUSKML
-                  </span>
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
-                </a>
+
+        {/* Reduced Height Retro Grid Footer */}
+        <div className="relative h-28 w-full overflow-hidden border-t border-zinc-800 shrink-0 bg-black">
+          <RetroGrid className="opacity-100" angle={65} />
+
+          <div className="absolute inset-0 flex flex-row items-center justify-between z-10 px-10 pointer-events-auto max-w-full mx-auto w-full">
+            <a
+              href="https://neura-huskml.maverickspectrum.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex flex-col gap-0.5 select-none hover:opacity-80 transition-opacity"
+            >
+              <div className="text-[11px] tracking-[0.4em] text-zinc-500 font-bold uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                In The Neural Cloud
               </div>
-              <span className="text-zinc-600">|</span>
-              <div className="flex items-center gap-2">
-                <span className="text-zinc-400 group-hover:text-zinc-300 transition-colors duration-300 font-light">Enhanced with</span>
-                <span className="text-red-500/80 group-hover:text-red-400 animate-pulse transition-colors duration-300">❤</span>
-                <a 
-                  href="https://huskml.maverickspectrum.com" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-orange-400 hover:text-orange-300 font-semibold transition-colors duration-300"
-                >
-                  HUSKML
-                </a>
+              <div className="text-4xl font-bold tracking-tight text-white/90 drop-shadow-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+                HUSKML
               </div>
-            </div>
-            <div className="text-zinc-500 text-xs">
-              Inspired by the original works of 
-              <a 
-                href="https://www.blockdl.com" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-zinc-400 hover:text-zinc-300 underline transition-colors duration-300 ml-1"
+            </a>
+
+            <div className="flex items-center">
+              <ShinyButton
+                href="https://www.linkedin.com/company/huskml"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="!font-mono"
               >
-                BlockDl
-              </a>, Support them✨!
+                <div className="flex flex-row items-center gap-2">
+                  <span className="text-[10px] uppercase tracking-wider opacity-80">Follow on</span>
+                  <span className="text-sm font-bold tracking-tight">LinkedIn</span>
+                </div>
+              </ShinyButton>
             </div>
           </div>
+
+          {/* Top Fade */}
+          <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-zinc-900 to-transparent pointer-events-none" />
         </div>
       </Card>
     </div>
