@@ -9,6 +9,7 @@ import type { Node, Edge } from "@xyflow/react";
 import { useFlowStore } from "./lib/flow-store";
 import "./App.css";
 import "./styles/fonts.css";
+import { RetroCursor } from "./components/RetroCursor";
 
 function App() {
   const { nodes, edges, setNodes, setEdges, initializeHistory } = useFlowStore();
@@ -38,6 +39,7 @@ function App() {
     <>
       <DeviceWarning />
       <BackgroundParticles />
+      <RetroCursor />
       <AppShell
         palette={paletteContent}
         canvas={canvasContent}

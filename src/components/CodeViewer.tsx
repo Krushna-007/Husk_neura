@@ -199,8 +199,8 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
   const hasContent = nodes.length > 0;
 
   return (
-    <div className={cn("h-full flex flex-col bg-zinc-900/80", className)}>
-      <Card className="border-zinc-800 bg-zinc-900 shadow-sm rounded-xl flex-1 flex flex-col animate-fade-in relative overflow-hidden" style={{ height: 'calc(100vh - 57px)' }}>
+    <div className={cn("h-full flex flex-col bg-zinc-900 border-l border-zinc-800", className)}>
+      <Card className="border-0 bg-transparent shadow-none rounded-none flex-1 flex flex-col pt-6 pb-0 gap-0 animate-fade-in relative overflow-hidden h-full">
         <CardHeader className="pb-3 shrink-0 z-10 bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-800/50">
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl text-zinc-200 font-semibold font-grotesk">

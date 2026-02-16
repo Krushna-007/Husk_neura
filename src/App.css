@@ -23,6 +23,17 @@
   overflow: hidden;
 }
 
+/* Hide system cursor globally */
+html,
+body {
+  cursor: none !important;
+}
+
+/* Ensure nothing overrides it */
+* {
+  cursor: none !important;
+}
+
 /* ReactFlow handle styling */
 .layer-node .react-flow__handle {
   width: 12px;
