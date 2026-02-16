@@ -11,7 +11,6 @@ import {
   computePyTorchShapes, 
   getLayerInputDimension, 
   needsFlattenLayer, 
-  calculateFlattenedSize,
   validatePyTorchDimensions,
   detectShapeIssues,
   type PyTorchShapeResult 
@@ -121,10 +120,10 @@ class ImportManager {
  * Determines if the network structure requires a custom nn.Module class
  */
 export function requiresCustomModule(dagResult: DAGResult): boolean {
-  const { orderedNodes, edgeMap } = dagResult;
+  const { edgeMap } = dagResult;
   
   // Check for branching (nodes with multiple outputs)
-  for (const [nodeId, targets] of edgeMap.entries()) {
+  for (const [, targets] of edgeMap.entries()) {
     if (targets.length > 1) {
       return true; // Branching detected
     }
@@ -163,13 +162,7 @@ function generateClassName(layers: LayerObject[]): string {
   return layerTypes.join("") + "Net";
 }
 
-/**
- * Gets the input dimension for the first layer that needs it
- */
-function getInputDimension(layers: LayerObject[]): number {
-  // For now, return a placeholder - this will be enhanced in Phase 3
-  return 784; // Common MNIST input size
-}
+
 
 // ============================================================================
 // SEQUENTIAL MODEL GENERATION
@@ -210,8 +203,7 @@ export function generatePyTorchSequential(
         const needsFlatten = needsFlattenLayer(
           prevLayer.type,
           layer.type,
-          prevLayerInfo.outputDims,
-          'flat'
+          prevLayerInfo.outputDims
         );
         
         if (needsFlatten) {
@@ -232,10 +224,10 @@ export function generatePyTorchSequential(
       enhancedParams._inputChannels = layerInfo.inputChannels;
     }
     if (layerInfo?.inputDims) {
-      enhancedParams._inputDims = layerInfo.inputDims;
+      (enhancedParams as any)._inputDims = layerInfo.inputDims;
     }
     if (layerInfo?.spatialDims) {
-      enhancedParams._spatialDims = layerInfo.spatialDims;
+      (enhancedParams as any)._spatialDims = layerInfo.spatialDims;
     }
 
     const pytorchCode = layerDef.generateCode.pytorch(enhancedParams);
@@ -313,7 +305,7 @@ export function generatePyTorchModule(
   dagResult: DAGResult, 
   options: PyTorchCodeOptions = {}
 ): string {
-  const { orderedNodes, edgeMap } = dagResult;
+  const { orderedNodes } = dagResult;
   
   if (orderedNodes.length === 0) {
     return "# Invalid DAG structure - cannot generate code";
@@ -354,8 +346,7 @@ export function generatePyTorchModule(
         const needsFlatten = needsFlattenLayer(
           prevLayer.type,
           layer.type,
-          prevLayerInfo.outputDims,
-          'flat'
+          prevLayerInfo.outputDims
         );
         
         if (needsFlatten) {
@@ -377,10 +368,10 @@ export function generatePyTorchModule(
       enhancedParams._inputChannels = layerInfo.inputChannels;
     }
     if (layerInfo?.inputDims) {
-      enhancedParams._inputDims = layerInfo.inputDims;
+      (enhancedParams as any)._inputDims = layerInfo.inputDims;
     }
     if (layerInfo?.spatialDims) {
-      enhancedParams._spatialDims = layerInfo.spatialDims;
+      (enhancedParams as any)._spatialDims = layerInfo.spatialDims;
     }
 
     const pytorchCode = layerDef.generateCode.pytorch(enhancedParams);
@@ -478,8 +469,9 @@ export function generatePyTorchCode(
   const shapeIssues = detectShapeIssues(shapeResult);
 
   // If there are critical shape issues, return error with explanations
+  let errorCode = "";
   if (!isValid || shapeIssues.length > 0) {
-    let errorCode = "# ⚠️  TENSOR SHAPE ISSUES DETECTED ⚠️\n";
+    errorCode = "# ⚠️  TENSOR SHAPE ISSUES DETECTED ⚠️\n";
     errorCode += "# The following issues need to be resolved:\n#\n";
     
     if (shapeResult.errors.length > 0) {
@@ -508,7 +500,7 @@ export function generatePyTorchCode(
     
     // Still try to generate code but with warnings
     errorCode += "# GENERATED CODE (may have issues):\n";
-    errorCode += "# " + "="*50 + "\n\n";
+    errorCode += "# " + "=".repeat(50) + "\n\n";
   }
 
   // Determine which generation method to use
@@ -521,7 +513,7 @@ export function generatePyTorchCode(
 
   // Add shape issue warnings to the generated code if any
   if (!isValid || shapeIssues.length > 0) {
-    return (errorCode || "") + generatedCode;
+    return errorCode + generatedCode;
   }
 
   return generatedCode;

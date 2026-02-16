@@ -1494,11 +1494,11 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
   // TRANSFORMATION LAYERS
   // ============================================================================
   
-  Reshape: {
+  ReshapeFlat: {
     metadata: {
       category: "transformation",
       icon: "🔄",
-      description: "Reshapes input tensor to a new shape",
+      description: "Reshapes input tensor to a new shape (comma-separated format)",
       tags: ["reshape", "transform", "tensor", "shape"],
       performance: {
         complexity: "O(1) - just changes view",
@@ -2123,7 +2123,7 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         const returnSequences = String(params.return_sequences) === "true";
         
         // Get input features from previous layer
-        const inputSize = Number(params._inputDims?.[1]) || Number(params._inputDim) || 128;
+        const inputSize = Number((params as any)._inputDims?.[1]) || Number((params as any)._inputDim) || 128;
         
         // PyTorch LSTM parameters
         let initCode = `self.lstm = nn.LSTM(input_size=${inputSize}, hidden_size=${units}, batch_first=True`;
@@ -2375,7 +2375,7 @@ export const layerDefinitions: Record<string, LayerDefinition> = {
         const returnSequences = String(params.return_sequences) === "true";
         
         // Get input features from previous layer
-        const inputSize = Number(params._inputDims?.[1]) || Number(params._inputDim) || 128;
+        const inputSize = Number((params as any)._inputDims?.[1]) || Number((params as any)._inputDim) || 128;
         
         // PyTorch GRU parameters
         let initCode = `self.gru = nn.GRU(input_size=${inputSize}, hidden_size=${units}, batch_first=True`;

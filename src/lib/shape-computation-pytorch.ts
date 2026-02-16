@@ -81,7 +81,6 @@ function convertKerasToPyTorchShape(kerasShape: number[], layerType: string): Py
  * Computes input dimensions for a layer based on previous layer's output
  */
 function computeLayerInputDimensions(
-  layer: LayerObject,
   previousLayerInfo: LayerDimensionInfo | null,
   inputShapeInfo: PyTorchShapeInfo
 ): number[] {
@@ -123,7 +122,7 @@ function computeLayerOutputDimensions(
       const strides = stridesStr.replace(/[()]/g, '').split(',').map(s => parseInt(s.trim()));
 
       if (inputDims.length >= 3) {
-        const [c, h, w] = inputDims;
+        const [, h, w] = inputDims;
         let outputH, outputW;
 
         if (padding === "same") {
@@ -226,7 +225,7 @@ function computeLayerOutputDimensions(
  * Computes PyTorch-specific shape information for all layers in a DAG
  */
 export function computePyTorchShapes(dagResult: DAGResult): PyTorchShapeResult {
-  const { orderedNodes, edgeMap } = dagResult;
+  const { orderedNodes } = dagResult;
   const layerDimensions = new Map<string, LayerDimensionInfo>();
   const errors: Array<{ layerId: string; message: string }> = [];
 
@@ -257,7 +256,7 @@ export function computePyTorchShapes(dagResult: DAGResult): PyTorchShapeResult {
   for (const layer of orderedNodes) {
     try {
       // Compute input dimensions for this layer
-      const inputDims = computeLayerInputDimensions(layer, previousLayerInfo, inputShapeInfo);
+      const inputDims = computeLayerInputDimensions(previousLayerInfo, inputShapeInfo);
       const inputChannels = previousLayerInfo?.outputChannels || (inputDims.length > 0 ? inputDims[0] : undefined);
 
       // Compute output dimensions
@@ -332,8 +331,7 @@ export function getLayerInputDimension(
 export function needsFlattenLayer(
   fromLayerType: string,
   toLayerType: string,
-  fromOutputDims: number[],
-  toInputRequirement: 'flat' | 'multi' | 'any'
+  fromOutputDims: number[]
 ): boolean {
   // Conv/Pooling layers output multi-dimensional tensors
   const multiDimOutputLayers = ['Conv2D', 'MaxPool2D', 'AveragePooling2D', 'GlobalAveragePooling2D'];

@@ -5,7 +5,6 @@
  */
 
 import { Trophy, Star, Zap, Target, CheckCircle } from "lucide-react";
-import { Badge } from "./ui/badge";
 
 export interface Achievement {
   id: string;

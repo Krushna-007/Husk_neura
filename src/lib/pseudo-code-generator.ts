@@ -62,7 +62,7 @@ model.add(tf.keras.layers.Input(shape=(28, 28, 1)))
   }
 
   const params = inputNode.data.params || {};
-  const inputType = params.inputType || 'image_grayscale';
+  const inputType = (params as any).inputType || 'image_grayscale';
   
   let shapeComment = '';
   let shapeCode = '';
@@ -110,10 +110,10 @@ function generateDenseLayerCode(nodes: Node[]): PseudoCodeSnippet {
   const denseNodes = nodes.filter(node => node.data.type === 'Dense');
   const inputNode = nodes.find(node => node.data.type === 'Input');
   
-  if (denseNodes.length === 0) return null;
+  if (denseNodes.length === 0) return { title: '', description: '', code: '', language: 'keras', concepts: [] };
   
   const firstDense = denseNodes[0];
-  const units = firstDense.data.params?.units || 128;
+  const units = (firstDense.data.params as any)?.units || 128;
   
   return {
     title: "Dense Layer Added! 💪",
@@ -177,10 +177,10 @@ print(f"Layer types: ${layerTypes.join(' → ')}")`,
 function generateActivationCode(nodes: Node[]): PseudoCodeSnippet {
   const activationNodes = nodes.filter(node => node.data.type === 'Activation');
   
-  if (activationNodes.length === 0) return null;
+  if (activationNodes.length === 0) return { title: '', description: '', code: '', language: 'keras', concepts: [] };
   
   const activation = activationNodes[0];
-  const activationType = activation.data.params?.activation || 'relu';
+  const activationType = (activation.data.params as any)?.activation || 'relu';
   
   let activationExplanation = '';
   switch (activationType) {
@@ -258,10 +258,10 @@ ${nodes.map(node => {
     case 'Input':
       return '# Input layer - data entry point\nmodel.add(tf.keras.layers.Input(shape=(28, 28, 1)))';
     case 'Dense':
-      const units = node.data.params?.units || 128;
+      const units = (node.data.params as any)?.units || 128;
       return `# Dense layer - ${units} neurons\nmodel.add(tf.keras.layers.Dense(${units}))`;
     case 'Activation':
-      const activation = node.data.params?.activation || 'relu';
+      const activation = (node.data.params as any)?.activation || 'relu';
       return `# Activation - ${activation} function\nmodel.add(tf.keras.layers.Activation('${activation}'))`;
     default:
       return `# ${node.data.type} layer\n# model.add(tf.keras.layers.${node.data.type}())`;

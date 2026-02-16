@@ -4,8 +4,7 @@
  * Provides elegant guidance and motivation for course selection with premium UX.
  */
 
-import { ArrowLeft, BookOpen, Play, Target, Trophy, Zap, Brain } from "lucide-react";
-import { Button } from "./ui/button";
+import { ArrowLeft, BookOpen, Target, Trophy, Zap, Brain } from "lucide-react";
 import { Card } from "./ui/card";
 import { Badge } from "./ui/badge";
 

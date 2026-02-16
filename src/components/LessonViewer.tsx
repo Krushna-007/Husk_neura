@@ -44,7 +44,6 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
     getTaskValidationResults,
     getNextLesson,
     canProgressToNextLesson,
-    exitCourse,
     toggleLessonViewer,
     saveCanvasState,
     restoreCanvasState
