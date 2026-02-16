@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from "react";
 import type { Node, Edge } from "@xyflow/react";
-import { Download, Upload, Trash2, GraduationCap, X, BookOpen } from "lucide-react";
+import { Download, Upload, Trash2, GraduationCap, X } from "lucide-react";
 
 import { Button } from "./ui/button";
 
@@ -51,7 +51,6 @@ export function AppHeader({
     isCourseMode,
     currentCourse,
     currentLesson,
-    toggleCourseMode,
     exitCourse
   } = useCourseStore();
 
