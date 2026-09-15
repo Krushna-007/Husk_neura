@@ -11,10 +11,10 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Button } from "./ui/button";
-import { Trash2 } from "lucide-react";
+import { Trash2, AlertTriangle } from "lucide-react";
 import { getDefaultParams, getLayerFormSpec } from "../lib/layers/parameters";
 import { getLayerCategoryColors } from "../lib/categories";
-import { getLayerIcon } from "../lib/layer-definitions";
+import { LayerIcon } from "../lib/layer-icons";
 import {
   getParameterDisplayValues,
   getTotalParameterCount,
@@ -46,7 +46,6 @@ export function LayerNode({ id, data }: LayerNodeProps) {
   const { updateNodeData, deleteElements } = useReactFlow();
 
   const formSpec = getLayerFormSpec(type);
-  const icon = getLayerIcon(type);
   const categoryColors = getLayerCategoryColors(type);
   const visibleParams = getParameterDisplayValues(type, params);
   const totalParams = getTotalParameterCount(type);
@@ -137,20 +136,17 @@ export function LayerNode({ id, data }: LayerNodeProps) {
 
   const getNodeClasses = () => {
     const base =
-      "layer-node flex flex-col px-4 py-3 rounded-xl shadow-lg border-2 transition-colors duration-200 cursor-pointer min-w-[160px] max-w-[280px] backdrop-blur-sm";
+      "layer-node flex flex-col px-4 py-3 rounded-md shadow-sm border cursor-pointer min-w-[160px] max-w-[280px]";
 
     if (hasShapeError) {
-      return `${base} border-red-500 hover:border-red-600 bg-gradient-to-br from-red-900/20 to-red-800/20 animate-pulse`;
+      return `${base} border-red-400 hover:border-red-500 bg-red-50`;
     }
 
-    const gradientBg = categoryColors.bg.replace('bg-', 'from-').replace('/20', '/30');
-    const gradientTo = categoryColors.bg.replace('bg-', 'to-').replace('/20', '/20');
-
-    return `${base} ${categoryColors.border} ${categoryColors.hover} bg-gradient-to-br ${gradientBg} ${gradientTo} hover:backdrop-blur-lg`;
+    return `${base} ${categoryColors.bg} ${categoryColors.border} ${categoryColors.hover} hover:shadow-md`;
   };
 
   const getHandleClasses = (isError: boolean, color: string) =>
-    `node-handle w-3 h-3 border border-zinc-800 shadow-sm rounded-full transition-colors duration-200 ${isError
+    `node-handle w-3 h-3 border-2 border-paper-raised shadow-sm rounded-full transition-colors duration-200 ${isError
       ? "!bg-red-500"
       : color
     }`;
@@ -174,7 +170,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                 e.preventDefault();
                 handleDelete();
               }}
-              className="absolute -top-2 -right-2 z-10 opacity-0 group-hover:opacity-100 transition-all duration-200 bg-red-500 hover:bg-red-600 text-white rounded-full p-1 shadow-lg hover:shadow-xl hover:scale-110"
+              className="absolute -top-2 -right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out-soft bg-red-600 hover:bg-red-700 text-white rounded-full p-1 shadow-sm"
               title="Delete this block"
             >
               <Trash2 className="h-3 w-3" />
@@ -195,11 +191,12 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                   : ""
                   }`}
               >
-                <span className="text-base group-hover:scale-110 transition-transform duration-200 flex-shrink-0">
-                  {icon}
-                </span>
+                <LayerIcon
+                  type={type}
+                  className={`h-4 w-4 flex-shrink-0 ${hasShapeError ? "text-red-600" : "text-ink-muted"}`}
+                />
                 <span
-                  className={`font-semibold text-sm truncate ${hasShapeError ? "text-red-400" : "text-zinc-200"
+                  className={`font-semibold text-sm truncate ${hasShapeError ? "text-red-600" : "text-ink"
                     }`}
                 >
                   {type}
@@ -213,12 +210,11 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                   </span>
                 )}
                 {hasShapeError && (
-                  <span
-                    className="text-red-500 text-sm font-bold flex-shrink-0"
-                    title={`Shape Error: ${shapeErrorMessage}`}
-                  >
-                    ⚠️
-                  </span>
+                  <AlertTriangle
+                    className="h-3.5 w-3.5 flex-shrink-0 text-red-600"
+                    strokeWidth={2}
+                    aria-label={`Shape error: ${shapeErrorMessage}`}
+                  />
                 )}
               </div>
 
@@ -230,7 +226,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                       .map((param, index) => (
                         <span
                           key={index}
-                          className="text-xs text-zinc-300 bg-zinc-800/70 px-2 py-0.5 rounded-md truncate flex-shrink-0 max-w-[80px]"
+                          className="text-xs font-mono text-ink-muted bg-paper-raised border border-rule px-2 py-0.5 rounded-sm truncate flex-shrink-0 max-w-[80px]"
                           title={param}
                         >
                           {param}
@@ -238,7 +234,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                       ))}
                   </div>
                   {showMoreIndicator && (
-                    <span className="text-xs text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded-md font-medium flex-shrink-0">
+                    <span className="text-xs font-mono text-ink-faint bg-rule-soft px-2 py-0.5 rounded-sm font-medium flex-shrink-0">
                       +{totalParams - 2} more
                     </span>
                   )}
@@ -246,7 +242,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
               )}
 
               {hasShapeError && shapeErrorMessage && (
-                <div className="text-xs text-red-400 bg-red-900/20 px-2 py-1 rounded-md border border-red-700 mt-2">
+                <div className="text-xs text-red-700 bg-red-50 px-2 py-1 rounded-sm border border-red-200 mt-2">
                   {shapeErrorMessage}
                 </div>
               )}
@@ -254,14 +250,14 @@ export function LayerNode({ id, data }: LayerNodeProps) {
           </div>
         </PopoverTrigger>
 
-        <PopoverContent className="w-80 bg-zinc-900 border-zinc-800" side="right" align="start">
+        <PopoverContent className="w-80 bg-paper-raised border-rule" side="right" align="start">
           <div className="space-y-4">
             <div className="space-y-2">
-              <h4 className="font-medium text-sm flex items-center gap-2 text-zinc-100">
-                <span>{icon}</span>
+              <h4 className="font-medium text-sm flex items-center gap-2 text-ink">
+                <LayerIcon type={type} className="h-4 w-4 text-ink-muted" />
                 Edit {type} Layer
               </h4>
-              <p className="text-xs text-zinc-300">
+              <p className="text-xs text-ink-muted">
                 Configure the parameters for this layer.
               </p>
             </div>
