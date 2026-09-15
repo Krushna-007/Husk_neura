@@ -43,34 +43,40 @@ export function RetroCursor() {
             <Pointer className="z-[9999]" style={{ cursor: "none" }}>
                 {isClicking || isHoveringCanvas ? (
                     <Hand
-                        className="h-6 w-6 text-cyan-400 fill-zinc-900 stroke-[1.5px]"
+                        className="h-5 w-5"
                         style={{
-                            filter: "drop-shadow(0 0 5px rgba(34, 211, 238, 0.5))",
+                            color: "var(--color-paper-raised)",
+                            fill: "var(--color-ink)",
+                            strokeWidth: 1.5,
                             transform: isClicking
-                                ? "translate(-2px, -2px) scale(0.9)" // Clicking/Grabbing effect
-                                : "translate(-2px, -2px)",           // Hovering canvas (Open Hand)
+                                ? "translate(-2px, -2px) scale(0.92)"
+                                : "translate(-2px, -2px)",
                         }}
                     />
                 ) : (
                     <MousePointer2
-                        className="h-6 w-6 text-cyan-400 fill-zinc-900 stroke-[1.5px]"
+                        className="h-5 w-5"
                         style={{
-                            filter: "drop-shadow(0 0 5px rgba(34, 211, 238, 0.5))",
-                            transform: "rotate(-15deg) translate(-2px, -2px)"
+                            color: "var(--color-paper-raised)",
+                            fill: "var(--color-ink)",
+                            strokeWidth: 1.5,
+                            transform: "translate(-1px, -1px)",
                         }}
                     />
                 )}
             </Pointer>
-            <PointerFollower
-                align="bottom-right"
-                gap={15}
-                transition={{ stiffness: 300, damping: 20, bounce: 0.5 }}
-                className="z-[9998]"
-            >
-                <div className="px-3 py-1 bg-black/80 border border-cyan-500/50 rounded-lg backdrop-blur-sm text-[10px] font-mono font-bold text-cyan-300 uppercase tracking-widest shadow-[0_0_15px_-3px_rgba(34,211,238,0.3)] whitespace-nowrap">
-                    8-Bit from PAST
-                </div>
-            </PointerFollower>
+            {isHoveringCanvas && (
+                <PointerFollower
+                    align="bottom-right"
+                    gap={12}
+                    transition={{ stiffness: 400, damping: 30, bounce: 0 }}
+                    className="z-[9998]"
+                >
+                    <div className="rounded-sm bg-ink px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-white whitespace-nowrap">
+                        {isClicking ? "Panning" : "Drag to pan"}
+                    </div>
+                </PointerFollower>
+            )}
         </MouseTrackerProvider>
     );
 }
