@@ -129,16 +129,16 @@ export function AppHeader({
   }, [onClearAll]);
 
   return (
-    <header className="bg-black border-b border-zinc-800 shadow-sm px-6 py-3 flex items-center justify-between">
+    <header className="flex items-center justify-between border-b border-rule bg-paper-raised px-4 py-2.5">
       {/* Left Side - Logo & Title */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <img src="/favicon_new.svg" alt="Icon" className="h-5 w-5" />
-          <span className="text-zinc-100 font-medium">
+          <span className="text-[13px] font-medium tracking-tightish text-ink">
             {isCourseMode && currentCourse ? currentCourse.title : "Neural Network Builder"}
           </span>
           {isCourseMode && currentLesson && (
-            <span className="text-zinc-500 text-sm">• {currentLesson.title}</span>
+            <span className="text-[13px] text-ink-faint">• {currentLesson.title}</span>
           )}
         </div>
       </div>

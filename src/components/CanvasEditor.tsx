@@ -50,17 +50,18 @@ const HuskMLAttribution = () => {
 
 // Flow editor configuration
 const FLOW_CONFIG = {
+  // Husk Platinum: canvas reads as paper, ruled with hairlines.
   BACKGROUND: {
     GAP: 25,
     SIZE: 1,
-    COLOR: "#18181b",
-    SECONDARY_COLOR: "#27272a",
-    PATTERN_COLOR: "#3f3f46",
+    COLOR: "#E5E5EA",           // ruled lines  (rule-soft)
+    SECONDARY_COLOR: "#FBFBFD", // canvas paper
+    PATTERN_COLOR: "#D2D2D7",   // dot overlay  (hairline)
     ANIMATION_DURATION: "20s"
   },
   EDGE: {
     STROKE_WIDTH: 2,
-    STROKE_COLOR: "#a1a1aa",
+    STROKE_COLOR: "#8E8E93",
     ANIMATED_STROKE: "rgba(99, 102, 241, 0.5)",
     SELECTED_STROKE: "rgba(99, 102, 241, 0.8)",
     HOVER_STROKE: "rgba(129, 140, 248, 0.7)"
@@ -240,13 +241,13 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
         className="animate-[fadeIn_0.5s_ease-in-out]"
       >
         <Controls
-          className="bg-zinc-900/90 border-zinc-800 text-zinc-100 rounded-xl backdrop-blur-sm transition-transform duration-300 hover:scale-105"
+          className="bg-zinc-900/90 border-zinc-800 text-zinc-100 rounded-md backdrop-blur-sm transition-transform duration-300"
           showZoom={true}
           showFitView={true}
           fitViewOptions={{ duration: 800, padding: 0.2 }}
         />
         <MiniMap
-          className="bg-zinc-900/80 border border-zinc-800 rounded-lg backdrop-blur-sm transition-all duration-300 hover:bg-zinc-900/90 hover:shadow-lg"
+          className="bg-zinc-900/80 border border-zinc-800 rounded-md backdrop-blur-sm transition-colors duration-150 hover:bg-zinc-900/90 hover:shadow-lg"
           nodeColor={(node) => {
             const type = (node.data as any)?.type?.toLowerCase() || '';
             if (type.includes('input')) return '#3B82F6';
