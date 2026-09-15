@@ -223,7 +223,7 @@ export default function BlockPalette({
     >
       {/* Course Mode Indicator */}
       {isCourseMode && currentLesson && (
-        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-md">
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-300 rounded-md">
           <div className="flex items-center gap-2 mb-1">
             <GraduationCap className="h-4 w-4 text-blue-400" />
             <span className="text-sm font-medium text-blue-300">Course Mode</span>
@@ -294,7 +294,7 @@ export default function BlockPalette({
 
       {templatesRestricted ? (
         <div className="text-center py-8 text-zinc-400 animate-fade-in">
-          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-500/10 rounded-full border border-purple-500/20">
+          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-50 rounded-full border border-purple-300">
             <GraduationCap className="h-8 w-8 text-purple-400" />
           </div>
           <h3 className="text-zinc-200 font-medium mb-2">Templates Not Available</h3>
@@ -408,20 +408,20 @@ export default function BlockPalette({
                           {template.name}
                         </span>
                       </div>
-                      <p className="text-xs text-zinc-300 leading-relaxed mb-2">
+                      <p className="mb-2 text-xs leading-relaxed text-ink-muted">
                         {template.description}
                       </p>
                       <div className="flex gap-1 flex-wrap">
                         {template.tags.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm"
+                            className="rounded-sm border border-rule bg-paper px-1.5 py-0.5 font-mono text-[11px] text-ink-muted"
                           >
                             {tag}
                           </span>
                         ))}
                         {template.tags.length > 3 && (
-                          <span className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm">
+                          <span className="rounded-sm border border-rule bg-paper px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">
                             +{template.tags.length - 3}
                           </span>
                         )}

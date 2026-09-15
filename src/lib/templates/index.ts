@@ -1479,47 +1479,50 @@ export function getTemplateCategoryColors(category: string): {
     string,
     { bg: string; border: string; text: string; hover: string }
   > = {
+    /* Husk Platinum (light): mirrors the layer-category treatment in
+     * lib/categories.ts — faint tinted card, hairline border, saturated
+     * label. Hue identity is preserved from the dark build. */
     green: {
-      bg: "bg-green-900/20",
-      border: "border-green-600",
-      text: "text-green-300",
-      hover: "hover:border-green-500 hover:shadow-green-500/20",
+      bg: "bg-green-50",
+      border: "border-green-200",
+      text: "text-green-700",
+      hover: "hover:border-green-400 hover:shadow-green-500/10",
     },
     blue: {
-      bg: "bg-blue-900/20",
-      border: "border-blue-600",
-      text: "text-blue-300",
-      hover: "hover:border-blue-500 hover:shadow-blue-500/20",
+      bg: "bg-blue-50",
+      border: "border-blue-200",
+      text: "text-blue-700",
+      hover: "hover:border-blue-400 hover:shadow-blue-500/10",
     },
     purple: {
-      bg: "bg-purple-900/20",
-      border: "border-purple-600",
-      text: "text-purple-300",
-      hover: "hover:border-purple-500 hover:shadow-purple-500/20",
+      bg: "bg-purple-50",
+      border: "border-purple-200",
+      text: "text-purple-700",
+      hover: "hover:border-purple-400 hover:shadow-purple-500/10",
     },
     cyan: {
-      bg: "bg-cyan-900/20",
-      border: "border-cyan-600",
-      text: "text-cyan-300",
-      hover: "hover:border-cyan-500 hover:shadow-cyan-500/20",
+      bg: "bg-cyan-50",
+      border: "border-cyan-200",
+      text: "text-cyan-700",
+      hover: "hover:border-cyan-400 hover:shadow-cyan-500/10",
     },
     orange: {
-      bg: "bg-orange-900/20",
-      border: "border-orange-600",
-      text: "text-orange-300",
-      hover: "hover:border-orange-500 hover:shadow-orange-500/20",
+      bg: "bg-orange-50",
+      border: "border-orange-200",
+      text: "text-orange-700",
+      hover: "hover:border-orange-400 hover:shadow-orange-500/10",
     },
     red: {
-      bg: "bg-red-900/20",
-      border: "border-red-600",
-      text: "text-red-300",
-      hover: "hover:border-red-500 hover:shadow-red-500/20",
+      bg: "bg-red-50",
+      border: "border-red-200",
+      text: "text-red-700",
+      hover: "hover:border-red-400 hover:shadow-red-500/10",
     },
     indigo: {
-      bg: "bg-indigo-900/20",
-      border: "border-indigo-600",
-      text: "text-indigo-300",
-      hover: "hover:border-indigo-500 hover:shadow-indigo-500/20",
+      bg: "bg-indigo-50",
+      border: "border-indigo-200",
+      text: "text-indigo-700",
+      hover: "hover:border-indigo-400 hover:shadow-indigo-500/10",
     },
   };
 
