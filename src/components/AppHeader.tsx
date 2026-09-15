@@ -159,7 +159,7 @@ export function AppHeader({
                     variant="outline"
                     size="sm"
                     disabled={!hasContent}
-                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-600 border-zinc-700 text-zinc-300"
                   >
                     <Trash2 className="h-4 w-4" />
                     Clear Canvas
@@ -195,7 +195,7 @@ export function AppHeader({
               variant="outline"
               size="sm"
               onClick={exitCourse}
-              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-red-800 hover:border-red-500 hover:text-red-300 ml-2"
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-red-50 hover:border-red-500 hover:text-red-700 ml-2"
             >
               <X className="h-4 w-4" />
               Exit Course
@@ -215,7 +215,7 @@ export function AppHeader({
                     variant="outline"
                     size="sm"
                     disabled={!hasContent}
-                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-600 border-zinc-700 text-zinc-300"
                   >
                     <Trash2 className="h-4 w-4" />
                     Clear All
@@ -281,7 +281,7 @@ export function AppHeader({
               variant="outline"
               size="sm"
               onClick={toggleCourseMode}
-              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-blue-800 hover:border-blue-500 hover:text-blue-300"
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-blue-50 hover:border-blue-500 hover:text-blue-700"
             >
               <BookOpen className="h-4 w-4" />
               Learn

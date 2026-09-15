@@ -173,9 +173,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         <div className="flex items-start gap-3">
           <div className="mt-1">
             {isCompleted ? (
-              <CheckCircle className="h-5 w-5 text-green-400" />
+              <CheckCircle className="h-5 w-5 text-green-600" />
             ) : isValid ? (
-              <CheckCircle className="h-5 w-5 text-blue-400 animate-pulse" />
+              <CheckCircle className="h-5 w-5 text-blue-600 animate-pulse" />
             ) : (
               <Circle className="h-5 w-5 text-zinc-400" />
             )}
@@ -188,9 +188,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
                 variant="outline" 
                 className={`text-xs ${
                   isCompleted 
-                    ? 'border-green-300 text-green-400'
+                    ? 'border-green-300 text-green-600'
                     : isValid
-                      ? 'border-blue-300 text-blue-400'
+                      ? 'border-blue-300 text-blue-600'
                       : 'border-zinc-600 text-zinc-400'
                 }`}
               >
@@ -218,7 +218,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
             {/* Task Completion Indicator */}
             {isValid && !isCompleted && (
               <div className="mt-2 p-2 bg-blue-50 border border-blue-300 rounded-md">
-                <div className="flex items-center gap-2 text-xs text-blue-300 font-medium">
+                <div className="flex items-center gap-2 text-xs text-blue-700 font-medium">
                   <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
                   <span>✨ Task requirements met! Auto-completing...</span>
                 </div>
@@ -234,7 +234,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
                   variant="outline"
                   size="sm"
                   onClick={() => toggleHints(task.id)}
-                  className="text-xs border-zinc-600 text-zinc-400 hover:text-yellow-400 hover:border-yellow-500"
+                  className="text-xs border-zinc-600 text-zinc-400 hover:text-yellow-600 hover:border-yellow-500"
                 >
                   <Lightbulb className="h-3 w-3 mr-1" />
                   {shouldShowHints ? 'Hide' : 'Show'} Hints
@@ -246,9 +246,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
                       {task.hints.map((hint, index) => (
                         <div 
                           key={index}
-                          className="flex items-start gap-2 text-xs text-yellow-200"
+                          className="flex items-start gap-2 text-xs text-yellow-700"
                         >
-                          <span className="text-yellow-400 mt-0.5">💡</span>
+                          <span className="text-yellow-600 mt-0.5">💡</span>
                           <span>{hint}</span>
                         </div>
                       ))}
@@ -323,7 +323,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
             </div>
           </div>
           {progress.completed === progress.total && (
-            <div className="flex items-center justify-center gap-1 text-xs text-green-400 font-medium mt-2">
+            <div className="flex items-center justify-center gap-1 text-xs text-green-600 font-medium mt-2">
               <CheckCircle className="h-3 w-3" />
               <span>All tasks completed! 🎉</span>
             </div>
@@ -389,7 +389,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         {/* Tasks Section */}
         <div className="space-y-4">
           <div className="flex items-center gap-2 pt-4 border-t border-zinc-700">
-            <Target className="h-5 w-5 text-blue-400" />
+            <Target className="h-5 w-5 text-blue-600" />
             <h3 className="text-lg font-semibold text-zinc-100">Tasks</h3>
             <Badge variant="outline" className="border-zinc-600 text-zinc-400">
               {progress.completed} / {progress.total}
@@ -404,8 +404,8 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         {/* Completion Message */}
         {progress.completed === progress.total && (
           <Card className="p-6 bg-green-50 border-green-300 text-center">
-            <Trophy className="h-8 w-8 text-green-400 mx-auto mb-3" />
-            <h3 className="text-lg font-semibold text-green-400 mb-2">
+            <Trophy className="h-8 w-8 text-green-600 mx-auto mb-3" />
+            <h3 className="text-lg font-semibold text-green-600 mb-2">
               Lesson Complete! 🎉
             </h3>
             <p className="text-zinc-300 mb-4">
@@ -414,7 +414,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
             {canGoNext && (
               <Button
                 onClick={handleNextLesson}
-                className="bg-green-600 hover:bg-green-700 text-white"
+                className="bg-green-600 hover:bg-green-50 text-white"
               >
                 Continue to Next Lesson
                 <ArrowRight className="h-4 w-4 ml-2" />

@@ -225,14 +225,14 @@ export default function BlockPalette({
       {isCourseMode && currentLesson && (
         <div className="mb-4 p-3 bg-blue-50 border border-blue-300 rounded-md">
           <div className="flex items-center gap-2 mb-1">
-            <GraduationCap className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-blue-300">Course Mode</span>
+            <GraduationCap className="h-4 w-4 text-blue-600" />
+            <span className="text-sm font-medium text-blue-700">Course Mode</span>
           </div>
-          <p className="text-xs text-blue-200">
+          <p className="text-xs text-blue-700">
             {currentLesson.title}
           </p>
           {allowedLayers.length > 0 && (
-            <p className="text-xs text-blue-300/70 mt-1">
+            <p className="text-xs text-blue-700/70 mt-1">
               Only lesson layers available ({allowedLayers.length} types)
             </p>
           )}
@@ -295,7 +295,7 @@ export default function BlockPalette({
       {templatesRestricted ? (
         <div className="text-center py-8 text-zinc-400 animate-fade-in">
           <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-50 rounded-full border border-purple-300">
-            <GraduationCap className="h-8 w-8 text-purple-400" />
+            <GraduationCap className="h-8 w-8 text-purple-600" />
           </div>
           <h3 className="text-zinc-200 font-medium mb-2">Templates Not Available</h3>
           <p className="text-sm text-zinc-400 leading-relaxed max-w-sm mx-auto mb-4">

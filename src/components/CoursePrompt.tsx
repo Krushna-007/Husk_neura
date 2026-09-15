@@ -18,7 +18,7 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
       {/* Header */}
       <div className="flex-shrink-0 p-6 pb-4 text-center border-b border-zinc-800/50">
         <div className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-md border border-blue-300">
-          <BookOpen className="w-8 h-8 text-blue-400" />
+          <BookOpen className="w-8 h-8 text-blue-600" />
         </div>
         <h2 className="text-xl font-bold text-zinc-100 mb-2">
           Ready to Master Neural Networks?
@@ -34,11 +34,11 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
         <Card className="p-4 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border-blue-300">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-10 h-10 bg-blue-50 rounded-full">
-              <ArrowLeft className="w-5 h-5 text-blue-400 animate-pulse" />
+              <ArrowLeft className="w-5 h-5 text-blue-600 animate-pulse" />
             </div>
             <div className="flex-1">
-              <p className="font-medium text-blue-200 mb-1">Start Here</p>
-              <p className="text-blue-300/80 text-xs">Browse courses in the left panel</p>
+              <p className="font-medium text-blue-700 mb-1">Start Here</p>
+              <p className="text-blue-700/80 text-xs">Browse courses in the left panel</p>
             </div>
           </div>
         </Card>
@@ -46,14 +46,14 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
         {/* Premium Features */}
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-zinc-200 flex items-center gap-2">
-            <Zap className="w-4 h-4 text-yellow-400" />
+            <Zap className="w-4 h-4 text-yellow-600" />
             Premium Learning Experience
           </h3>
           
           <div className="grid gap-3">
             <div className="flex items-start gap-3 p-3 rounded-md bg-zinc-800/30 border border-zinc-700/50">
               <div className="flex items-center justify-center w-8 h-8 bg-green-50 rounded-md">
-                <Brain className="w-4 h-4 text-green-400" />
+                <Brain className="w-4 h-4 text-green-600" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-zinc-200 text-sm">Interactive Learning</p>
@@ -65,7 +65,7 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
 
             <div className="flex items-start gap-3 p-3 rounded-md bg-zinc-800/30 border border-zinc-700/50">
               <div className="flex items-center justify-center w-8 h-8 bg-blue-50 rounded-md">
-                <Target className="w-4 h-4 text-blue-400" />
+                <Target className="w-4 h-4 text-blue-600" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-zinc-200 text-sm">Guided Practice</p>
@@ -77,7 +77,7 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
 
             <div className="flex items-start gap-3 p-3 rounded-md bg-zinc-800/30 border border-zinc-700/50">
               <div className="flex items-center justify-center w-8 h-8 bg-purple-50 rounded-md">
-                <Trophy className="w-4 h-4 text-purple-400" />
+                <Trophy className="w-4 h-4 text-purple-600" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-zinc-200 text-sm">Progress Tracking</p>
@@ -95,25 +95,25 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
           <Card className="p-4 bg-gradient-to-br from-emerald-500/10 to-blue-500/10 border-emerald-300">
             <div className="flex items-start justify-between mb-3">
               <div>
-                <h4 className="font-semibold text-emerald-200">Neural Network 101</h4>
-                <p className="text-emerald-300/80 text-xs mt-1">Perfect for beginners</p>
+                <h4 className="font-semibold text-emerald-700">Neural Network 101</h4>
+                <p className="text-emerald-700/80 text-xs mt-1">Perfect for beginners</p>
               </div>
-              <Badge className="bg-emerald-50 text-emerald-400 border-emerald-300">
+              <Badge className="bg-emerald-50 text-emerald-600 border-emerald-300">
                 Free
               </Badge>
             </div>
             <div className="grid grid-cols-3 gap-3 text-xs">
               <div className="text-center">
-                <div className="font-medium text-emerald-200">2h</div>
-                <div className="text-emerald-300/60">Duration</div>
+                <div className="font-medium text-emerald-700">2h</div>
+                <div className="text-emerald-700/60">Duration</div>
               </div>
               <div className="text-center">
-                <div className="font-medium text-emerald-200">4</div>
-                <div className="text-emerald-300/60">Lessons</div>
+                <div className="font-medium text-emerald-700">4</div>
+                <div className="text-emerald-700/60">Lessons</div>
               </div>
               <div className="text-center">
-                <div className="font-medium text-emerald-200">8</div>
-                <div className="text-emerald-300/60">Tasks</div>
+                <div className="font-medium text-emerald-700">8</div>
+                <div className="text-emerald-700/60">Tasks</div>
               </div>
             </div>
           </Card>

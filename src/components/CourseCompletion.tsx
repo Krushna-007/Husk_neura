@@ -56,7 +56,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
             Congratulations! 🎉
           </h1>
           <p className="text-zinc-300 text-lg">
-            You've successfully completed <span className="text-blue-400 font-semibold">{currentCourse.title}</span>
+            You've successfully completed <span className="text-blue-600 font-semibold">{currentCourse.title}</span>
           </p>
           <p className="text-zinc-400 text-sm mt-2">
             Completed on {completionTime}
@@ -67,7 +67,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         <Card className="bg-zinc-800/50 border-zinc-700 mb-6">
           <div className="p-6">
             <h3 className="text-lg font-semibold text-ink mb-4 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-400" />
+              <CheckCircle className="h-5 w-5 text-green-600" />
               What You've Accomplished
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -95,7 +95,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         <Card className="bg-zinc-800/50 border-zinc-700 mb-6">
           <div className="p-6">
             <h3 className="text-lg font-semibold text-ink mb-4 flex items-center gap-2">
-              <Share2 className="h-5 w-5 text-blue-400" />
+              <Share2 className="h-5 w-5 text-blue-600" />
               Share Your Achievement
             </h3>
             <p className="text-zinc-400 text-sm mb-4">
@@ -104,7 +104,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 onClick={handleLinkedInShare}
-                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white flex-1"
+                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white flex-1"
               >
                 <ExternalLink className="h-4 w-4" />
                 Share on LinkedIn
@@ -147,7 +147,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
           </Button>
           <Button
             onClick={exitCourse}
-            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white flex-1"
+            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white flex-1"
           >
             Explore More Courses
           </Button>

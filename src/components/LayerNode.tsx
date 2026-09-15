@@ -170,7 +170,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                 e.preventDefault();
                 handleDelete();
               }}
-              className="absolute -top-2 -right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out-soft bg-red-600 hover:bg-red-700 text-white rounded-full p-1 shadow-sm"
+              className="absolute -top-2 -right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out-soft bg-red-600 hover:bg-red-50 text-white rounded-full p-1 shadow-sm"
               title="Delete this block"
             >
               <Trash2 className="h-3 w-3" />

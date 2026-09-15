@@ -34,15 +34,15 @@ export function DeviceWarning() {
           <div className="flex items-center justify-center gap-6 sm:gap-8 py-2">
             <div className="flex flex-col items-center gap-2">
               <Smartphone className="text-red-500 w-10 h-10 animate-pulse" />
-              <span className="text-xs text-red-400">Mobile</span>
+              <span className="text-xs text-red-600">Mobile</span>
             </div>
             <div className="flex flex-col items-center gap-2">
               <Tablet className="text-yellow-500 w-10 h-10" />
-              <span className="text-xs text-yellow-400">Tablet</span>
+              <span className="text-xs text-yellow-600">Tablet</span>
             </div>
             <div className="flex flex-col items-center gap-2">
               <Laptop className="text-green-500 w-10 h-10" />
-              <span className="text-xs text-green-400">Desktop</span>
+              <span className="text-xs text-green-600">Desktop</span>
             </div>
           </div>
           
@@ -61,15 +61,15 @@ export function DeviceWarning() {
               </p>
               <ul className="text-sm text-zinc-400 space-y-2 text-left list-none">
                 <li className="flex items-center gap-2">
-                  <span className="text-red-400">•</span>
+                  <span className="text-red-600">•</span>
                   Larger canvas for network design
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-red-400">•</span>
+                  <span className="text-red-600">•</span>
                   Better drag & drop support
                 </li>
                 <li className="flex items-center gap-2">
-                  <span className="text-red-400">•</span>
+                  <span className="text-red-600">•</span>
                   Precise mouse control
                 </li>
               </ul>
