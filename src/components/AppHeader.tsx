@@ -159,7 +159,7 @@ export function AppHeader({
                     variant="outline"
                     size="sm"
                     disabled={!hasContent}
-                    className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
                   >
                     <Trash2 className="h-4 w-4" />
                     Clear Canvas
@@ -215,7 +215,7 @@ export function AppHeader({
                     variant="outline"
                     size="sm"
                     disabled={!hasContent}
-                    className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
                   >
                     <Trash2 className="h-4 w-4" />
                     Clear All

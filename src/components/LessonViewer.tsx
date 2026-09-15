@@ -164,9 +164,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         key={task.id}
         className={`p-4 transition-colors duration-150 ${
           isCompleted 
-            ? 'bg-green-500/10 border-green-500/30 shadow-lg shadow-green-500/5' 
+            ? 'bg-green-50 border-green-300 shadow-lg shadow-green-500/5' 
             : isValid 
-              ? 'bg-blue-500/10 border-blue-500/30 shadow-lg shadow-blue-500/5 animate-pulse' 
+              ? 'bg-blue-50 border-blue-300 shadow-lg shadow-blue-500/5 animate-pulse' 
               : 'bg-zinc-800/50 border-zinc-700'
         }`}
       >
@@ -188,9 +188,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
                 variant="outline" 
                 className={`text-xs ${
                   isCompleted 
-                    ? 'border-green-500/50 text-green-400'
+                    ? 'border-green-300 text-green-400'
                     : isValid
-                      ? 'border-blue-500/50 text-blue-400'
+                      ? 'border-blue-300 text-blue-400'
                       : 'border-zinc-600 text-zinc-400'
                 }`}
               >
@@ -217,7 +217,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
 
             {/* Task Completion Indicator */}
             {isValid && !isCompleted && (
-              <div className="mt-2 p-2 bg-blue-500/20 border border-blue-500/30 rounded-md">
+              <div className="mt-2 p-2 bg-blue-50 border border-blue-300 rounded-md">
                 <div className="flex items-center gap-2 text-xs text-blue-300 font-medium">
                   <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
                   <span>✨ Task requirements met! Auto-completing...</span>
@@ -241,7 +241,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
                 </Button>
                 
                 {shouldShowHints && (
-                  <div className="mt-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-md">
+                  <div className="mt-2 p-3 bg-yellow-50 border border-yellow-300 rounded-md">
                     <div className="space-y-1">
                       {task.hints.map((hint, index) => (
                         <div 
@@ -403,7 +403,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
 
         {/* Completion Message */}
         {progress.completed === progress.total && (
-          <Card className="p-6 bg-green-500/10 border-green-500/30 text-center">
+          <Card className="p-6 bg-green-50 border-green-300 text-center">
             <Trophy className="h-8 w-8 text-green-400 mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-green-400 mb-2">
               Lesson Complete! 🎉

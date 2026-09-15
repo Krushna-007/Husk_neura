@@ -45,11 +45,11 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
   const getDifficultyColor = (difficulty: Course['difficulty']) => {
     switch (difficulty) {
       case 'beginner':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
+        return 'bg-green-50 text-green-400 border-green-300';
       case 'intermediate':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+        return 'bg-yellow-50 text-yellow-400 border-yellow-300';
       case 'advanced':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
+        return 'bg-red-50 text-red-400 border-red-300';
       default:
         return 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30';
     }
@@ -125,8 +125,8 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
           return (
             <Card
               key={course.id}
-              className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-500/50 transition-colors duration-150 cursor-pointer ${
-                isSelected ? 'border-blue-500 bg-blue-500/5 shadow-lg shadow-blue-500/10' : ''
+              className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-300 transition-colors duration-150 cursor-pointer ${
+                isSelected ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-500/10' : ''
               }`}
               onClick={() => setSelectedCourse(isSelected ? null : course)}
             >
@@ -235,7 +235,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                         variant="outline"
                         size="sm"
                         onClick={(e) => handleResetProgress(course.id, e)}
-                        className="px-3 border-zinc-600 text-zinc-400 hover:text-red-400 hover:border-red-500 hover:bg-red-500/10"
+                        className="px-3 border-zinc-600 text-zinc-400 hover:text-red-400 hover:border-red-500 hover:bg-red-50"
                         title="Reset Progress"
                       >
                         <RotateCcw className="h-3.5 w-3.5" />

@@ -133,7 +133,7 @@ export function TutorialGuide({ isOpen, onClose }: TutorialGuideProps) {
       <DialogContent className="bg-zinc-900 border-zinc-800 max-w-xl">
         <DialogHeader>
           <DialogTitle className="text-xl text-zinc-100 flex items-center gap-3">
-            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 font-medium text-sm">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 text-blue-400 font-medium text-sm">
               {currentStep + 1}
             </div>
             {step.title}
