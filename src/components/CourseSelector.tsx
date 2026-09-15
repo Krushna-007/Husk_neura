@@ -125,7 +125,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
           return (
             <Card
               key={course.id}
-              className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer ${
+              className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-500/50 transition-colors duration-150 cursor-pointer ${
                 isSelected ? 'border-blue-500 bg-blue-500/5 shadow-lg shadow-blue-500/10' : ''
               }`}
               onClick={() => setSelectedCourse(isSelected ? null : course)}
@@ -175,7 +175,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                   </div>
                   <div className="relative w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
                     <div 
-                      className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full transition-all duration-500 ease-out relative"
+                      className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full transition-colors duration-150 ease-out relative"
                       style={{ width: `${progress.progress}%` }}
                     >
                       {progress.progress > 0 && (

@@ -17,7 +17,7 @@ interface TutorialStep {
 
 const tutorialSteps: TutorialStep[] = [
   {
-    title: "Welcome to HUSKML! 👋",
+    title: "Welcome to HuskML",
     content: "Your Journey to Visual Neural Network Design Starts Here",
     description: "HUSKML makes neural network design intuitive and visual. You'll be able to create complex architectures with just a few clicks and see the code generate automatically.",
     tips: [
@@ -26,7 +26,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Layer Palette 🧱",
+    title: "Layer palette",
     content: "Your Building Blocks Library",
     description: "On the left side, you'll find all the neural network layers organized by categories. From basic Dense layers to advanced Convolutional layers, everything you need is here.",
     tips: [
@@ -36,7 +36,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Canvas Workspace 🎯",
+    title: "Canvas workspace",
     content: "Design Your Network Architecture",
     description: "The main canvas is your design space. Drag layers from the palette and arrange them to create your network structure. The visual layout directly represents your network's architecture.",
     tips: [
@@ -46,7 +46,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Making Connections 🔗",
+    title: "Making connections",
     content: "Connect Your Layers",
     description: "Layers communicate through connections. Each connection represents data flow in your network. Create them by dragging from one layer's output (bottom) to another layer's input (top).",
     tips: [
@@ -56,7 +56,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Layer Settings ⚙️",
+    title: "Layer settings",
     content: "Customize Your Layers",
     description: "Double-click any layer to open its settings panel. Here you can configure everything from the number of neurons to activation functions and special parameters specific to each layer type.",
     tips: [
@@ -66,7 +66,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Live Code Generation 💻",
+    title: "Live code generation",
     content: "From Visual to Code",
     description: "Watch as your visual design transforms into production-ready Keras code in real-time. The code panel on the right shows the exact implementation of your network, ready to use in your projects.",
     tips: [
@@ -76,7 +76,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Save Your Work 💾",
+    title: "Save your work",
     content: "Preserve Your Designs",
     description: "Your network designs can be saved and shared. Use the Export button to save your work as a JSON file, which you can later import to continue working or share with others.",
     tips: [
@@ -86,7 +86,7 @@ const tutorialSteps: TutorialStep[] = [
     ]
   },
   {
-    title: "Ready to Create! 🚀",
+    title: "Ready to build",
     content: "Start Building Amazing Networks",
     description: "You're now equipped with all the essential tools to create neural networks visually. Remember to start simple and gradually add complexity as you become more comfortable.",
     tips: [

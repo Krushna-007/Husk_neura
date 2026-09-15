@@ -112,7 +112,7 @@ export function AchievementBadge({
     <div className={`flex items-center gap-3 ${className}`}>
       <div 
         className={`
-          flex items-center justify-center rounded-full border-2 transition-all duration-300
+          flex items-center justify-center rounded-full border-2 transition-colors duration-150
           ${sizeScheme.container}
           ${isUnlocked 
             ? `${colorScheme.bg} ${colorScheme.border} ${colorScheme.glow}` 

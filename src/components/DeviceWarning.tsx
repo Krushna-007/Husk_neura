@@ -28,7 +28,7 @@ export function DeviceWarning() {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="bg-zinc-900 border-zinc-800 text-zinc-100 p-4 sm:p-6 max-w-[95vw] sm:max-w-md mx-auto rounded-xl">
+      <DialogContent className="bg-zinc-900 border-zinc-800 text-zinc-100 p-4 sm:p-6 max-w-[95vw] sm:max-w-md mx-auto rounded-md">
         <div className="space-y-8">
           {/* Icons with animation */}
           <div className="flex items-center justify-center gap-6 sm:gap-8 py-2">
@@ -79,7 +79,7 @@ export function DeviceWarning() {
           <div className="border-t border-zinc-800 pt-6 space-y-3">
             <button
               onClick={() => setIsOpen(false)}
-              className="w-full py-3 px-4 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 text-zinc-100 rounded-lg transition-colors duration-200 text-base font-medium touch-manipulation"
+              className="w-full py-3 px-4 bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 text-zinc-100 rounded-md transition-colors duration-200 text-base font-medium touch-manipulation"
             >
               Continue Anyway
             </button>

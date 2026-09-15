@@ -72,7 +72,7 @@ export function CodeViewer({ className }: CodeViewerProps) {
   const [code, setCode] = useState(`# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
-# Welcome to HUSKML! 🚀
+# Welcome to HUSKML
 # Start building your neural network by dragging and dropping layers from the left panel
 
 import tensorflow as tf
@@ -81,7 +81,7 @@ from tensorflow import keras
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`);
+print("Model scaffold ready.")`);
 
   useEffect(() => {
     const generateCode = async () => {
@@ -90,7 +90,7 @@ print("✨ Ready to create something amazing with HUSKML!")`);
           ? `# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
-# Welcome to HUSKML! 🚀
+# Welcome to HUSKML
 # Start building your neural network by dragging and dropping layers from the left panel
 
 import tensorflow as tf
@@ -99,11 +99,11 @@ from tensorflow import keras
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`
+print("Model scaffold ready.")`
           : `# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
-# Welcome to HUSKML! 🚀
+# Welcome to HUSKML
 # Start building your neural network by dragging and dropping layers from the left panel
 
 import torch
@@ -113,7 +113,7 @@ import torch.nn.functional as F
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`;
+print("Model scaffold ready.")`;
 
         setCode(welcomeMessage);
         return;
@@ -256,8 +256,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             onClick={handleCopy}
             variant="outline"
             size="sm"
-            className={`flex-1 max-w-[200px] bg-zinc-900 border-[1px] border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${copied ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
-              }`}
+            className={`flex-1 max-w-[200px] ${copied ? "border-green-600 text-green-700" : ""}`}
           >
             {copied ? (
               <>
@@ -275,8 +274,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             onClick={handleDownload}
             variant="outline"
             size="sm"
-            className={`flex-1 max-w-[200px] bg-zinc-900 border-[1px] border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${downloaded ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
-              }`}
+            className={`flex-1 max-w-[200px] ${downloaded ? "border-green-600 text-green-700" : ""}`}
           >
             {downloaded ? (
               <>
@@ -293,7 +291,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
         </div>
 
         {/* Reduced Height Retro Grid Footer */}
-        <div className="relative h-28 w-full overflow-hidden border-t border-zinc-800 shrink-0 bg-black">
+        <div className="relative h-28 w-full overflow-hidden border-t border-rule shrink-0 bg-paper-raised">
           <RetroGrid className="opacity-100" angle={65} />
 
           <div className="absolute inset-0 flex flex-row items-center justify-between z-10 px-10 pointer-events-auto max-w-full mx-auto w-full">
@@ -303,10 +301,10 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
               rel="noopener noreferrer"
               className="flex flex-col gap-0.5 select-none hover:opacity-80 transition-opacity"
             >
-              <div className="text-[11px] tracking-[0.4em] text-zinc-500 font-bold uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <div className="text-[11px] tracking-[0.4em] text-zinc-500 font-bold uppercase" style={{ fontFamily: "var(--font-display)" }}>
                 In The Neural Cloud
               </div>
-              <div className="text-4xl font-bold tracking-tight text-white/90 drop-shadow-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
+              <div className="text-4xl font-bold tracking-display text-ink" style={{ fontFamily: "var(--font-display)" }}>
                 HUSKML
               </div>
             </a>

@@ -17,7 +17,7 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
     <div className={`flex flex-col h-full bg-gradient-to-br from-zinc-900/50 to-zinc-800/30 ${className}`}>
       {/* Header */}
       <div className="flex-shrink-0 p-6 pb-4 text-center border-b border-zinc-800/50">
-        <div className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl border border-blue-500/20">
+        <div className="inline-flex items-center justify-center w-16 h-16 mb-4 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-md border border-blue-500/20">
           <BookOpen className="w-8 h-8 text-blue-400" />
         </div>
         <h2 className="text-xl font-bold text-zinc-100 mb-2">
@@ -51,8 +51,8 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
           </h3>
           
           <div className="grid gap-3">
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
-              <div className="flex items-center justify-center w-8 h-8 bg-green-500/20 rounded-lg">
+            <div className="flex items-start gap-3 p-3 rounded-md bg-zinc-800/30 border border-zinc-700/50">
+              <div className="flex items-center justify-center w-8 h-8 bg-green-500/20 rounded-md">
                 <Brain className="w-4 h-4 text-green-400" />
               </div>
               <div className="flex-1 min-w-0">
@@ -63,8 +63,8 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
-              <div className="flex items-center justify-center w-8 h-8 bg-blue-500/20 rounded-lg">
+            <div className="flex items-start gap-3 p-3 rounded-md bg-zinc-800/30 border border-zinc-700/50">
+              <div className="flex items-center justify-center w-8 h-8 bg-blue-500/20 rounded-md">
                 <Target className="w-4 h-4 text-blue-400" />
               </div>
               <div className="flex-1 min-w-0">
@@ -75,8 +75,8 @@ export function CoursePrompt({ className = "" }: CoursePromptProps) {
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 rounded-lg bg-zinc-800/30 border border-zinc-700/50">
-              <div className="flex items-center justify-center w-8 h-8 bg-purple-500/20 rounded-lg">
+            <div className="flex items-start gap-3 p-3 rounded-md bg-zinc-800/30 border border-zinc-700/50">
+              <div className="flex items-center justify-center w-8 h-8 bg-purple-500/20 rounded-md">
                 <Trophy className="w-4 h-4 text-purple-400" />
               </div>
               <div className="flex-1 min-w-0">

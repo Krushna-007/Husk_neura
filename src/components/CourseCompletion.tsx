@@ -49,10 +49,10 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
       <div className="flex-1 overflow-y-auto p-6">
         {/* Celebration Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4 animate-bounce">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4">
             <Trophy className="h-10 w-10 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-ink mb-2">
             Congratulations! 🎉
           </h1>
           <p className="text-zinc-300 text-lg">
@@ -66,7 +66,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         {/* Achievement Summary */}
         <Card className="bg-zinc-800/50 border-zinc-700 mb-6">
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-ink mb-4 flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-green-400" />
               What You've Accomplished
             </h3>
@@ -94,7 +94,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         {/* Share Section */}
         <Card className="bg-zinc-800/50 border-zinc-700 mb-6">
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+            <h3 className="text-lg font-semibold text-ink mb-4 flex items-center gap-2">
               <Share2 className="h-5 w-5 text-blue-400" />
               Share Your Achievement
             </h3>
@@ -123,7 +123,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         {/* Next Steps */}
         <Card className="bg-zinc-800/50 border-zinc-700">
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">What's Next?</h3>
+            <h3 className="text-lg font-semibold text-ink mb-4">What's Next?</h3>
             <div className="space-y-3 text-zinc-300">
               <p>🚀 <strong>Keep Learning:</strong> Try building more complex networks with different architectures</p>
               <p>🔬 <strong>Experiment:</strong> Modify parameters and see how they affect your network's performance</p>

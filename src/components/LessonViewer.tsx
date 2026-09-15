@@ -162,7 +162,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
     return (
       <Card
         key={task.id}
-        className={`p-4 transition-all duration-300 ${
+        className={`p-4 transition-colors duration-150 ${
           isCompleted 
             ? 'bg-green-500/10 border-green-500/30 shadow-lg shadow-green-500/5' 
             : isValid 
@@ -219,7 +219,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
             {isValid && !isCompleted && (
               <div className="mt-2 p-2 bg-blue-500/20 border border-blue-500/30 rounded-md">
                 <div className="flex items-center gap-2 text-xs text-blue-300 font-medium">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full animate-ping"></div>
+                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
                   <span>✨ Task requirements met! Auto-completing...</span>
                 </div>
               </div>
@@ -314,7 +314,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
           </div>
           <div className="relative w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-500 ease-out relative"
+              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-colors duration-150 ease-out relative"
               style={{ width: `${(progress.completed / progress.total) * 100}%` }}
             >
               {progress.completed > 0 && (
