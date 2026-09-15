@@ -1,0 +1,67 @@
+/* Hallmark · macrostructure: n/a (app-scope reskin) · theme: Husk Platinum
+ * tone: premium-utilitarian · anchor hue: cool-blue (253°) · paper band: light (L 96%)
+ * display style: grotesk-sans (Geist) · mono outlier: Departure Mono (retained identity)
+ * sources studied: apple.com (paper/ink/pill), sarvam.ai (3-face system, restrained accent),
+ *                  gumloop.com (light node-editor precedent), @xyflow/react default light theme
+ * pre-emit critique: P5 H4 E5 S5 R5 V4
+ */
+
+:root {
+  /* ---- Paper: Apple-grade off-white. Never #fff. ---- */
+  --color-paper:        oklch(96.8% 0.0015 286);   /* #F5F5F7 app ground   */
+  --color-paper-raised: oklch(100%  0      0);     /* #FFFFFF cards/panels */
+  --color-paper-sunken: oklch(94.2% 0.0020 286);   /* canvas well          */
+
+  /* ---- Ink: near-black, never #000. ---- */
+  --color-ink:       oklch(21.5% 0.0040 286);      /* #1D1D1F primary   */
+  --color-ink-2:     oklch(33.0% 0.0040 286);      /* secondary         */
+  --color-ink-muted: oklch(52.0% 0.0055 286);      /* #6E6E73 tertiary  */
+  --color-ink-faint: oklch(63.0% 0.0055 286);      /* #8E8E93 quaternary*/
+
+  /* ---- Rules: Apple hairline. ---- */
+  --color-rule:        oklch(87.0% 0.0030 286);    /* #D2D2D7 */
+  --color-rule-soft:   oklch(91.5% 0.0025 286);    /* #E5E5EA */
+
+  /* ---- Accent: one blue, small footprint. ---- */
+  --color-accent:       oklch(55.0% 0.190 253);    /* #0071E3 */
+  --color-accent-hover: oklch(64.0% 0.165 250);    /* #2997FF */
+  --color-accent-wash:  oklch(96.0% 0.020 253);    /* tinted panel */
+
+  /* ---- Status ---- */
+  --color-danger:  oklch(55.0% 0.200 27);
+  --color-success: oklch(56.0% 0.140 150);
+  --color-warn:    oklch(70.0% 0.150 75);
+
+  /* ---- Type ---- */
+  --font-display: "Geist", ui-sans-serif, -apple-system, system-ui, sans-serif;
+  --font-body:    "Geist", ui-sans-serif, -apple-system, system-ui, sans-serif;
+  --font-mono:    "Departure Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Apple tracks display type negative; body stays neutral. */
+  --tracking-display: -0.022em;
+  --tracking-tight:   -0.011em;
+  --tracking-normal:  0em;
+
+  /* ---- Radii: Apple pill for actions, small radius for cards. ---- */
+  --radius-pill: 980px;
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+
+  /* ---- Elevation: light-theme shadows are soft + low-alpha. ---- */
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 1px rgb(0 0 0 / 0.03);
+  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.04);
+  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.10), 0 2px 8px rgb(0 0 0 / 0.05);
+
+  /* ---- Motion ---- */
+  --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:     cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 120ms;
+  --dur-base: 200ms;
+  --dur-slow: 320ms;
+
+  /* ---- Spacing (4pt) ---- */
+  --space-2xs: 4px;  --space-xs: 8px;  --space-sm: 12px;
+  --space-md: 16px;  --space-lg: 24px; --space-xl: 32px; --space-2xl: 48px;
+}

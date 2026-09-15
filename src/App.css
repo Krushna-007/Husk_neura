@@ -23,22 +23,39 @@
   overflow: hidden;
 }
 
-/* Hide system cursor globally */
+/* The custom pointer replaces the system cursor across chrome and canvas. */
 html,
-body {
+body,
+* {
   cursor: none !important;
 }
 
-/* Ensure nothing overrides it */
-* {
-  cursor: none !important;
+/* ...but text still needs a caret. Restoring the native cursor where the
+   user is actually typing: inputs, textareas, and the code editor. */
+input,
+textarea,
+select,
+[contenteditable="true"],
+.cm-editor,
+.cm-editor * {
+  cursor: auto !important;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="search"],
+textarea,
+[contenteditable="true"],
+.cm-content,
+.cm-line {
+  cursor: text !important;
 }
 
 /* ReactFlow handle styling */
 .layer-node .react-flow__handle {
   width: 12px;
   height: 12px;
-  border: 2px solid #18181b;
+  border: 2px solid #FFFFFF;
   border-radius: 50%;
 }
 
@@ -52,48 +69,48 @@ body {
 
 /* Node selection styling */
 .react-flow__node.selected .layer-node {
-  outline: 2px solid #f59e0b;
+  outline: 2px solid #0071E3;
   outline-offset: 2px;
 }
 
 /* React Flow Controls Dark Theme */
 .react-flow__controls {
-  background-color: #18181b !important;
-  border: 1px solid #3f3f46 !important;
+  background-color: #F5F5F7 !important;
+  border: 1px solid #D2D2D7 !important;
   border-radius: 8px !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
 .react-flow__controls button {
-  background-color: #27272a !important;
-  border: 1px solid #3f3f46 !important;
-  color: #e4e4e7 !important;
+  background-color: #EFEFF2 !important;
+  border: 1px solid #D2D2D7 !important;
+  color: #1D1D1F !important;
   border-radius: 4px !important;
   transition: all 0.2s ease-in-out !important;
 }
 
 .react-flow__controls button:hover {
-  background-color: #3f3f46 !important;
-  border-color: #52525b !important;
-  color: #f4f4f5 !important;
+  background-color: #D2D2D7 !important;
+  border-color: #AEAEB2 !important;
+  color: #1D1D1F !important;
 }
 
 .react-flow__controls button:active {
-  background-color: #52525b !important;
+  background-color: #AEAEB2 !important;
 }
 
 .react-flow__controls button svg {
-  fill: #e4e4e7 !important;
+  fill: #1D1D1F !important;
 }
 
 .react-flow__controls button:hover svg {
-  fill: #f4f4f5 !important;
+  fill: #1D1D1F !important;
 }
 
 /* React Flow MiniMap Dark Theme */
 .react-flow__minimap {
-  background-color: #18181b !important;
-  border: 1px solid #3f3f46 !important;
+  background-color: #F5F5F7 !important;
+  border: 1px solid #D2D2D7 !important;
   border-radius: 8px !important;
 }
 
@@ -102,21 +119,21 @@ body {
 }
 
 .react-flow__minimap-node {
-  fill: #3f3f46 !important;
-  stroke: #52525b !important;
+  fill: #D2D2D7 !important;
+  stroke: #AEAEB2 !important;
 }
 
 .react-flow__minimap-node:hover {
-  fill: #52525b !important;
+  fill: #AEAEB2 !important;
 }
 
 /* React Flow Background */
 .react-flow__background {
-  background-color: #000000 !important;
+  background-color: #FBFBFD !important;
 }
 
 .react-flow__background-pattern {
-  color: #18181b !important;
+  color: #F5F5F7 !important;
 }
 
 /* Dark Scrollbar Styling */
@@ -126,107 +143,107 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: #18181b;
+  background: #F5F5F7;
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: #D2D2D7;
   border-radius: 6px;
-  border: 2px solid #18181b;
+  border: 2px solid #F5F5F7;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #52525b;
+  background: #AEAEB2;
 }
 
 ::-webkit-scrollbar-corner {
-  background: #18181b;
+  background: #F5F5F7;
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #3f3f46 #18181b;
+  scrollbar-color: #D2D2D7 transparent;
 }
 
 /* CodeMirror Dark Theme Overrides */
 .cm-editor {
-  background-color: #0a0a0a !important;
-  color: #e4e4e7 !important;
+  background-color: #FFFFFF !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-scroller {
-  background-color: #0a0a0a !important;
+  background-color: #FFFFFF !important;
 }
 
 .cm-editor .cm-content {
-  color: #e4e4e7 !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-line {
-  color: #e4e4e7 !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-gutters {
-  background-color: #18181b !important;
-  color: #71717a !important;
-  border-right: 1px solid #3f3f46 !important;
+  background-color: #F5F5F7 !important;
+  color: #8E8E93 !important;
+  border-right: 1px solid #D2D2D7 !important;
 }
 
 .cm-editor .cm-activeLine {
-  background-color: #27272a !important;
+  background-color: #EFEFF2 !important;
 }
 
 .cm-editor .cm-activeLineGutter {
-  background-color: #27272a !important;
+  background-color: #EFEFF2 !important;
 }
 
 .cm-editor .cm-selectionBackground {
-  background-color: #3f3f46 !important;
+  background-color: #D2D2D7 !important;
 }
 
 .cm-editor .cm-cursor {
-  border-left-color: #f59e0b !important;
+  border-left-color: #0071E3 !important;
 }
 
 /* CodeMirror syntax highlighting for Python */
 .cm-editor .cm-keyword {
-  color: #f59e0b !important;
+  color: #9B2393 !important;
 }
 
 .cm-editor .cm-string {
-  color: #10b981 !important;
+  color: #C41A16 !important;
 }
 
 .cm-editor .cm-number {
-  color: #3b82f6 !important;
+  color: #1C00CF !important;
 }
 
 .cm-editor .cm-comment {
-  color: #71717a !important;
+  color: #8E8E93 !important;
 }
 
 .cm-editor .cm-operator {
-  color: #e4e4e7 !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-variable {
-  color: #e4e4e7 !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-variable-2 {
-  color: #e4e4e7 !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-property {
-  color: #e4e4e7 !important;
+  color: #1D1D1F !important;
 }
 
 .cm-editor .cm-definition {
-  color: #8b5cf6 !important;
+  color: #0071E3 !important;
 }
 
 .cm-editor .cm-builtin {
-  color: #f59e0b !important;
+  color: #6F42C1 !important;
 }

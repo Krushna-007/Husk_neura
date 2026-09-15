@@ -1,431 +1,207 @@
+@import "./styles/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
-
-@theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
+/* Husk Platinum — light theme.
+ * The previous file declared an OKLCH palette inside `@theme inline`, which is
+ * Tailwind v4 syntax; this project runs Tailwind v3.3.5, so none of it emitted
+ * CSS and every semantic class (bg-card, text-muted-foreground, ring-ring) was
+ * silently inert. The palette now lives in :root below and is wired to utility
+ * names in tailwind.config.js, so those classes finally render.
+ */
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(0.05 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.1 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.1 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.8 0.15 85);
-  --primary-foreground: oklch(0.05 0 0);
-  --secondary: oklch(0.15 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.15 0 0);
-  --accent-foreground: oklch(0.95 0 0);
-  --destructive: oklch(0.6 0.2 25);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.15 0 0);
-  --ring: oklch(0.8 0.15 85);
-  --chart-1: oklch(0.8 0.15 85);
-  --chart-2: oklch(0.7 0.12 45);
-  --chart-3: oklch(0.6 0.1 65);
-  --chart-4: oklch(0.75 0.13 25);
-  --chart-5: oklch(0.65 0.11 105);
-  --sidebar: oklch(0.1 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.8 0.15 85);
-  --sidebar-primary-foreground: oklch(0.05 0 0);
-  --sidebar-accent: oklch(0.15 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.8 0.15 85);
+
+  --background:            var(--color-paper);
+  --foreground:            var(--color-ink);
+  --card:                  var(--color-paper-raised);
+  --card-foreground:       var(--color-ink);
+  --popover:               var(--color-paper-raised);
+  --popover-foreground:    var(--color-ink);
+  --primary:               var(--color-accent);
+  --primary-foreground:    #ffffff;
+  --secondary:             var(--color-rule-soft);
+  --secondary-foreground:  var(--color-ink);
+  --muted:                 var(--color-rule-soft);
+  --muted-foreground:      var(--color-ink-muted);
+  --accent:                var(--color-rule-soft);
+  --accent-foreground:     var(--color-ink);
+  --destructive:           var(--color-danger);
+  --destructive-foreground:#ffffff;
+  --border:                var(--color-rule);
+  --input:                 var(--color-rule);
+  --ring:                  var(--color-accent);
 }
 
+/* Retained so a future dark toggle still has values to switch to.
+ * Nothing applies `.dark` today. */
 .dark {
-  --background: oklch(0.05 0 0);
-  --foreground: oklch(0.95 0 0);
-  --card: oklch(0.1 0 0);
-  --card-foreground: oklch(0.95 0 0);
-  --popover: oklch(0.1 0 0);
-  --popover-foreground: oklch(0.95 0 0);
-  --primary: oklch(0.8 0.15 85);
-  --primary-foreground: oklch(0.05 0 0);
-  --secondary: oklch(0.15 0 0);
-  --secondary-foreground: oklch(0.95 0 0);
-  --muted: oklch(0.15 0 0);
-  --muted-foreground: oklch(0.6 0 0);
-  --accent: oklch(0.15 0 0);
-  --accent-foreground: oklch(0.95 0 0);
+  --background: oklch(0.05 0 0);          --foreground: oklch(0.95 0 0);
+  --card: oklch(0.1 0 0);                 --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.1 0 0);              --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.8 0.15 85);          --primary-foreground: oklch(0.05 0 0);
+  --secondary: oklch(0.15 0 0);           --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.15 0 0);               --muted-foreground: oklch(0.6 0 0);
+  --accent: oklch(0.15 0 0);              --accent-foreground: oklch(0.95 0 0);
   --destructive: oklch(0.6 0.2 25);
-  --border: oklch(0.2 0 0);
-  --input: oklch(0.15 0 0);
+  --border: oklch(0.2 0 0);               --input: oklch(0.15 0 0);
   --ring: oklch(0.8 0.15 85);
-  --chart-1: oklch(0.8 0.15 85);
-  --chart-2: oklch(0.7 0.12 45);
-  --chart-3: oklch(0.6 0.1 65);
-  --chart-4: oklch(0.75 0.13 25);
-  --chart-5: oklch(0.65 0.11 105);
-  --sidebar: oklch(0.1 0 0);
-  --sidebar-foreground: oklch(0.95 0 0);
-  --sidebar-primary: oklch(0.8 0.15 85);
-  --sidebar-primary-foreground: oklch(0.05 0 0);
-  --sidebar-accent: oklch(0.15 0 0);
-  --sidebar-accent-foreground: oklch(0.95 0 0);
-  --sidebar-border: oklch(0.2 0 0);
-  --sidebar-ring: oklch(0.8 0.15 85);
 }
 
 @layer base {
   * {
-    @apply border-zinc-800;
+    border-color: var(--color-rule);
   }
+
   body {
-    @apply bg-black text-zinc-100;
-    font-family: "Departure Mono", monospace;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    letter-spacing: var(--tracking-normal);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
-  /* Custom Font Classes */
-  .font-display {
-    font-family: "Departure Mono", monospace;
+
+  /* Display type tracks negative, the way Apple sets SF Pro. */
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-display);
   }
-  
-  .font-mono {
-    font-family: "Departure Mono", monospace;
+
+  /* Departure Mono survives as the technical voice: layer params, generated
+   * code, numeric labels. It no longer carries body copy. */
+  .font-mono, code, pre, kbd {
+    font-family: var(--font-mono);
   }
-  
-  /* Enhanced Layer Node Styling */
-  .layer-node {
-    @apply transition-colors duration-200 ease-out;
+
+  ::selection {
+    background: var(--color-accent-wash);
+    color: var(--color-ink);
   }
-  
-  .layer-node .node-handle {
-    @apply transition-colors duration-200;
-  }
-  
-  /* Enhanced Template Card Styling */
-  .template-card {
-    @apply bg-gradient-to-br from-gray-800/50 to-gray-900/50 backdrop-blur-sm;
-    @apply border border-gray-700/50;
-    @apply hover:border-blue-500/50 hover:from-gray-800/60 hover:to-gray-900/60;
-    @apply transition-all duration-200;
-  }
-  
-  .template-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px -2px rgba(66, 153, 225, 0.1);
-  }
-  
-  /* Enhanced Scrollbar */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    @apply bg-gray-900;
-  }
-  
+}
+
+@layer base {
+  /* ---- Scrollbar ---- */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
-    @apply bg-gray-700 rounded-full;
+    background: var(--color-rule);
+    border-radius: var(--radius-pill);
+    border: 2px solid var(--color-paper);
   }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-600;
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-ink-faint); }
+
+  /* ---- Cards ---- */
+  .template-card {
+    background: var(--color-paper-raised);
+    border: 1px solid var(--color-rule);
+    box-shadow: var(--shadow-sm);
+    transition: border-color var(--dur-base) var(--ease-out),
+                box-shadow    var(--dur-base) var(--ease-out),
+                transform     var(--dur-base) var(--ease-out);
   }
-  
-  /* Micro Animations */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
+  .template-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
   }
-  
-  .animate-glow {
-    animation: glow 2s ease-in-out infinite alternate;
-  }
-  
-  .animate-pulse-slow {
-    animation: pulse-slow 3s ease-in-out infinite;
-  }
-  
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-out;
-  }
-  
-  .animate-slide-up {
-    animation: slideUp 0.3s ease-out;
-  }
-  
-  .animate-scale-in {
-    animation: scaleIn 0.2s ease-out;
-  }
-  
-  /* Hover Effects */
-  .hover-lift {
-    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-  }
-  
-  .hover-lift:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.1);
-  }
-  
-  .hover-glow {
-    transition: box-shadow 0.3s ease-out;
-  }
-  
-  .hover-glow:hover {
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
-  }
-  
-  /* Keyframe Animations */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  @keyframes glow {
-    from {
-      box-shadow: 0 0 5px rgba(245, 158, 11, 0.5);
-    }
-    to {
-      box-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
-    }
-  }
-  
-  @keyframes pulse-slow {
-    0%, 100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.7;
-    }
-  }
-  
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  @keyframes scaleIn {
-    from {
-      opacity: 0;
-      transform: scale(0.9);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
+
+  .hover-lift { transition: transform var(--dur-base) var(--ease-out),
+                            box-shadow var(--dur-base) var(--ease-out); }
+  .hover-lift:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+  .hover-glow { transition: box-shadow var(--dur-slow) var(--ease-out); }
+  .hover-glow:hover { box-shadow: 0 0 0 4px var(--color-accent-wash); }
+
+  .layer-node { transition: border-color var(--dur-base) var(--ease-out),
+                            box-shadow   var(--dur-base) var(--ease-out); }
+
+  /* ---- Animations ---- */
+  .animate-fade-in    { animation: fadeIn var(--dur-slow) var(--ease-out); }
+  .animate-slide-up   { animation: slideUp var(--dur-base) var(--ease-out); }
+  .animate-scale-in   { animation: scaleIn var(--dur-fast) var(--ease-out); }
+  @keyframes fadeIn     { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp    { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes scaleIn    { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 
-  @keyframes backgroundScroll {
-    0% {
-      background-position: 0 0, 25px 25px;
-    }
-    100% {
-      background-position: -50px -50px, -25px -25px;
-    }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
   }
+}
 
-  /* Enhanced React Flow Styles */
-  .react-flow__node {
-    @apply transition-colors duration-200;
-  }
-
-  .react-flow__edge {
-    @apply transition-colors duration-200;
-  }
-
-  .react-flow__edge-path {
-    @apply transition-colors duration-200;
+@layer base {
+  /* ---- React Flow, themed through its own variables ----
+   * The library ships light-first; these just tune it to Husk Platinum. */
+  .react-flow {
+    --xy-background-pattern-dots-color:  var(--color-rule);
+    --xy-background-pattern-lines-color: var(--color-rule-soft);
+    --xy-edge-stroke:                    var(--color-ink-faint);
+    --xy-edge-stroke-selected:           var(--color-accent);
+    --xy-connectionline-stroke:          var(--color-accent);
+    --xy-controls-button-background-color:       var(--color-paper-raised);
+    --xy-controls-button-background-color-hover: var(--color-rule-soft);
+    --xy-controls-button-color:          var(--color-ink-2);
+    --xy-controls-button-border-color:   var(--color-rule);
+    --xy-edge-label-background-color:    var(--color-paper-raised);
   }
 
   .react-flow__controls {
-    @apply !shadow-lg !bg-transparent;
+    box-shadow: var(--shadow-md);
+    border-radius: var(--radius-md);
+    overflow: hidden;
   }
 
-  .react-flow__controls-button {
-    @apply transition-colors duration-200 !border-zinc-700 !bg-transparent text-zinc-400 hover:!bg-zinc-800/50;
-  }
-
-  .react-flow__minimap {
-    @apply !shadow-lg !bg-transparent;
-  }
-
-  .react-flow__attribution {
-    @apply !bg-transparent text-zinc-600;
-  }
-
-  .react-flow__background {
-    @apply !bg-transparent;
-  }
-
-  .react-flow__panel {
-    @apply !bg-transparent;
-  }
-
-  /* Remove selection highlight */
+  .react-flow__node { outline: none !important; }
   .react-flow__node-layerNode.selected,
   .react-flow__node-layerNode:focus {
     outline: none !important;
     box-shadow: none !important;
   }
 
-  .react-flow__node {
-    outline: none !important;
-  }
-
-  /* Make ReactFlow watermark transparent and replace text */
+  /* ---- Attribution ----
+   * Replaces the React Flow wordmark with HUSKML and keeps the link
+   * clickable. The previous file spread this across 17 duplicated rule
+   * blocks; this is the same behaviour, stated once. */
   .react-flow__attribution {
-    @apply !text-zinc-600 hover:!text-zinc-400;
+    position: relative !important;
+    z-index: 5;
+    padding: 5px !important;
     right: 10px !important;
     left: auto !important;
+    background: transparent !important;
+    color: var(--color-ink-faint);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
-  
-  .react-flow__attribution a {
-    @apply !text-zinc-600 hover:!text-zinc-400;
-    pointer-events: none;
-  }
-
-  .react-flow__attribution::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-  }
-
+  .react-flow__attribution:hover { color: var(--color-ink-muted); }
   .react-flow__attribution::before {
     content: "HUSKML";
     position: absolute;
     right: 0;
-    font-family: "Departure Mono", monospace;
-    cursor: pointer;
+    font-family: var(--font-mono);
     z-index: 1;
   }
-
-  /* Create a clickable link over the text */
-  .react-flow__attribution:hover {
-    @apply text-zinc-400;
-  }
-
-  .react-flow__attribution:hover::before {
-    text-decoration: underline;
-  }
-
-  /* Add an actual link that covers the text */
-  .react-flow__attribution::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    cursor: pointer;
-  }
-
-  .react-flow__attribution {
-    cursor: pointer;
-  }
-
-  .react-flow__attribution:hover {
-    cursor: pointer;
-  }
-
-  /* Make the entire attribution clickable */
-  .react-flow__attribution {
-    position: relative !important;
-    z-index: 5;
-    cursor: pointer;
-    padding: 5px !important;
-  }
-
-  .react-flow__attribution:hover {
-    @apply text-zinc-400;
-  }
-
-  /* Create the actual clickable link */
-  .react-flow__attribution::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    cursor: pointer;
-  }
-
-  .react-flow__attribution {
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  /* Make it actually clickable by overlaying a real link */
-  .react-flow__attribution {
-    position: relative !important;
-  }
-
+  .react-flow__attribution:hover::before { text-decoration: underline; }
   .react-flow__attribution a {
     opacity: 0;
     position: absolute;
     inset: 0;
     z-index: 3;
-    cursor: pointer;
     display: block;
     width: 100%;
     height: 100%;
-  }
-
-  .react-flow__attribution a[href] {
     pointer-events: all !important;
   }
 }
-

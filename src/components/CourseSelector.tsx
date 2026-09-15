@@ -45,11 +45,11 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
   const getDifficultyColor = (difficulty: Course['difficulty']) => {
     switch (difficulty) {
       case 'beginner':
-        return 'bg-green-500/20 text-green-400 border-green-500/30';
+        return 'bg-green-50 text-green-600 border-green-300';
       case 'intermediate':
-        return 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30';
+        return 'bg-yellow-50 text-yellow-600 border-yellow-300';
       case 'advanced':
-        return 'bg-red-500/20 text-red-400 border-red-500/30';
+        return 'bg-red-50 text-red-600 border-red-300';
       default:
         return 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30';
     }
@@ -108,7 +108,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
       {/* Header */}
       <div className="flex-shrink-0 p-4 pb-3 text-center border-b border-zinc-800">
         <div className="flex items-center justify-center gap-2 mb-2">
-          <GraduationCap className="h-5 w-5 text-blue-400" />
+          <GraduationCap className="h-5 w-5 text-blue-600" />
           <h2 className="text-lg font-bold text-zinc-100">Guided Courses</h2>
         </div>
         <p className="text-zinc-400 text-xs leading-relaxed">
@@ -125,8 +125,8 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
           return (
             <Card
               key={course.id}
-              className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-500/50 transition-all duration-300 cursor-pointer ${
-                isSelected ? 'border-blue-500 bg-blue-500/5 shadow-lg shadow-blue-500/10' : ''
+              className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-300 transition-colors duration-150 cursor-pointer ${
+                isSelected ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-500/10' : ''
               }`}
               onClick={() => setSelectedCourse(isSelected ? null : course)}
             >
@@ -153,15 +153,15 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
               {/* Course Stats */}
               <div className="grid grid-cols-3 gap-3 mb-3">
                 <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-                  <Clock className="h-3 w-3 text-blue-400" />
+                  <Clock className="h-3 w-3 text-blue-600" />
                   <span className="font-medium">{formatDuration(course.estimatedDuration)}</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-                  <BookOpen className="h-3 w-3 text-green-400" />
+                  <BookOpen className="h-3 w-3 text-green-600" />
                   <span className="font-medium">{course.lessons.length} lessons</span>
                 </div>
                 <div className="flex items-center gap-1.5 text-xs text-zinc-500">
-                  <Target className="h-3 w-3 text-purple-400" />
+                  <Target className="h-3 w-3 text-purple-600" />
                   <span className="font-medium">{course.lessons.reduce((acc, lesson) => acc + lesson.tasks.length, 0)} tasks</span>
                 </div>
               </div>
@@ -175,7 +175,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                   </div>
                   <div className="relative w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
                     <div 
-                      className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full transition-all duration-500 ease-out relative"
+                      className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full transition-colors duration-150 ease-out relative"
                       style={{ width: `${progress.progress}%` }}
                     >
                       {progress.progress > 0 && (
@@ -225,7 +225,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                     <Button
                       onClick={() => handleStartCourse(course.id)}
                       size="sm"
-                      className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium"
+                      className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white font-medium"
                     >
                       <Play className="h-3.5 w-3.5" />
                       {progress.hasStarted ? 'Continue Course' : 'Start Course'}
@@ -235,7 +235,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                         variant="outline"
                         size="sm"
                         onClick={(e) => handleResetProgress(course.id, e)}
-                        className="px-3 border-zinc-600 text-zinc-400 hover:text-red-400 hover:border-red-500 hover:bg-red-500/10"
+                        className="px-3 border-zinc-600 text-zinc-400 hover:text-red-600 hover:border-red-500 hover:bg-red-50"
                         title="Reset Progress"
                       >
                         <RotateCcw className="h-3.5 w-3.5" />

@@ -79,71 +79,76 @@ export const categories: Record<string, CategoryDefinition> = {
 // ============================================================================
 
 /**
- * Static color mapping to ensure Tailwind classes are included in build
+ * Static color mapping to ensure Tailwind classes are included in build.
+ *
+ * Husk Platinum (light): each category reads as a faint tinted card with a
+ * hairline border and a saturated label. The hue identity of every category
+ * is preserved from the dark build, so existing muscle memory survives —
+ * only the lightness is re-derived for a white ground.
  */
 const categoryColorMap: Record<
   string,
   { bg: string; border: string; text: string; hover: string }
 > = {
   emerald: {
-    bg: "bg-emerald-900/20",
-    border: "border-emerald-600",
-    text: "text-emerald-300",
-    hover: "hover:border-emerald-500 hover:shadow-emerald-500/20",
+    bg: "bg-emerald-50",
+    border: "border-emerald-200",
+    text: "text-emerald-700",
+    hover: "hover:border-emerald-400 hover:shadow-emerald-500/10",
   },
   blue: {
-    bg: "bg-blue-900/20",
-    border: "border-blue-600",
-    text: "text-blue-300",
-    hover: "hover:border-blue-500 hover:shadow-blue-500/20",
+    bg: "bg-blue-50",
+    border: "border-blue-200",
+    text: "text-blue-700",
+    hover: "hover:border-blue-400 hover:shadow-blue-500/10",
   },
   purple: {
-    bg: "bg-purple-900/20",
-    border: "border-purple-600",
-    text: "text-purple-300",
-    hover: "hover:border-purple-500 hover:shadow-purple-500/20",
+    bg: "bg-purple-50",
+    border: "border-purple-200",
+    text: "text-purple-700",
+    hover: "hover:border-purple-400 hover:shadow-purple-500/10",
   },
   indigo: {
-    bg: "bg-indigo-900/20",
-    border: "border-indigo-600",
-    text: "text-indigo-300",
-    hover: "hover:border-indigo-500 hover:shadow-indigo-500/20",
+    bg: "bg-indigo-50",
+    border: "border-indigo-200",
+    text: "text-indigo-700",
+    hover: "hover:border-indigo-400 hover:shadow-indigo-500/10",
   },
   amber: {
-    bg: "bg-amber-900/20",
-    border: "border-amber-500",
-    text: "text-amber-300",
-    hover: "hover:border-amber-400 hover:shadow-amber-400/20",
+    bg: "bg-amber-50",
+    border: "border-amber-200",
+    text: "text-amber-700",
+    hover: "hover:border-amber-400 hover:shadow-amber-500/10",
   },
   orange: {
-    bg: "bg-orange-900/20",
-    border: "border-orange-600",
-    text: "text-orange-300",
-    hover: "hover:border-orange-500 hover:shadow-orange-500/20",
+    bg: "bg-orange-50",
+    border: "border-orange-200",
+    text: "text-orange-700",
+    hover: "hover:border-orange-400 hover:shadow-orange-500/10",
   },
   rose: {
-    bg: "bg-rose-900/20",
-    border: "border-rose-600",
-    text: "text-rose-300",
-    hover: "hover:border-rose-500 hover:shadow-rose-500/20",
+    bg: "bg-rose-50",
+    border: "border-rose-200",
+    text: "text-rose-700",
+    hover: "hover:border-rose-400 hover:shadow-rose-500/10",
   },
   cyan: {
-    bg: "bg-cyan-900/20",
-    border: "border-cyan-600",
-    text: "text-cyan-300",
-    hover: "hover:border-cyan-500 hover:shadow-cyan-500/20",
+    bg: "bg-cyan-50",
+    border: "border-cyan-200",
+    text: "text-cyan-700",
+    hover: "hover:border-cyan-400 hover:shadow-cyan-500/10",
   },
   teal: {
-    bg: "bg-teal-900/20",
-    border: "border-teal-600",
-    text: "text-teal-300",
-    hover: "hover:border-teal-500 hover:shadow-teal-500/20",
+    bg: "bg-teal-50",
+    border: "border-teal-200",
+    text: "text-teal-700",
+    hover: "hover:border-teal-400 hover:shadow-teal-500/10",
   },
   slate: {
-    bg: "bg-zinc-800/50",
-    border: "border-zinc-600",
-    text: "text-zinc-300",
-    hover: "hover:border-zinc-500 hover:shadow-zinc-500/20",
+    bg: "bg-paper-raised",
+    border: "border-rule",
+    text: "text-ink-2",
+    hover: "hover:border-ink-faint hover:shadow-black/5",
   },
 };
 
@@ -253,6 +258,7 @@ export function getLayerCategories() {
     const layersByCategory = getLayersByCategory(key);
 
     return {
+      key,
       name: category.name,
       color: category.color,
       bgColor: colorClasses.bg,

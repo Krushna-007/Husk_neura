@@ -58,7 +58,7 @@ export function WelcomeModal({ open, onOpenChange }: WelcomeModalProps) {
         {/* Polished Header */}
         <div className="text-center px-4 sm:px-8 pt-4 sm:pt-6 pb-4 sm:pb-6">
           <div className="flex items-center justify-center gap-3 sm:gap-4 mb-2">
-            <div className="rounded-xl">
+            <div className="rounded-md">
               <Logo className="h-8 w-8 sm:h-10 sm:w-10 text-slate-800" />
             </div>
             <div className="text-left">
@@ -76,7 +76,7 @@ export function WelcomeModal({ open, onOpenChange }: WelcomeModalProps) {
         {/* Video Section */}
         <div className="relative px-4 sm:px-8 pb-4 sm:pb-6">
           {isVideoLoading && (
-            <div className="absolute inset-0 mx-4 sm:mx-8 flex items-center justify-center bg-slate-100 aspect-video rounded-lg">
+            <div className="absolute inset-0 mx-4 sm:mx-8 flex items-center justify-center bg-slate-100 aspect-video rounded-md">
               <div className="flex flex-col items-center gap-3">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-slate-600"></div>
                 <p className="text-slate-600 text-sm">Loading demo video...</p>
@@ -85,7 +85,7 @@ export function WelcomeModal({ open, onOpenChange }: WelcomeModalProps) {
           )}
 
           {hasVideoError ? (
-            <div className="flex items-center justify-center bg-slate-100 aspect-video rounded-lg">
+            <div className="flex items-center justify-center bg-slate-100 aspect-video rounded-md">
               <div className="text-center p-4 sm:p-8">
                 <Play className="h-12 w-12 sm:h-16 sm:w-16 text-slate-400 mx-auto mb-4" />
                 <h3 className="text-base sm:text-lg font-semibold text-slate-700 mb-2">
@@ -99,7 +99,7 @@ export function WelcomeModal({ open, onOpenChange }: WelcomeModalProps) {
           ) : (
             shouldLoadVideo && (
               <video
-                className="w-full aspect-video block object-cover rounded-lg shadow-lg"
+                className="w-full aspect-video block object-cover rounded-md shadow-lg"
                 autoPlay
                 muted
                 loop

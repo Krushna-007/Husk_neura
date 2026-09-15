@@ -129,16 +129,16 @@ export function AppHeader({
   }, [onClearAll]);
 
   return (
-    <header className="bg-black border-b border-zinc-800 shadow-sm px-6 py-3 flex items-center justify-between">
+    <header className="flex items-center justify-between border-b border-rule bg-paper-raised px-4 py-2.5">
       {/* Left Side - Logo & Title */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
           <img src="/favicon_new.svg" alt="Icon" className="h-5 w-5" />
-          <span className="text-zinc-100 font-medium">
+          <span className="text-[13px] font-medium tracking-tightish text-ink">
             {isCourseMode && currentCourse ? currentCourse.title : "Neural Network Builder"}
           </span>
           {isCourseMode && currentLesson && (
-            <span className="text-zinc-500 text-sm">• {currentLesson.title}</span>
+            <span className="text-[13px] text-ink-faint">• {currentLesson.title}</span>
           )}
         </div>
       </div>
@@ -159,7 +159,7 @@ export function AppHeader({
                     variant="outline"
                     size="sm"
                     disabled={!hasContent}
-                    className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-600 border-zinc-700 text-zinc-300"
                   >
                     <Trash2 className="h-4 w-4" />
                     Clear Canvas
@@ -195,7 +195,7 @@ export function AppHeader({
               variant="outline"
               size="sm"
               onClick={exitCourse}
-              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-red-800 hover:border-red-500 hover:text-red-300 ml-2"
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-red-50 hover:border-red-500 hover:text-red-700 ml-2"
             >
               <X className="h-4 w-4" />
               Exit Course
@@ -215,7 +215,7 @@ export function AppHeader({
                     variant="outline"
                     size="sm"
                     disabled={!hasContent}
-                    className="flex items-center gap-2 hover:bg-red-900/20 hover:border-red-500 hover:text-red-400 border-zinc-700 text-zinc-300"
+                    className="flex items-center gap-2 hover:bg-red-50 hover:border-red-500 hover:text-red-600 border-zinc-700 text-zinc-300"
                   >
                     <Trash2 className="h-4 w-4" />
                     Clear All
@@ -281,7 +281,7 @@ export function AppHeader({
               variant="outline"
               size="sm"
               onClick={toggleCourseMode}
-              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-blue-800 hover:border-blue-500 hover:text-blue-300"
+              className="flex items-center gap-2 border-zinc-700 text-zinc-300 hover:bg-blue-50 hover:border-blue-500 hover:text-blue-700"
             >
               <BookOpen className="h-4 w-4" />
               Learn

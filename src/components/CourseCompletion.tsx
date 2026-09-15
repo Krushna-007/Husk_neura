@@ -49,14 +49,14 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
       <div className="flex-1 overflow-y-auto p-6">
         {/* Celebration Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4 animate-bounce">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4">
             <Trophy className="h-10 w-10 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 className="text-3xl font-bold text-ink mb-2">
             Congratulations! 🎉
           </h1>
           <p className="text-zinc-300 text-lg">
-            You've successfully completed <span className="text-blue-400 font-semibold">{currentCourse.title}</span>
+            You've successfully completed <span className="text-blue-600 font-semibold">{currentCourse.title}</span>
           </p>
           <p className="text-zinc-400 text-sm mt-2">
             Completed on {completionTime}
@@ -66,8 +66,8 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         {/* Achievement Summary */}
         <Card className="bg-zinc-800/50 border-zinc-700 mb-6">
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <CheckCircle className="h-5 w-5 text-green-400" />
+            <h3 className="text-lg font-semibold text-ink mb-4 flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-green-600" />
               What You've Accomplished
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -94,8 +94,8 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         {/* Share Section */}
         <Card className="bg-zinc-800/50 border-zinc-700 mb-6">
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-              <Share2 className="h-5 w-5 text-blue-400" />
+            <h3 className="text-lg font-semibold text-ink mb-4 flex items-center gap-2">
+              <Share2 className="h-5 w-5 text-blue-600" />
               Share Your Achievement
             </h3>
             <p className="text-zinc-400 text-sm mb-4">
@@ -104,7 +104,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 onClick={handleLinkedInShare}
-                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white flex-1"
+                className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white flex-1"
               >
                 <ExternalLink className="h-4 w-4" />
                 Share on LinkedIn
@@ -123,7 +123,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
         {/* Next Steps */}
         <Card className="bg-zinc-800/50 border-zinc-700">
           <div className="p-6">
-            <h3 className="text-lg font-semibold text-white mb-4">What's Next?</h3>
+            <h3 className="text-lg font-semibold text-ink mb-4">What's Next?</h3>
             <div className="space-y-3 text-zinc-300">
               <p>🚀 <strong>Keep Learning:</strong> Try building more complex networks with different architectures</p>
               <p>🔬 <strong>Experiment:</strong> Modify parameters and see how they affect your network's performance</p>
@@ -147,7 +147,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
           </Button>
           <Button
             onClick={exitCourse}
-            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white flex-1"
+            className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white flex-1"
           >
             Explore More Courses
           </Button>

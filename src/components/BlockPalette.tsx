@@ -10,6 +10,7 @@ interface LayerType {
 }
 
 interface CategoryType {
+  key: string;
   name: string;
   color: string;
   bgColor: string;
@@ -20,6 +21,7 @@ interface CategoryType {
 }
 import type { NetworkTemplate } from "../lib/templates";
 import { getLayerTypes } from "../lib/layer-definitions";
+import { LayerIcon, CategoryIcon, TemplateIcon } from "../lib/layer-icons";
 import { getLayerCategories } from "../lib/categories";
 import {
   getAllTemplates,
@@ -82,7 +84,7 @@ export default function BlockPalette({
     const allTemplates = getAllTemplates();
 
     console.log(
-      `🔄 BlockPalette updateData: ${types.length} types, ${categories.length} categories, ${allTemplates.length} templates`
+      `BlockPalette updateData: ${types.length} types, ${categories.length} categories, ${allTemplates.length} templates`
     );
 
     setLayerTypes(types);
@@ -217,20 +219,20 @@ export default function BlockPalette({
 
   return (
     <div
-      className={`space-y-6 p-6 h-full overflow-y-auto bg-transparent ${className}`}
+      className={`flex h-full flex-col gap-4 overflow-y-auto bg-transparent p-4 ${className}`}
     >
       {/* Course Mode Indicator */}
       {isCourseMode && currentLesson && (
-        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/20 rounded-lg">
+        <div className="mb-4 p-3 bg-blue-50 border border-blue-300 rounded-md">
           <div className="flex items-center gap-2 mb-1">
-            <GraduationCap className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-blue-300">Course Mode</span>
+            <GraduationCap className="h-4 w-4 text-blue-600" />
+            <span className="text-sm font-medium text-blue-700">Course Mode</span>
           </div>
-          <p className="text-xs text-blue-200">
+          <p className="text-xs text-blue-700">
             {currentLesson.title}
           </p>
           {allowedLayers.length > 0 && (
-            <p className="text-xs text-blue-300/70 mt-1">
+            <p className="text-xs text-blue-700/70 mt-1">
               Only lesson layers available ({allowedLayers.length} types)
             </p>
           )}
@@ -238,35 +240,37 @@ export default function BlockPalette({
       )}
 
       {/* Tab Navigation */}
-      <div className="flex space-x-2">
-        <button
-          onClick={() => setActiveTab(CONFIG.TABS.LAYERS)}
-          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${activeTab === CONFIG.TABS.LAYERS
-              ? "bg-transparent border-2 border-blue-500 text-blue-400 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] animate-pulse"
-              : "bg-transparent border-2 border-blue-500/30 text-blue-400/70 hover:border-blue-400 hover:text-blue-300 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.3)]"
-            }`}
-        >
-          <Layers className="h-4 w-4" />
-          Layers
-        </button>
-        <button
-          onClick={() => setActiveTab(CONFIG.TABS.TEMPLATES)}
-          className={`flex-1 flex items-center justify-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 hover-lift ${activeTab === CONFIG.TABS.TEMPLATES
-              ? "bg-transparent border-2 border-purple-500 text-purple-400 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)] animate-pulse"
-              : "bg-transparent border-2 border-purple-500/30 text-purple-400/70 hover:border-purple-400 hover:text-purple-300 hover:shadow-[0_0_10px_-3px_rgba(168,85,247,0.3)]"
-            }`}
-        >
-          <Grid3X3 className="h-4 w-4" />
-          Templates
-        </button>
+      <div
+        role="tablist"
+        className="flex gap-1 rounded-md bg-rule-soft p-1"
+      >
+        {[
+          { id: CONFIG.TABS.LAYERS, label: "Layers", Icon: Layers },
+          { id: CONFIG.TABS.TEMPLATES, label: "Templates", Icon: Grid3X3 },
+        ].map(({ id, label, Icon }) => {
+          const selected = activeTab === id;
+          return (
+            <button
+              key={id}
+              role="tab"
+              aria-selected={selected}
+              onClick={() => setActiveTab(id)}
+              className={`flex flex-1 items-center justify-center gap-1.5 rounded-sm px-3 py-1.5 text-[13px] font-medium transition-colors duration-150 ease-out-soft ${
+                selected
+                  ? "bg-paper-raised text-ink shadow-sm"
+                  : "text-ink-muted hover:text-ink"
+              }`}
+            >
+              <Icon className="h-3.5 w-3.5" strokeWidth={1.75} />
+              {label}
+            </button>
+          );
+        })}
       </div>
 
       {/* Search */}
       <div className="relative">
-        <Search className={`absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 animate-pulse ${activeTab === CONFIG.TABS.LAYERS
-            ? "text-blue-400 shadow-[0_0_10px_-1px_rgba(59,130,246,0.5)]"
-            : "text-purple-400 shadow-[0_0_10px_-1px_rgba(168,85,247,0.5)]"
-          }`} />
+        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" strokeWidth={1.75} />
         <Input
           type="text"
           placeholder={
@@ -276,18 +280,12 @@ export default function BlockPalette({
           }
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className={`pl-10 pr-10 bg-transparent border-2 text-zinc-100 placeholder:text-zinc-400 focus:ring-2 focus:border-transparent backdrop-blur-sm transition-all duration-200 ${activeTab === CONFIG.TABS.LAYERS
-              ? "border-blue-500/50 focus:ring-blue-500/50 shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)]"
-              : "border-purple-500/50 focus:ring-purple-500/50 shadow-[0_0_10px_-3px_rgba(168,85,247,0.5)]"
-            }`}
+          className="h-9 rounded-md border border-rule bg-paper-raised pl-9 pr-9 text-[13px] text-ink placeholder:text-ink-faint transition-colors duration-150 ease-out-soft focus-visible:border-brand"
         />
         {searchTerm && (
           <button
             onClick={clearSearch}
-            className={`absolute right-3 top-1/2 transform -translate-y-1/2 transition-colors duration-200 ${activeTab === CONFIG.TABS.LAYERS
-                ? "text-blue-400/70 hover:text-blue-300"
-                : "text-purple-400/70 hover:text-purple-300"
-              }`}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-ink-faint transition-colors duration-150 ease-out-soft hover:text-ink"
           >
             <X className="h-4 w-4" />
           </button>
@@ -296,15 +294,15 @@ export default function BlockPalette({
 
       {templatesRestricted ? (
         <div className="text-center py-8 text-zinc-400 animate-fade-in">
-          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-500/10 rounded-full border border-purple-500/20">
-            <GraduationCap className="h-8 w-8 text-purple-400" />
+          <div className="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-purple-50 rounded-full border border-purple-300">
+            <GraduationCap className="h-8 w-8 text-purple-600" />
           </div>
           <h3 className="text-zinc-200 font-medium mb-2">Templates Not Available</h3>
           <p className="text-sm text-zinc-400 leading-relaxed max-w-sm mx-auto mb-4">
             Templates are limited during guided lessons. Focus on building with individual layers to master the fundamentals.
           </p>
-          <div className="text-xs text-purple-300/70 bg-purple-500/10 rounded-lg p-3 max-w-xs mx-auto">
-            💡 Complete the course to unlock all templates
+          <div className="mx-auto max-w-xs rounded-md border border-rule bg-paper-raised p-3 text-xs text-ink-muted">
+            Complete the course to unlock all templates
           </div>
         </div>
       ) : hasNoResults ? (
@@ -328,25 +326,23 @@ export default function BlockPalette({
           </p>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-5">
           {activeTab === CONFIG.TABS.LAYERS
             ? // Layers View
-            filteredCategories.map((category, index) => (
-              <div key={category.name} className="space-y-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+            filteredCategories.map((category) => (
+              <div key={category.name} className="space-y-1.5">
                 <h3
-                  className={`text-sm font-medium ${category.textColor} border-b border-zinc-700 pb-1`}
+                  className={`flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider ${category.textColor} border-b border-rule pb-1.5`}
                 >
+                  <CategoryIcon categoryKey={category.key} className="h-3.5 w-3.5 flex-shrink-0" />
                   {category.name}
                 </h3>
-                <div className="space-y-2">
-                  {category.layers.map((layer: LayerType, layerIndex: number) => (
+                <div className="space-y-1.5">
+                  {category.layers.map((layer: LayerType) => (
                     <div
                       key={layer.type}
-                      className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${category.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent shadow-[0_0_10px_-3px_rgba(245,158,11,0.3)]`}
-                      style={{
-                        cursor: CONFIG.DRAG_CURSOR.GRAB,
-                        animationDelay: `${(index * 0.1) + (layerIndex * 0.05)}s`
-                      }}
+                      className={`cursor-grab ${category.borderColor} rounded-md border bg-paper-raised px-3 py-2.5 transition-colors duration-150 ease-out-soft hover:border-brand`}
+                      style={{ cursor: CONFIG.DRAG_CURSOR.GRAB }}
                       draggable
                       onDragStart={(event) =>
                         handleDragStart(event, layer.type)
@@ -363,12 +359,12 @@ export default function BlockPalette({
                       <div
                         className={`flex items-center gap-2 mb-1 ${category.textColor}`}
                       >
-                        <span className="text-base">{layer.icon}</span>
+                        <LayerIcon type={layer.type} className="h-4 w-4 flex-shrink-0" />
                         <span className="font-medium text-sm">
                           {layer.type}
                         </span>
                       </div>
-                      <p className="text-xs text-zinc-300 leading-relaxed">
+                      <p className="text-xs text-ink-muted leading-relaxed">
                         {layer.description}
                       </p>
                     </div>
@@ -377,23 +373,20 @@ export default function BlockPalette({
               </div>
             ))
             : // Templates View
-            Object.values(templatesByCategory).map((categoryData, index) => (
-              <div key={categoryData.category} className="space-y-3 animate-fade-in" style={{ animationDelay: `${index * 0.1}s` }}>
+            Object.values(templatesByCategory).map((categoryData) => (
+              <div key={categoryData.category} className="space-y-1.5">
                 <h3
-                  className={`text-sm font-medium ${categoryData.textColor} border-b border-zinc-700 pb-1 flex items-center gap-2`}
+                  className={`flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider ${categoryData.textColor} border-b border-rule pb-1.5`}
                 >
-                  <span>{categoryData.icon}</span>
+                  <TemplateIcon categoryKey={categoryData.category} className="h-3.5 w-3.5 flex-shrink-0" />
                   {categoryData.name}
                 </h3>
-                <div className="space-y-2">
-                  {categoryData.templates.map((template, templateIndex) => (
+                <div className="space-y-1.5">
+                  {categoryData.templates.map((template) => (
                     <div
                       key={template.id}
-                      className={`cursor-move transition-all duration-300 hover:scale-[1.02] hover-lift animate-scale-in ${categoryData.borderColor} rounded-xl border-2 p-3 backdrop-blur-sm bg-transparent`}
-                      style={{
-                        cursor: CONFIG.DRAG_CURSOR.GRAB,
-                        animationDelay: `${(index * 0.1) + (templateIndex * 0.05)}s`
-                      }}
+                      className={`cursor-grab ${categoryData.borderColor} rounded-md border bg-paper-raised px-3 py-2.5 transition-colors duration-150 ease-out-soft hover:border-brand`}
+                      style={{ cursor: CONFIG.DRAG_CURSOR.GRAB }}
                       draggable
                       onDragStart={(event) =>
                         handleTemplateDragStart(event, template.id)
@@ -410,25 +403,25 @@ export default function BlockPalette({
                       <div
                         className={`flex items-center gap-2 mb-1 ${categoryData.textColor}`}
                       >
-                        <span className="text-base">{template.icon}</span>
+                        <TemplateIcon categoryKey={template.category} className="h-4 w-4 flex-shrink-0" />
                         <span className="font-medium text-sm">
                           {template.name}
                         </span>
                       </div>
-                      <p className="text-xs text-zinc-300 leading-relaxed mb-2">
+                      <p className="mb-2 text-xs leading-relaxed text-ink-muted">
                         {template.description}
                       </p>
                       <div className="flex gap-1 flex-wrap">
                         {template.tags.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm"
+                            className="rounded-sm border border-rule bg-paper px-1.5 py-0.5 font-mono text-[11px] text-ink-muted"
                           >
                             {tag}
                           </span>
                         ))}
                         {template.tags.length > 3 && (
-                          <span className="text-xs px-2 py-1 bg-zinc-700/50 text-zinc-200 rounded-full border border-zinc-600/50 backdrop-blur-sm">
+                          <span className="rounded-sm border border-rule bg-paper px-1.5 py-0.5 font-mono text-[11px] text-ink-muted">
                             +{template.tags.length - 3}
                           </span>
                         )}

@@ -42,9 +42,9 @@ export function AchievementBadge({
   const colors = {
     gold: {
       bg: 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20',
-      border: 'border-yellow-500/30',
-      icon: 'text-yellow-400',
-      text: 'text-yellow-200',
+      border: 'border-yellow-300',
+      icon: 'text-yellow-600',
+      text: 'text-yellow-700',
       glow: 'shadow-lg shadow-yellow-500/20'
     },
     silver: {
@@ -56,30 +56,30 @@ export function AchievementBadge({
     },
     bronze: {
       bg: 'bg-gradient-to-br from-orange-600/20 to-amber-600/20',
-      border: 'border-orange-500/30',
-      icon: 'text-orange-400',
-      text: 'text-orange-200',
+      border: 'border-orange-300',
+      icon: 'text-orange-600',
+      text: 'text-orange-700',
       glow: 'shadow-lg shadow-orange-500/20'
     },
     blue: {
       bg: 'bg-gradient-to-br from-blue-500/20 to-cyan-500/20',
-      border: 'border-blue-500/30',
-      icon: 'text-blue-400',
-      text: 'text-blue-200',
+      border: 'border-blue-300',
+      icon: 'text-blue-600',
+      text: 'text-blue-700',
       glow: 'shadow-lg shadow-blue-500/20'
     },
     green: {
       bg: 'bg-gradient-to-br from-green-500/20 to-emerald-500/20',
-      border: 'border-green-500/30',
-      icon: 'text-green-400',
-      text: 'text-green-200',
+      border: 'border-green-300',
+      icon: 'text-green-600',
+      text: 'text-green-700',
       glow: 'shadow-lg shadow-green-500/20'
     },
     purple: {
       bg: 'bg-gradient-to-br from-purple-500/20 to-pink-500/20',
-      border: 'border-purple-500/30',
-      icon: 'text-purple-400',
-      text: 'text-purple-200',
+      border: 'border-purple-300',
+      icon: 'text-purple-600',
+      text: 'text-purple-700',
       glow: 'shadow-lg shadow-purple-500/20'
     },
   };
@@ -112,7 +112,7 @@ export function AchievementBadge({
     <div className={`flex items-center gap-3 ${className}`}>
       <div 
         className={`
-          flex items-center justify-center rounded-full border-2 transition-all duration-300
+          flex items-center justify-center rounded-full border-2 transition-colors duration-150
           ${sizeScheme.container}
           ${isUnlocked 
             ? `${colorScheme.bg} ${colorScheme.border} ${colorScheme.glow}` 

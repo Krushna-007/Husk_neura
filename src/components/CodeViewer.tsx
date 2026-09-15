@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
-import { Check, Copy, Download } from "lucide-react";
+import { Check, Copy, Download, ExternalLink } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -15,8 +15,6 @@ import {
 } from "../lib/code-generation";
 import { useFlowStore } from "../lib/flow-store";
 import { cn } from "../lib/utils";
-import RetroGrid from "./ui/RetroGrid";
-import ShinyButton from "./ui/ShinyButton";
 
 
 
@@ -72,7 +70,7 @@ export function CodeViewer({ className }: CodeViewerProps) {
   const [code, setCode] = useState(`# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
-# Welcome to HUSKML! 🚀
+# Welcome to HUSKML
 # Start building your neural network by dragging and dropping layers from the left panel
 
 import tensorflow as tf
@@ -81,7 +79,7 @@ from tensorflow import keras
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`);
+print("Model scaffold ready.")`);
 
   useEffect(() => {
     const generateCode = async () => {
@@ -90,7 +88,7 @@ print("✨ Ready to create something amazing with HUSKML!")`);
           ? `# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
-# Welcome to HUSKML! 🚀
+# Welcome to HUSKML
 # Start building your neural network by dragging and dropping layers from the left panel
 
 import tensorflow as tf
@@ -99,11 +97,11 @@ from tensorflow import keras
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`
+print("Model scaffold ready.")`
           : `# HUSKML - Advanced Neural Network Builder
 # https://huskml.maverickspectrum.com
 
-# Welcome to HUSKML! 🚀
+# Welcome to HUSKML
 # Start building your neural network by dragging and dropping layers from the left panel
 
 import torch
@@ -113,7 +111,7 @@ import torch.nn.functional as F
 # Your HUSKML model will appear here once you add layers
 model = None
 
-print("✨ Ready to create something amazing with HUSKML!")`;
+print("Model scaffold ready.")`;
 
         setCode(welcomeMessage);
         return;
@@ -199,23 +197,23 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
   const hasContent = nodes.length > 0;
 
   return (
-    <div className={cn("h-full flex flex-col bg-zinc-900 border-l border-zinc-800", className)}>
+    <div className={cn("flex h-full flex-col bg-paper-raised", className)}>
       <Card className="border-0 bg-transparent shadow-none rounded-none flex-1 flex flex-col pt-6 pb-0 gap-0 animate-fade-in relative overflow-hidden h-full">
-        <CardHeader className="pb-3 shrink-0 z-10 bg-zinc-900/95 backdrop-blur-sm border-b border-zinc-800/50">
+        <CardHeader className="z-10 shrink-0 border-b border-rule bg-paper-raised pb-3">
           <div className="flex items-center justify-between">
-            <CardTitle className="text-xl text-zinc-200 font-semibold font-grotesk">
+            <CardTitle className="font-display text-[15px] font-semibold tracking-tightish text-ink">
               Generated Code
             </CardTitle>
             <div className="flex items-center gap-3">
               <Select value={framework} onValueChange={(value: 'keras' | 'pytorch') => setFramework(value)}>
-                <SelectTrigger className="w-[120px] h-8 bg-zinc-800/50 border-zinc-700 text-zinc-300">
+                <SelectTrigger className="h-8 w-[120px] rounded-md border-rule bg-paper-raised text-[13px] text-ink">
                   <SelectValue placeholder="Framework" />
                 </SelectTrigger>
-                <SelectContent className="bg-zinc-800 border-zinc-700">
-                  <SelectItem value="keras" className="text-zinc-300 hover:bg-zinc-700">
+                <SelectContent className="border-rule bg-paper-raised">
+                  <SelectItem value="keras" className="text-ink focus:bg-rule-soft">
                     Keras
                   </SelectItem>
-                  <SelectItem value="pytorch" className="text-zinc-300 hover:bg-zinc-700">
+                  <SelectItem value="pytorch" className="text-ink focus:bg-rule-soft">
                     PyTorch
                   </SelectItem>
                 </SelectContent>
@@ -225,9 +223,9 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
                 className={
                   hasContent
                     ? framework === 'pytorch'
-                      ? "bg-orange-900/20 text-orange-300 border-orange-500"
-                      : "bg-amber-900/20 text-amber-300 border-amber-500"
-                    : "bg-blue-900/20 text-blue-300 border-blue-600"
+                      ? "bg-orange-50 text-orange-700 border-orange-200"
+                      : "bg-amber-50 text-amber-700 border-amber-200"
+                    : "bg-rule-soft text-ink-muted border-rule"
                 }
               >
                 {hasContent ? (framework === 'pytorch' ? 'PyTorch Beta' : 'Keras') : "Ready"}
@@ -256,8 +254,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             onClick={handleCopy}
             variant="outline"
             size="sm"
-            className={`flex-1 max-w-[200px] bg-zinc-900 border-[1px] border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${copied ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
-              }`}
+            className={`flex-1 max-w-[200px] ${copied ? "border-green-600 text-green-700" : ""}`}
           >
             {copied ? (
               <>
@@ -275,8 +272,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             onClick={handleDownload}
             variant="outline"
             size="sm"
-            className={`flex-1 max-w-[200px] bg-zinc-900 border-[1px] border-zinc-700 text-zinc-300 hover:bg-zinc-800 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_10px_-3px_rgba(59,130,246,0.5)] transition-all duration-300 ${downloaded ? "border-green-500 text-green-400 shadow-[0_0_10px_-3px_rgba(34,197,94,0.5)]" : ""
-              }`}
+            className={`flex-1 max-w-[200px] ${downloaded ? "border-green-600 text-green-700" : ""}`}
           >
             {downloaded ? (
               <>
@@ -292,43 +288,33 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
           </Button>
         </div>
 
-        {/* Reduced Height Retro Grid Footer */}
-        <div className="relative h-28 w-full overflow-hidden border-t border-zinc-800 shrink-0 bg-black">
-          <RetroGrid className="opacity-100" angle={65} />
+        {/* Footer — brand line and outbound link, separated by a hairline. */}
+        <footer className="flex shrink-0 items-center justify-between gap-4 border-t border-rule bg-paper px-6 py-4">
+          <a
+            href="https://neura-huskml.maverickspectrum.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex select-none flex-col gap-0.5"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-ink-faint">
+              In the neural cloud
+            </span>
+            <span className="font-display text-lg font-semibold tracking-display text-ink group-hover:text-brand">
+              HUSKML
+            </span>
+          </a>
 
-          <div className="absolute inset-0 flex flex-row items-center justify-between z-10 px-10 pointer-events-auto max-w-full mx-auto w-full">
+          <Button asChild variant="outline" size="sm">
             <a
-              href="https://neura-huskml.maverickspectrum.com/"
+              href="https://www.linkedin.com/company/huskml"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col gap-0.5 select-none hover:opacity-80 transition-opacity"
             >
-              <div className="text-[11px] tracking-[0.4em] text-zinc-500 font-bold uppercase" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                In The Neural Cloud
-              </div>
-              <div className="text-4xl font-bold tracking-tight text-white/90 drop-shadow-sm" style={{ fontFamily: "'Space Grotesk', sans-serif" }}>
-                HUSKML
-              </div>
+              Follow on LinkedIn
+              <ExternalLink className="h-3.5 w-3.5" />
             </a>
-
-            <div className="flex items-center">
-              <ShinyButton
-                href="https://www.linkedin.com/company/huskml"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="!font-mono"
-              >
-                <div className="flex flex-row items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-wider opacity-80">Follow on</span>
-                  <span className="text-sm font-bold tracking-tight">LinkedIn</span>
-                </div>
-              </ShinyButton>
-            </div>
-          </div>
-
-          {/* Top Fade */}
-          <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-zinc-900 to-transparent pointer-events-none" />
-        </div>
+          </Button>
+        </footer>
       </Card>
     </div>
   );

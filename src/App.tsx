@@ -3,7 +3,6 @@ import { AppShell } from "./components/AppShell";
 import { CanvasEditor } from "./components/CanvasEditor";
 import BlockPalette from "./components/BlockPalette";
 import { CodeViewer } from "./components/CodeViewer";
-import { BackgroundParticles } from "./components/BackgroundParticles";
 import { DeviceWarning } from "./components/DeviceWarning";
 import type { Node, Edge } from "@xyflow/react";
 import { useFlowStore } from "./lib/flow-store";
@@ -38,7 +37,6 @@ function App() {
   return (
     <>
       <DeviceWarning />
-      <BackgroundParticles />
       <RetroCursor />
       <AppShell
         palette={paletteContent}

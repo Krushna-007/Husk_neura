@@ -55,3 +55,4 @@ coverage
 # Build artifacts
 dist.zip
 sample.txt
+.hallmark/
