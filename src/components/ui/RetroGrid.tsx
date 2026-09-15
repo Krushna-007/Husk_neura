@@ -17,22 +17,22 @@ export default function RetroGrid({
             style={{ "--grid-angle": `${angle}deg` } as React.CSSProperties}
         >
             {/* Grid */}
-            <div className="absolute inset-0 [transform:rotateX(var(--grid-angle))] bg-black">
+            <div className="absolute inset-0 [transform:rotateX(var(--grid-angle))] bg-paper-raised">
                 <div
                     className={cn(
                         "animate-grid",
                         "[background-repeat:repeat] [background-size:60px_60px]",
                         "[height:300vh] [inset:0%_0px] [margin-left:-50%] [transform-origin:100%_0_0] [width:600vw]",
 
-                        // Color styles - White grid lines on black
-                        "[background-image:linear-gradient(to_right,rgba(255,255,255,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.3)_1px,transparent_0)]",
+                        // Husk Platinum: ink grid lines on paper
+                        "[background-image:linear-gradient(to_right,rgba(0,0,0,0.13)_1px,transparent_0),linear-gradient(to_bottom,rgba(0,0,0,0.13)_1px,transparent_0)]",
                         "dark:[background-image:linear-gradient(to_right,rgba(255,255,255,0.3)_1px,transparent_0),linear-gradient(to_bottom,rgba(255,255,255,0.3)_1px,transparent_0)]",
                     )}
                 />
             </div>
 
             {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-paper-raised via-transparent to-transparent" />
         </div>
     );
 }
