@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
-import { Check, Copy, Download } from "lucide-react";
+import { Check, Copy, Download, ExternalLink } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
@@ -15,8 +15,6 @@ import {
 } from "../lib/code-generation";
 import { useFlowStore } from "../lib/flow-store";
 import { cn } from "../lib/utils";
-import RetroGrid from "./ui/RetroGrid";
-import ShinyButton from "./ui/ShinyButton";
 
 
 
@@ -290,43 +288,33 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
           </Button>
         </div>
 
-        {/* Reduced Height Retro Grid Footer */}
-        <div className="relative h-28 w-full overflow-hidden border-t border-rule shrink-0 bg-paper-raised">
-          <RetroGrid className="opacity-100" angle={65} />
+        {/* Footer — brand line and outbound link, separated by a hairline. */}
+        <footer className="flex shrink-0 items-center justify-between gap-4 border-t border-rule bg-paper px-6 py-4">
+          <a
+            href="https://neura-huskml.maverickspectrum.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex select-none flex-col gap-0.5"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.28em] text-ink-faint">
+              In the neural cloud
+            </span>
+            <span className="font-display text-lg font-semibold tracking-display text-ink group-hover:text-brand">
+              HUSKML
+            </span>
+          </a>
 
-          <div className="absolute inset-0 flex flex-row items-center justify-between z-10 px-10 pointer-events-auto max-w-full mx-auto w-full">
+          <Button asChild variant="outline" size="sm">
             <a
-              href="https://neura-huskml.maverickspectrum.com/"
+              href="https://www.linkedin.com/company/huskml"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col gap-0.5 select-none hover:opacity-80 transition-opacity"
             >
-              <div className="text-[11px] tracking-[0.4em] text-zinc-500 font-bold uppercase" style={{ fontFamily: "var(--font-display)" }}>
-                In The Neural Cloud
-              </div>
-              <div className="text-4xl font-bold tracking-display text-ink" style={{ fontFamily: "var(--font-display)" }}>
-                HUSKML
-              </div>
+              Follow on LinkedIn
+              <ExternalLink className="h-3.5 w-3.5" />
             </a>
-
-            <div className="flex items-center">
-              <ShinyButton
-                href="https://www.linkedin.com/company/huskml"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="!font-mono"
-              >
-                <div className="flex flex-row items-center gap-2">
-                  <span className="text-[10px] uppercase tracking-wider opacity-80">Follow on</span>
-                  <span className="text-sm font-bold tracking-tight">LinkedIn</span>
-                </div>
-              </ShinyButton>
-            </div>
-          </div>
-
-          {/* Top Fade */}
-          <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-zinc-900 to-transparent pointer-events-none" />
-        </div>
+          </Button>
+        </footer>
       </Card>
     </div>
   );
