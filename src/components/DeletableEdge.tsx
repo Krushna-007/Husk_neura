@@ -50,7 +50,7 @@ export function DeletableEdge({
       style={{
         ...style,
         strokeWidth: selected ? 2.5 : 1.5,
-        stroke: selected ? "var(--color-accent)" : "var(--color-ink-faint)",
+        stroke: selected ? "var(--color-accent)" : "var(--color-ink-muted)",
       }}
       onClick={onEdgeClick}
     />
