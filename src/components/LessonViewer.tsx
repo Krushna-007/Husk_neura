@@ -414,7 +414,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
             {canGoNext && (
               <Button
                 onClick={handleNextLesson}
-                className="bg-green-600 hover:bg-green-50 text-white"
+                className="bg-green-600 hover:bg-green-700 text-white"
               >
                 Continue to Next Lesson
                 <ArrowRight className="h-4 w-4 ml-2" />

@@ -225,7 +225,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                     <Button
                       onClick={() => handleStartCourse(course.id)}
                       size="sm"
-                      className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white font-medium"
+                      className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium"
                     >
                       <Play className="h-3.5 w-3.5" />
                       {progress.hasStarted ? 'Continue Course' : 'Start Course'}
