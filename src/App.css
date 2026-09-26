@@ -207,36 +207,10 @@ textarea,
   border-left-color: var(--color-accent) !important;
 }
 
-/* CodeMirror syntax highlighting for Python */
-.cm-editor .cm-keyword {
-  color: #9B2393 !important;
-}
-
-.cm-editor .cm-string {
-  color: #C41A16 !important;
-}
-
-.cm-editor .cm-number {
-  color: #1C00CF !important;
-}
-
-.cm-editor .cm-comment {
-  color: var(--color-ink-faint) !important;
-}
-
-.cm-editor .cm-operator {
-  color: var(--color-ink) !important;
-}
-
-.cm-editor .cm-variable {
-  color: var(--color-ink) !important;
-}
-
+/* Syntax colours come from CodeMirror 6's own light theme. The rules that
+   used to live here targeted CodeMirror 5 class names (.cm-keyword,
+   .cm-string, …) which CM6 never emits, so they were inert. */
 .cm-editor .cm-variable-2 {
-  color: var(--color-ink) !important;
-}
-
-.cm-editor .cm-property {
   color: var(--color-ink) !important;
 }
 
@@ -244,6 +218,3 @@ textarea,
   color: var(--color-accent) !important;
 }
 
-.cm-editor .cm-builtin {
-  color: #6F42C1 !important;
-}
