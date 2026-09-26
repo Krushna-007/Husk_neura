@@ -219,7 +219,7 @@ export default function BlockPalette({
 
   return (
     <div
-      className={`flex h-full flex-col gap-4 overflow-y-auto bg-transparent p-4 ${className}`}
+      className={`flex h-full flex-col gap-3 overflow-y-auto bg-transparent p-3 ${className}`}
     >
       {/* Course Mode Indicator */}
       {isCourseMode && currentLesson && (
@@ -242,7 +242,7 @@ export default function BlockPalette({
       {/* Tab Navigation */}
       <div
         role="tablist"
-        className="flex gap-1 rounded-md bg-rule-soft p-1"
+        className="flex gap-1 rounded-md border border-rule bg-paper p-0.5"
       >
         {[
           { id: CONFIG.TABS.LAYERS, label: "Layers", Icon: Layers },
@@ -255,9 +255,9 @@ export default function BlockPalette({
               role="tab"
               aria-selected={selected}
               onClick={() => setActiveTab(id)}
-              className={`flex flex-1 items-center justify-center gap-1.5 rounded-sm px-3 py-1.5 text-[13px] font-medium transition-colors duration-150 ease-out-soft ${
+              className={`flex flex-1 items-center justify-center gap-1.5 rounded-sm px-3 py-1 text-[13px] font-medium transition-colors duration-150 ease-out-soft ${
                 selected
-                  ? "bg-paper-raised text-ink shadow-sm"
+                  ? "bg-raised text-ink shadow-sm"
                   : "text-ink-muted hover:text-ink"
               }`}
             >
@@ -270,7 +270,7 @@ export default function BlockPalette({
 
       {/* Search */}
       <div className="relative">
-        <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-faint" strokeWidth={1.75} />
+        <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-ink-faint" strokeWidth={1.75} />
         <Input
           type="text"
           placeholder={
@@ -280,7 +280,7 @@ export default function BlockPalette({
           }
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="h-9 rounded-md border border-rule bg-paper-raised pl-9 pr-9 text-[13px] text-ink placeholder:text-ink-faint transition-colors duration-150 ease-out-soft focus-visible:border-brand"
+          className="h-8 rounded-md border border-rule bg-raised pl-8 pr-8 text-[13px] text-ink shadow-sm placeholder:text-ink-faint transition-colors duration-150 ease-out-soft focus-visible:border-brand"
         />
         {searchTerm && (
           <button
@@ -326,7 +326,7 @@ export default function BlockPalette({
           </p>
         </div>
       ) : (
-        <div className="space-y-5">
+        <div className="space-y-4">
           {activeTab === CONFIG.TABS.LAYERS
             ? // Layers View
             filteredCategories.map((category) => (
@@ -337,11 +337,11 @@ export default function BlockPalette({
                   <CategoryIcon categoryKey={category.key} className="h-3.5 w-3.5 flex-shrink-0" />
                   {category.name}
                 </h3>
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   {category.layers.map((layer: LayerType) => (
                     <div
                       key={layer.type}
-                      className={`cursor-grab ${category.borderColor} rounded-md border bg-paper-raised px-3 py-2.5 transition-colors duration-150 ease-out-soft hover:border-brand`}
+                      className={`cursor-grab rounded-md border ${category.borderColor} bg-raised px-2.5 py-1.5 shadow-sm transition-colors duration-150 ease-out-soft hover:border-brand-edge hover:bg-brand-wash`}
                       style={{ cursor: CONFIG.DRAG_CURSOR.GRAB }}
                       draggable
                       onDragStart={(event) =>
@@ -357,14 +357,14 @@ export default function BlockPalette({
                       }
                     >
                       <div
-                        className={`flex items-center gap-2 mb-1 ${category.textColor}`}
+                        className={`flex items-center gap-1.5 ${category.textColor}`}
                       >
                         <LayerIcon type={layer.type} className="h-4 w-4 flex-shrink-0" />
-                        <span className="font-medium text-sm">
+                        <span className="text-[13px] font-medium leading-tight">
                           {layer.type}
                         </span>
                       </div>
-                      <p className="text-xs text-ink-muted leading-relaxed">
+                      <p className="mt-0.5 text-[11px] leading-snug text-ink-muted">
                         {layer.description}
                       </p>
                     </div>
@@ -381,11 +381,11 @@ export default function BlockPalette({
                   <TemplateIcon categoryKey={categoryData.category} className="h-3.5 w-3.5 flex-shrink-0" />
                   {categoryData.name}
                 </h3>
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   {categoryData.templates.map((template) => (
                     <div
                       key={template.id}
-                      className={`cursor-grab ${categoryData.borderColor} rounded-md border bg-paper-raised px-3 py-2.5 transition-colors duration-150 ease-out-soft hover:border-brand`}
+                      className={`cursor-grab rounded-md border ${categoryData.borderColor} bg-raised px-2.5 py-1.5 shadow-sm transition-colors duration-150 ease-out-soft hover:border-brand-edge hover:bg-brand-wash`}
                       style={{ cursor: CONFIG.DRAG_CURSOR.GRAB }}
                       draggable
                       onDragStart={(event) =>
@@ -401,14 +401,14 @@ export default function BlockPalette({
                       }
                     >
                       <div
-                        className={`flex items-center gap-2 mb-1 ${categoryData.textColor}`}
+                        className={`flex items-center gap-1.5 ${categoryData.textColor}`}
                       >
                         <TemplateIcon categoryKey={template.category} className="h-4 w-4 flex-shrink-0" />
-                        <span className="font-medium text-sm">
+                        <span className="text-[13px] font-medium leading-tight">
                           {template.name}
                         </span>
                       </div>
-                      <p className="mb-2 text-xs leading-relaxed text-ink-muted">
+                      <p className="mb-1.5 mt-0.5 text-[11px] leading-snug text-ink-muted">
                         {template.description}
                       </p>
                       <div className="flex gap-1 flex-wrap">

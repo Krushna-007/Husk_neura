@@ -7,25 +7,36 @@
  */
 
 :root {
-  /* ---- Paper: Apple-grade off-white. Never #fff. ---- */
-  --color-paper:        oklch(96.8% 0.0015 286);   /* #F5F5F7 app ground   */
-  --color-paper-raised: oklch(100%  0      0);     /* #FFFFFF cards/panels */
-  --color-paper-sunken: oklch(94.2% 0.0020 286);   /* canvas well          */
+  /* ---- Surfaces: a four-step ladder, not one flat white. ----
+   * The first pass put header, sidebar, right panel, cards and inputs all on
+   * #ffffff, so nothing sat above anything else and only hairlines implied
+   * structure. Each level below is a distinct material with a fixed job.
+   * Greys carry a little cool chroma (hue 255) so they read as chosen rather
+   * than dead; none of them is pure white or pure grey. */
+  --color-sunken:  oklch(89.5% 0.0085 255);  /* canvas well — deepest       */
+  --color-paper:   oklch(94.0% 0.0060 255);  /* recessed: inputs, chips     */
+  --color-chrome:  oklch(96.9% 0.0040 255);  /* header, sidebar, panels     */
+  --color-raised:  oklch(99.4% 0.0020 255);  /* cards, nodes, menus         */
 
-  /* ---- Ink: near-black, never #000. ---- */
-  --color-ink:       oklch(21.5% 0.0040 286);      /* #1D1D1F primary   */
-  --color-ink-2:     oklch(33.0% 0.0040 286);      /* secondary         */
-  --color-ink-muted: oklch(52.0% 0.0055 286);      /* #6E6E73 tertiary  */
-  --color-ink-faint: oklch(63.0% 0.0055 286);      /* #8E8E93 quaternary*/
+  /* Kept as aliases so existing markup keeps working. */
+  --color-paper-raised: var(--color-raised);
+  --color-paper-sunken: var(--color-sunken);
 
-  /* ---- Rules: Apple hairline. ---- */
-  --color-rule:        oklch(87.0% 0.0030 286);    /* #D2D2D7 */
-  --color-rule-soft:   oklch(91.5% 0.0025 286);    /* #E5E5EA */
+  /* ---- Ink ---- */
+  --color-ink:       oklch(22.0% 0.0120 265);
+  --color-ink-2:     oklch(34.0% 0.0110 265);
+  --color-ink-muted: oklch(52.0% 0.0110 265);
+  --color-ink-faint: oklch(64.0% 0.0100 265);
 
-  /* ---- Accent: one blue, small footprint. ---- */
-  --color-accent:       oklch(55.0% 0.190 253);    /* #0071E3 */
-  --color-accent-hover: oklch(64.0% 0.165 250);    /* #2997FF */
-  --color-accent-wash:  oklch(96.0% 0.020 253);    /* tinted panel */
+  /* ---- Rules ---- */
+  --color-rule:      oklch(86.0% 0.0075 255);
+  --color-rule-soft: oklch(91.0% 0.0060 255);
+
+  /* ---- Accent ---- */
+  --color-accent:       oklch(55.0% 0.190 253);
+  --color-accent-hover: oklch(64.0% 0.165 250);
+  --color-accent-wash:  oklch(95.8% 0.0260 253);  /* hover surface        */
+  --color-accent-edge:  oklch(83.0% 0.0700 253);  /* hover border         */
 
   /* ---- Status ---- */
   --color-danger:  oklch(55.0% 0.200 27);
@@ -49,9 +60,9 @@
   --radius-lg:   14px;
 
   /* ---- Elevation: light-theme shadows are soft + low-alpha. ---- */
-  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.04), 0 1px 1px rgb(0 0 0 / 0.03);
-  --shadow-md: 0 4px 12px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.04);
-  --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.10), 0 2px 8px rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 1.5px rgb(16 24 40 / 0.06), 0 1px 1px rgb(16 24 40 / 0.04);
+  --shadow-md: 0 4px 10px rgb(16 24 40 / 0.09), 0 1px 3px rgb(16 24 40 / 0.06);
+  --shadow-lg: 0 14px 34px rgb(16 24 40 / 0.14), 0 3px 9px rgb(16 24 40 / 0.07);
 
   /* ---- Motion ---- */
   --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);

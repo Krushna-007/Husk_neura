@@ -19,7 +19,7 @@ export function RightPanel() {
   const [view, setView] = useState<View>("code");
 
   return (
-    <div className="flex h-full flex-col bg-paper-raised">
+    <div className="flex h-full flex-col bg-chrome">
       <div className="shrink-0 border-b border-rule px-4 pt-3">
         <div role="tablist" className="flex gap-1 rounded-md bg-rule-soft p-1">
           {VIEWS.map(({ id, label, Icon }) => {
@@ -32,7 +32,7 @@ export function RightPanel() {
                 onClick={() => setView(id)}
                 className={`flex flex-1 items-center justify-center gap-1.5 rounded-sm px-3 py-1.5 text-[13px] font-medium transition-colors duration-150 ease-out-soft ${
                   selected
-                    ? "bg-paper-raised text-ink shadow-sm"
+                    ? "bg-raised text-ink shadow-sm"
                     : "text-ink-muted hover:text-ink"
                 }`}
               >

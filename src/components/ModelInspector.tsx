@@ -149,26 +149,26 @@ export function ModelInspector() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="shrink-0 border-b border-rule bg-paper-raised px-4 py-3">
+      <header className="shrink-0 border-b border-rule bg-chrome px-4 py-3">
         <h2 className="font-display text-[15px] font-semibold tracking-tightish text-ink">
           Model Inspector
         </h2>
 
         <dl className="mt-3 grid grid-cols-3 gap-2">
-          <div className="rounded-md border border-rule bg-paper px-2.5 py-2">
+          <div className="rounded-md border border-rule bg-raised px-2.5 py-2 shadow-sm">
             <dt className="text-[10px] uppercase tracking-wider text-ink-faint">Parameters</dt>
             <dd className="mt-0.5 font-mono text-[15px] tabular-nums text-ink">
               {formatCount(metrics.totalParams)}
               {!metrics.totalIsComplete && <span className="text-amber-700">+</span>}
             </dd>
           </div>
-          <div className="rounded-md border border-rule bg-paper px-2.5 py-2">
+          <div className="rounded-md border border-rule bg-raised px-2.5 py-2 shadow-sm">
             <dt className="text-[10px] uppercase tracking-wider text-ink-faint">Weights</dt>
             <dd className="mt-0.5 font-mono text-[15px] tabular-nums text-ink">
               {formatBytes(metrics.weightBytes)}
             </dd>
           </div>
-          <div className="rounded-md border border-rule bg-paper px-2.5 py-2">
+          <div className="rounded-md border border-rule bg-raised px-2.5 py-2 shadow-sm">
             <dt className="text-[10px] uppercase tracking-wider text-ink-faint">Activations</dt>
             <dd className="mt-0.5 font-mono text-[15px] tabular-nums text-ink">
               {formatBytes(metrics.totalActivationBytes)}
