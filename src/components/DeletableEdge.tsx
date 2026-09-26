@@ -1,7 +1,19 @@
 import type { EdgeProps } from "@xyflow/react";
 import { BaseEdge, getBezierPath, useReactFlow } from "@xyflow/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 
+/**
+ * Connection edge. Click to remove.
+ *
+ * This previously drew two stacked edges: a base line plus a gradient dash
+ * whose offset was advanced by `setInterval(…, 50)` — a React state update
+ * twenty times a second, per edge, for as long as the graph was open. On a
+ * dozen edges that is ~240 re-renders a second spent on a decorative dash
+ * that reported nothing, since HuskML has no running state to indicate.
+ *
+ * One line now, coloured from the token layer, thickening to the accent when
+ * selected.
+ */
 export function DeletableEdge({
   id,
   sourceX,
@@ -11,7 +23,6 @@ export function DeletableEdge({
   sourcePosition,
   targetPosition,
   style = {},
-
   selected,
 }: EdgeProps) {
   const [edgePath] = getBezierPath({
@@ -23,57 +34,25 @@ export function DeletableEdge({
     targetPosition,
   });
 
-  const [offset, setOffset] = useState(0);
   const { deleteElements } = useReactFlow();
 
-  // Animate the flow effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setOffset((offset) => (offset + 1) % 15);
-    }, 50);
-    return () => clearInterval(interval);
-  }, []);
-
-  const onEdgeClick = useCallback((evt: React.MouseEvent<SVGGElement, MouseEvent>, id: string) => {
-    evt.stopPropagation();
-    deleteElements({ edges: [{ id }] });
-  }, [deleteElements]);
+  const onEdgeClick = useCallback(
+    (evt: React.MouseEvent<SVGGElement, MouseEvent>) => {
+      evt.stopPropagation();
+      deleteElements({ edges: [{ id }] });
+    },
+    [deleteElements, id]
+  );
 
   return (
-    <>
-      {/* Base edge with glow effect */}
-      <BaseEdge
-        path={edgePath}
-        style={{
-          ...style,
-          strokeWidth: selected ? 3 : 2,
-          stroke: selected ? 'rgba(99, 102, 241, 0.8)' : 'rgba(161, 161, 170, 0.6)',
-          filter: selected ? 'drop-shadow(0 0 8px rgba(99, 102, 241, 0.5))' : undefined,
-        }}
-        onClick={(e) => onEdgeClick(e, id)}
-      />
-      
-      {/* Animated flow effect */}
-      <BaseEdge
-        path={edgePath}
-        style={{
-          strokeWidth: 2,
-          stroke: 'url(#flowGradient)',
-          strokeDasharray: '5 10',
-          strokeDashoffset: -offset,
-          opacity: 0.6,
-        }}
-        onClick={(e) => onEdgeClick(e, id)}
-      />
-
-      {/* Gradient definition */}
-      <defs>
-        <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="rgba(99, 102, 241, 0)" />
-          <stop offset="50%" stopColor="rgba(99, 102, 241, 0.8)" />
-          <stop offset="100%" stopColor="rgba(99, 102, 241, 0)" />
-        </linearGradient>
-      </defs>
-    </>
+    <BaseEdge
+      path={edgePath}
+      style={{
+        ...style,
+        strokeWidth: selected ? 2.5 : 1.5,
+        stroke: selected ? "var(--color-accent)" : "var(--color-ink-faint)",
+      }}
+      onClick={onEdgeClick}
+    />
   );
 }
