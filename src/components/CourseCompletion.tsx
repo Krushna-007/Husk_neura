@@ -16,7 +16,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
 
   const handleLinkedInShare = () => {
     const text = encodeURIComponent(
-      `🎉 Just completed "${currentCourse.title}" on BlockDL! Built my first neural network from scratch and learned AI fundamentals. Excited to dive deeper into machine learning! #AI #MachineLearning #NeuralNetworks #BlockDL`
+      `Just completed "${currentCourse.title}" on BlockDL! Built my first neural network from scratch and learned AI fundamentals. Excited to dive deeper into machine learning! #AI #MachineLearning #NeuralNetworks #BlockDL`
     );
     const url = encodeURIComponent(window.location.origin);
     
@@ -26,7 +26,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
 
   const handleTwitterShare = () => {
     const text = encodeURIComponent(
-      `🎉 Just completed "${currentCourse.title}" on @BlockDL! Built my first neural network from scratch 🧠✨ #AI #MachineLearning #NeuralNetworks`
+      `Just completed "${currentCourse.title}" on @BlockDL! Built my first neural network from scratch 🧠✨ #AI #MachineLearning #NeuralNetworks`
     );
     const url = encodeURIComponent(window.location.origin);
     
@@ -53,7 +53,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
             <Trophy className="h-10 w-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-ink mb-2">
-            Congratulations! 🎉
+            Congratulations
           </h1>
           <p className="text-zinc-300 text-lg">
             You've successfully completed <span className="text-blue-600 font-semibold">{currentCourse.title}</span>
@@ -125,10 +125,10 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
           <div className="p-6">
             <h3 className="text-lg font-semibold text-ink mb-4">What's Next?</h3>
             <div className="space-y-3 text-zinc-300">
-              <p>🚀 <strong>Keep Learning:</strong> Try building more complex networks with different architectures</p>
-              <p>🔬 <strong>Experiment:</strong> Modify parameters and see how they affect your network's performance</p>
-              <p>📚 <strong>Advanced Topics:</strong> Explore convolutional networks, RNNs, and transformer architectures</p>
-              <p>🤝 <strong>Community:</strong> Join AI communities and share your projects</p>
+              <p><strong>Keep Learning:</strong> Try building more complex networks with different architectures</p>
+              <p><strong>Experiment:</strong> Modify parameters and see how they affect your network's performance</p>
+              <p><strong>Advanced Topics:</strong> Explore convolutional networks, RNNs, and transformer architectures</p>
+              <p><strong>Community:</strong> Join AI communities and share your projects</p>
             </div>
           </div>
         </Card>

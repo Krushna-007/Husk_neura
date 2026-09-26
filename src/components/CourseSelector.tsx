@@ -252,7 +252,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
       {/* Footer */}
       <div className="flex-shrink-0 p-3 text-center border-t border-zinc-800">
         <p className="text-xs text-zinc-500">
-          More courses coming soon! 🚀
+          More courses coming soon
         </p>
       </div>
     </div>
