@@ -15,7 +15,7 @@
    * than dead; none of them is pure white or pure grey. */
   --color-sunken:  oklch(84.5% 0.0135 255);  /* canvas well — deepest       */
   --color-paper:   oklch(94.0% 0.0060 255);  /* recessed: inputs, chips     */
-  --color-chrome:  oklch(96.9% 0.0040 255);  /* header, sidebar, panels     */
+  --color-chrome:  oklch(98.4% 0.0030 255);  /* header, sidebar, panels     */
   --color-raised:  oklch(99.4% 0.0020 255);  /* cards, nodes, menus         */
 
   /* Kept as aliases so existing markup keeps working. */
