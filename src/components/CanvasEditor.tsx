@@ -41,7 +41,7 @@ const HuskMLAttribution = () => {
       href="https://huskml.maverickspectrum.com"
       target="_blank"
       rel="noopener noreferrer"
-      className="absolute top-2 right-2 select-none font-mono text-sm text-zinc-500 opacity-70 transition-opacity hover:opacity-100 hover:text-zinc-300"
+      className="absolute right-2 top-2 select-none font-mono text-xs text-ink-2 transition-colors duration-150 ease-out-soft hover:text-ink"
     >
       HuskML
     </a>
@@ -54,14 +54,15 @@ const FLOW_CONFIG = {
   BACKGROUND: {
     GAP: 25,
     SIZE: 1,
-    COLOR: "#E5E5EA",           // ruled lines  (rule-soft)
-    SECONDARY_COLOR: "#FBFBFD", // canvas paper
-    PATTERN_COLOR: "#D2D2D7",   // dot overlay  (hairline)
+    // Read from the token layer so the canvas can never drift from the theme.
+    COLOR: "var(--color-grid)",
+    SECONDARY_COLOR: "var(--color-sunken)",
+    PATTERN_COLOR: "var(--color-rule)",
     ANIMATION_DURATION: "20s"
   },
   EDGE: {
-    STROKE_WIDTH: 2,
-    STROKE_COLOR: "#8E8E93",
+    STROKE_WIDTH: 1.5,
+    STROKE_COLOR: "var(--color-ink-muted)",
     ANIMATED_STROKE: "rgba(99, 102, 241, 0.5)",
     SELECTED_STROKE: "rgba(99, 102, 241, 0.8)",
     HOVER_STROKE: "rgba(129, 140, 248, 0.7)"
@@ -234,14 +235,12 @@ function CanvasEditorInner({ className = "" }: CanvasEditorProps) {
           style: {
             strokeWidth: FLOW_CONFIG.EDGE.STROKE_WIDTH,
             stroke: FLOW_CONFIG.EDGE.STROKE_COLOR,
-            transition: 'all 0.3s ease-in-out',
           },
-          animated: true,
+          animated: false,
         }}
-        className="animate-[fadeIn_0.5s_ease-in-out]"
       >
         <Controls
-          className="bg-zinc-900/90 border-zinc-800 text-zinc-100 rounded-md backdrop-blur-sm transition-transform duration-300"
+          className="rounded-md border border-rule bg-raised text-ink shadow-md"
           showZoom={true}
           showFitView={true}
           fitViewOptions={{ duration: 800, padding: 0.2 }}

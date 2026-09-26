@@ -46,7 +46,7 @@ export function AppShell({
   return (
     <div
       className={cn(
-        "flex flex-col h-screen bg-paper text-ink",
+        "flex flex-col h-screen bg-chrome text-ink",
         className
       )}
       style={{ minWidth: LAYOUT_CONFIG.MIN_WIDTH }}
@@ -60,7 +60,7 @@ export function AppShell({
 
       <div className="flex flex-1 overflow-hidden">
         <aside
-          className="flex-shrink-0 border-r border-rule bg-paper-raised"
+          className="flex-shrink-0 border-r border-rule bg-chrome"
           style={{ width: LAYOUT_CONFIG.SIDEBAR_WIDTH }}
         >
           <div className="h-full overflow-hidden">
@@ -68,12 +68,12 @@ export function AppShell({
           </div>
         </aside>
 
-        <main className="flex-grow bg-paper-sunken min-w-0">
+        <main className="min-w-0 flex-grow bg-sunken">
           <div className="h-full">{canvas}</div>
         </main>
 
         <aside
-          className="flex-shrink-0 border-l border-rule bg-paper-raised"
+          className="flex-shrink-0 border-l border-rule bg-chrome"
           style={{ width: LAYOUT_CONFIG.CODE_VIEWER_WIDTH }}
         >
           <div className="h-full overflow-hidden">

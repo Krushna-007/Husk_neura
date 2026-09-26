@@ -18,10 +18,10 @@ const platinum = {
   400: '#6E6E73', // muted ink     (Apple secondary label)
   500: '#8E8E93', // faint ink     (Apple tertiary label)
   600: '#AEAEB2',
-  700: '#D2D2D7', // hairline rule (Apple separator)
-  800: '#E5E5EA', // soft rule / chip surface
-  900: '#F5F5F7', // panel paper   (Apple ground)
-  950: '#FBFBFD', // lightest surface
+  700: '#D5D8DE', // hairline rule
+  800: '#E4E7EC', // soft rule / chip surface
+  900: '#F2F4F7', // panel chrome
+  950: '#FCFDFE', // raised surface
 };
 
 export default {
@@ -38,8 +38,11 @@ export default {
 
         /* Brand tokens (Husk Platinum). */
         paper:          'var(--color-paper)',
-        'paper-raised': 'var(--color-paper-raised)',
-        'paper-sunken': 'var(--color-paper-sunken)',
+        chrome:         'var(--color-chrome)',
+        raised:         'var(--color-raised)',
+        sunken:         'var(--color-sunken)',
+        'paper-raised': 'var(--color-raised)',
+        'paper-sunken': 'var(--color-sunken)',
         ink:            'var(--color-ink)',
         'ink-2':        'var(--color-ink-2)',
         'ink-muted':    'var(--color-ink-muted)',
@@ -49,6 +52,7 @@ export default {
         brand:          'var(--color-accent)',
         'brand-hover':  'var(--color-accent-hover)',
         'brand-wash':   'var(--color-accent-wash)',
+        'brand-edge':   'var(--color-accent-edge)',
 
         /* shadcn/ui primitives. These names were used across the ui/
          * components but emitted NO css under Tailwind v3 (the @theme inline

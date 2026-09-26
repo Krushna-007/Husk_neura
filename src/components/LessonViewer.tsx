@@ -75,7 +75,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
   // Update task validation when canvas changes
   useEffect(() => {
     if (currentLesson && nodes.length > 0) {
-      console.log('🔍 Validating tasks with current canvas state:', {
+      console.log('Validating tasks with current canvas state:', {
         nodes: nodes.length,
         edges: edges.length,
         lesson: currentLesson.title
@@ -89,7 +89,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         if (isValid) {
           const task = currentLesson.tasks.find(t => t.id === taskId);
           if (task && !task.completed) {
-            console.log('✅ Auto-completing task:', task.title);
+            console.log('Auto-completing task:', task.title);
             // Save canvas state before completing task
             saveCanvasState(nodes, edges);
             completeTask(taskId);
@@ -164,9 +164,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         key={task.id}
         className={`p-4 transition-colors duration-150 ${
           isCompleted 
-            ? 'bg-green-50 border-green-300 shadow-lg shadow-green-500/5' 
+            ? 'bg-green-50 border-green-300 shadow-sm' 
             : isValid 
-              ? 'bg-blue-50 border-blue-300 shadow-lg shadow-blue-500/5 animate-pulse' 
+              ? 'bg-blue-50 border-blue-300 shadow-sm animate-pulse' 
               : 'bg-zinc-800/50 border-zinc-700'
         }`}
       >
@@ -220,7 +220,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
               <div className="mt-2 p-2 bg-blue-50 border border-blue-300 rounded-md">
                 <div className="flex items-center gap-2 text-xs text-blue-700 font-medium">
                   <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  <span>✨ Task requirements met! Auto-completing...</span>
+                  <span>Task requirements met — completing…</span>
                 </div>
               </div>
             )}
@@ -248,7 +248,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
                           key={index}
                           className="flex items-start gap-2 text-xs text-yellow-700"
                         >
-                          <span className="text-yellow-600 mt-0.5">💡</span>
+                          <Lightbulb className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-amber-600" strokeWidth={1.75} />
                           <span>{hint}</span>
                         </div>
                       ))}
@@ -314,7 +314,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
           </div>
           <div className="relative w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-colors duration-150 ease-out relative"
+              className="bg-blue-600 h-2 rounded-full transition-colors duration-150 ease-out relative"
               style={{ width: `${(progress.completed / progress.total) * 100}%` }}
             >
               {progress.completed > 0 && (
@@ -325,7 +325,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
           {progress.completed === progress.total && (
             <div className="flex items-center justify-center gap-1 text-xs text-green-600 font-medium mt-2">
               <CheckCircle className="h-3 w-3" />
-              <span>All tasks completed! 🎉</span>
+              <span>All tasks completed</span>
             </div>
           )}
         </div>
@@ -406,7 +406,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
           <Card className="p-6 bg-green-50 border-green-300 text-center">
             <Trophy className="h-8 w-8 text-green-600 mx-auto mb-3" />
             <h3 className="text-lg font-semibold text-green-600 mb-2">
-              Lesson Complete! 🎉
+              Lesson complete
             </h3>
             <p className="text-zinc-300 mb-4">
               Great job! You've completed all tasks for this lesson.
@@ -414,7 +414,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
             {canGoNext && (
               <Button
                 onClick={handleNextLesson}
-                className="bg-green-600 hover:bg-green-50 text-white"
+                className="bg-green-600 hover:bg-green-700 text-white"
               >
                 Continue to Next Lesson
                 <ArrowRight className="h-4 w-4 ml-2" />

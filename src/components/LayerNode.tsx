@@ -136,13 +136,13 @@ export function LayerNode({ id, data }: LayerNodeProps) {
 
   const getNodeClasses = () => {
     const base =
-      "layer-node flex flex-col px-4 py-3 rounded-md shadow-sm border cursor-pointer min-w-[160px] max-w-[280px]";
+      "layer-node flex cursor-pointer flex-col rounded-md border px-3.5 py-2.5 shadow-md min-w-[160px] max-w-[280px] transition-shadow duration-150 ease-out-soft";
 
     if (hasShapeError) {
       return `${base} border-red-400 hover:border-red-500 bg-red-50`;
     }
 
-    return `${base} ${categoryColors.bg} ${categoryColors.border} ${categoryColors.hover} hover:shadow-md`;
+    return `${base} ${categoryColors.bg} ${categoryColors.border} ${categoryColors.hover} hover:shadow-lg`;
   };
 
   const getHandleClasses = (isError: boolean, color: string) =>
@@ -170,7 +170,7 @@ export function LayerNode({ id, data }: LayerNodeProps) {
                 e.preventDefault();
                 handleDelete();
               }}
-              className="absolute -top-2 -right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out-soft bg-red-600 hover:bg-red-50 text-white rounded-full p-1 shadow-sm"
+              className="absolute -top-2 -right-2 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-150 ease-out-soft bg-red-600 hover:bg-red-700 text-white rounded-full p-1 shadow-sm"
               title="Delete this block"
             >
               <Trash2 className="h-3 w-3" />

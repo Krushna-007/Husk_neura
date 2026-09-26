@@ -55,7 +55,7 @@ textarea,
 .layer-node .react-flow__handle {
   width: 12px;
   height: 12px;
-  border: 2px solid #FFFFFF;
+  border: 2px solid var(--color-raised);
   border-radius: 50%;
 }
 
@@ -69,48 +69,48 @@ textarea,
 
 /* Node selection styling */
 .react-flow__node.selected .layer-node {
-  outline: 2px solid #0071E3;
+  outline: 2px solid var(--color-accent);
   outline-offset: 2px;
 }
 
 /* React Flow Controls Dark Theme */
 .react-flow__controls {
-  background-color: #F5F5F7 !important;
-  border: 1px solid #D2D2D7 !important;
+  background-color: var(--color-chrome) !important;
+  border: 1px solid var(--color-rule) !important;
   border-radius: 8px !important;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
 }
 
 .react-flow__controls button {
-  background-color: #EFEFF2 !important;
-  border: 1px solid #D2D2D7 !important;
-  color: #1D1D1F !important;
+  background-color: var(--color-paper) !important;
+  border: 1px solid var(--color-rule) !important;
+  color: var(--color-ink) !important;
   border-radius: 4px !important;
   transition: all 0.2s ease-in-out !important;
 }
 
 .react-flow__controls button:hover {
-  background-color: #D2D2D7 !important;
-  border-color: #AEAEB2 !important;
-  color: #1D1D1F !important;
+  background-color: var(--color-rule) !important;
+  border-color: var(--color-ink-faint) !important;
+  color: var(--color-ink) !important;
 }
 
 .react-flow__controls button:active {
-  background-color: #AEAEB2 !important;
+  background-color: var(--color-ink-faint) !important;
 }
 
 .react-flow__controls button svg {
-  fill: #1D1D1F !important;
+  fill: var(--color-ink) !important;
 }
 
 .react-flow__controls button:hover svg {
-  fill: #1D1D1F !important;
+  fill: var(--color-ink) !important;
 }
 
 /* React Flow MiniMap Dark Theme */
 .react-flow__minimap {
-  background-color: #F5F5F7 !important;
-  border: 1px solid #D2D2D7 !important;
+  background-color: var(--color-chrome) !important;
+  border: 1px solid var(--color-rule) !important;
   border-radius: 8px !important;
 }
 
@@ -119,21 +119,21 @@ textarea,
 }
 
 .react-flow__minimap-node {
-  fill: #D2D2D7 !important;
-  stroke: #AEAEB2 !important;
+  fill: var(--color-rule) !important;
+  stroke: var(--color-ink-faint) !important;
 }
 
 .react-flow__minimap-node:hover {
-  fill: #AEAEB2 !important;
+  fill: var(--color-ink-faint) !important;
 }
 
 /* React Flow Background */
 .react-flow__background {
-  background-color: #FBFBFD !important;
+  background-color: var(--color-raised) !important;
 }
 
 .react-flow__background-pattern {
-  color: #F5F5F7 !important;
+  color: var(--color-chrome) !important;
 }
 
 /* Dark Scrollbar Styling */
@@ -143,107 +143,78 @@ textarea,
 }
 
 ::-webkit-scrollbar-track {
-  background: #F5F5F7;
+  background: var(--color-chrome);
   border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D2D2D7;
+  background: var(--color-rule);
   border-radius: 6px;
-  border: 2px solid #F5F5F7;
+  border: 2px solid var(--color-chrome);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #AEAEB2;
+  background: var(--color-ink-faint);
 }
 
 ::-webkit-scrollbar-corner {
-  background: #F5F5F7;
+  background: var(--color-chrome);
 }
 
 /* Firefox scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #D2D2D7 transparent;
+  scrollbar-color: var(--color-rule) transparent;
 }
 
 /* CodeMirror Dark Theme Overrides */
 .cm-editor {
-  background-color: #FFFFFF !important;
-  color: #1D1D1F !important;
+  background-color: var(--color-raised) !important;
+  color: var(--color-ink) !important;
 }
 
 .cm-editor .cm-scroller {
-  background-color: #FFFFFF !important;
+  background-color: var(--color-raised) !important;
 }
 
 .cm-editor .cm-content {
-  color: #1D1D1F !important;
+  color: var(--color-ink) !important;
 }
 
 .cm-editor .cm-line {
-  color: #1D1D1F !important;
+  color: var(--color-ink) !important;
 }
 
 .cm-editor .cm-gutters {
-  background-color: #F5F5F7 !important;
-  color: #8E8E93 !important;
-  border-right: 1px solid #D2D2D7 !important;
+  background-color: var(--color-chrome) !important;
+  color: var(--color-ink-faint) !important;
+  border-right: 1px solid var(--color-rule) !important;
 }
 
 .cm-editor .cm-activeLine {
-  background-color: #EFEFF2 !important;
+  background-color: var(--color-paper) !important;
 }
 
 .cm-editor .cm-activeLineGutter {
-  background-color: #EFEFF2 !important;
+  background-color: var(--color-paper) !important;
 }
 
 .cm-editor .cm-selectionBackground {
-  background-color: #D2D2D7 !important;
+  background-color: var(--color-rule) !important;
 }
 
 .cm-editor .cm-cursor {
-  border-left-color: #0071E3 !important;
+  border-left-color: var(--color-accent) !important;
 }
 
-/* CodeMirror syntax highlighting for Python */
-.cm-editor .cm-keyword {
-  color: #9B2393 !important;
-}
-
-.cm-editor .cm-string {
-  color: #C41A16 !important;
-}
-
-.cm-editor .cm-number {
-  color: #1C00CF !important;
-}
-
-.cm-editor .cm-comment {
-  color: #8E8E93 !important;
-}
-
-.cm-editor .cm-operator {
-  color: #1D1D1F !important;
-}
-
-.cm-editor .cm-variable {
-  color: #1D1D1F !important;
-}
-
+/* Syntax colours come from CodeMirror 6's own light theme. The rules that
+   used to live here targeted CodeMirror 5 class names (.cm-keyword,
+   .cm-string, …) which CM6 never emits, so they were inert. */
 .cm-editor .cm-variable-2 {
-  color: #1D1D1F !important;
-}
-
-.cm-editor .cm-property {
-  color: #1D1D1F !important;
+  color: var(--color-ink) !important;
 }
 
 .cm-editor .cm-definition {
-  color: #0071E3 !important;
+  color: var(--color-accent) !important;
 }
 
-.cm-editor .cm-builtin {
-  color: #6F42C1 !important;
-}

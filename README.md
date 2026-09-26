@@ -35,10 +35,12 @@ Drag, drop, connect. It's like LEGO but for tensors.
 - **Live Error Checking**: Trying to connect a `(32, 32, 3)` to a Dense layer expecting `(784,)`? We'll politely stop you.
 - **Layer Cheat Sheets**: Hover over any block to see what it actually does *(no PhD required)*
 
-### 🎭 **Retro-Futuristic UI**
-- **"8-Bit from PAST" Cursor**: Because normal cursors are boring
-- **Cyber-Industrial Theme**: True black + gold + cyan = chef's kiss
-- **Zero Eye Strain**: Designed for those 4-hour debugging marathons
+### 🎭 **The Interface**
+- **Custom Pointer**: A drawn cursor that switches to a grab hand over the
+  canvas and tells you what dragging will do
+- **Husk Platinum**: A light theme built on four surface materials, with
+  Departure Mono kept for the technical voice
+- **Readable by default**: Every rendered text pair meets WCAG AA
 
 ### 🔧 **Quality-of-Life Magic**
 - **Export to JSON**: Save your work, share with teammates
@@ -65,7 +67,7 @@ npm install
 # Fire it up
 npm run dev
 
-# Open http://localhost:5173 and start building
+# Open http://localhost:5173 (Vite will pick the next free port if busy)
 ```
 
 **Tech Stack:** React + TypeScript + React Flow + Vite *(the good stuff)*
@@ -92,6 +94,56 @@ npm run dev
 | **Teaching** | Show students *why* dimensions matter |
 | **Debugging** | Spot shape mismatches before writing a single line of code |
 | **Documentation** | Export architecture diagrams for papers/presentations |
+
+---
+
+## 🎨 Design system — Husk Platinum
+
+The UI runs on a light theme built from four surface materials, each with a
+fixed job. Every colour is an OKLCH token in `src/styles/tokens.css`, wired to
+utility names in `tailwind.config.js`; no component hardcodes a colour.
+
+| Material | Lightness | Used for |
+| --- | --- | --- |
+| `sunken` | 84.5 | the canvas well |
+| `paper` | 93.2 | recessed things: inputs, chips, tab tracks |
+| `chrome` | 98.4 | header, sidebar, right panel |
+| `raised` | 99.4 | cards, nodes, menus |
+
+Greys carry a little cool chroma (hue 255) so they read as chosen rather than
+dead, and nothing is pure `#fff` or `#000`. Type is Geist for the interface and
+Departure Mono for the technical voice — layer parameters, generated code, the
+wordmark.
+
+**Contrast.** Every rendered text node is checked against its effective
+background; the app currently passes WCAG AA on all 83 of them.
+
+**Motion.** Five primitives, all reporting state rather than decorating:
+`pulse`, `fade-in`, `spin`, the canvas grid, and the dialog transitions.
+`prefers-reduced-motion` collapses them.
+
+---
+
+## 🔬 Model Inspector
+
+The right panel has two views: the generated code, and an inspector that shows
+what the architecture on the canvas actually costs.
+
+- Trainable parameters per layer, with the arithmetic shown — a Conv2D reads
+  `5x5 x 32 x 64 + 64 bias`
+- Output shape and activation bytes per layer, from the same shape inference
+  the canvas uses for validation, so the two cannot disagree
+- Model totals: parameters, weight storage and activation memory at float32
+- A tensor glyph per layer, scaled against the largest in the model
+
+Numbers are labelled with their provenance and nothing is invented: a layer
+type the module does not model reports "not modelled", and a layer that shape
+inference never reached reports "not connected". Those are different failures
+and the totals report them separately, so a partial total never reads as a
+complete one.
+
+Verified against LeNet — 832 / 51,264 / 376,440 / 10,164 = **438,700
+parameters**, matching Keras.
 
 ---
 

@@ -197,9 +197,9 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
   const hasContent = nodes.length > 0;
 
   return (
-    <div className={cn("flex h-full flex-col bg-paper-raised", className)}>
+    <div className={cn("flex h-full flex-col bg-chrome", className)}>
       <Card className="border-0 bg-transparent shadow-none rounded-none flex-1 flex flex-col pt-6 pb-0 gap-0 animate-fade-in relative overflow-hidden h-full">
-        <CardHeader className="z-10 shrink-0 border-b border-rule bg-paper-raised pb-3">
+        <CardHeader className="z-10 shrink-0 border-b border-rule bg-chrome pb-3">
           <div className="flex items-center justify-between">
             <CardTitle className="font-display text-[15px] font-semibold tracking-tightish text-ink">
               Generated Code
@@ -239,7 +239,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
             value={code}
             height="100%"
             extensions={[python()]}
-            theme="dark"
+            theme="light"
             editable={false}
             className="h-full"
             style={{
@@ -289,7 +289,7 @@ ${dagResult.errors.map(error => `# - ${error}`).join('\n')}
         </div>
 
         {/* Footer — brand line and outbound link, separated by a hairline. */}
-        <footer className="flex shrink-0 items-center justify-between gap-4 border-t border-rule bg-paper px-6 py-4">
+        <footer className="flex shrink-0 items-center justify-between gap-4 border-t border-rule bg-paper px-5 py-3">
           <a
             href="https://neura-huskml.maverickspectrum.com/"
             target="_blank"

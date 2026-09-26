@@ -126,7 +126,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
             <Card
               key={course.id}
               className={`p-3 bg-zinc-900/50 border-zinc-700 hover:border-blue-300 transition-colors duration-150 cursor-pointer ${
-                isSelected ? 'border-blue-500 bg-blue-50 shadow-lg shadow-blue-500/10' : ''
+                isSelected ? 'border-blue-500 bg-blue-50 shadow-sm' : ''
               }`}
               onClick={() => setSelectedCourse(isSelected ? null : course)}
             >
@@ -175,7 +175,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                   </div>
                   <div className="relative w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
                     <div 
-                      className="bg-gradient-to-r from-blue-500 to-blue-400 h-2 rounded-full transition-colors duration-150 ease-out relative"
+                      className="bg-blue-600 h-2 rounded-full transition-colors duration-150 ease-out relative"
                       style={{ width: `${progress.progress}%` }}
                     >
                       {progress.progress > 0 && (
@@ -225,7 +225,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
                     <Button
                       onClick={() => handleStartCourse(course.id)}
                       size="sm"
-                      className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-50 text-white font-medium"
+                      className="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-medium"
                     >
                       <Play className="h-3.5 w-3.5" />
                       {progress.hasStarted ? 'Continue Course' : 'Start Course'}
@@ -252,7 +252,7 @@ export function CourseSelector({ className = "" }: CourseSelectorProps) {
       {/* Footer */}
       <div className="flex-shrink-0 p-3 text-center border-t border-zinc-800">
         <p className="text-xs text-zinc-500">
-          More courses coming soon! 🚀
+          More courses coming soon
         </p>
       </div>
     </div>

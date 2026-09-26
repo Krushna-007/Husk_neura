@@ -41,46 +41,46 @@ export function AchievementBadge({
 
   const colors = {
     gold: {
-      bg: 'bg-gradient-to-br from-yellow-500/20 to-orange-500/20',
+      bg: 'bg-yellow-50',
       border: 'border-yellow-300',
       icon: 'text-yellow-600',
       text: 'text-yellow-700',
-      glow: 'shadow-lg shadow-yellow-500/20'
+      glow: 'shadow-sm'
     },
     silver: {
-      bg: 'bg-gradient-to-br from-zinc-400/20 to-zinc-500/20',
+      bg: 'bg-zinc-50',
       border: 'border-zinc-400/30',
       icon: 'text-zinc-300',
       text: 'text-zinc-200',
-      glow: 'shadow-lg shadow-zinc-400/20'
+      glow: 'shadow-sm'
     },
     bronze: {
-      bg: 'bg-gradient-to-br from-orange-600/20 to-amber-600/20',
+      bg: 'bg-orange-50',
       border: 'border-orange-300',
       icon: 'text-orange-600',
       text: 'text-orange-700',
-      glow: 'shadow-lg shadow-orange-500/20'
+      glow: 'shadow-sm'
     },
     blue: {
-      bg: 'bg-gradient-to-br from-blue-500/20 to-cyan-500/20',
+      bg: 'bg-blue-50',
       border: 'border-blue-300',
       icon: 'text-blue-600',
       text: 'text-blue-700',
-      glow: 'shadow-lg shadow-blue-500/20'
+      glow: 'shadow-sm'
     },
     green: {
-      bg: 'bg-gradient-to-br from-green-500/20 to-emerald-500/20',
+      bg: 'bg-green-50',
       border: 'border-green-300',
       icon: 'text-green-600',
       text: 'text-green-700',
-      glow: 'shadow-lg shadow-green-500/20'
+      glow: 'shadow-sm'
     },
     purple: {
-      bg: 'bg-gradient-to-br from-purple-500/20 to-pink-500/20',
+      bg: 'bg-purple-50',
       border: 'border-purple-300',
       icon: 'text-purple-600',
       text: 'text-purple-700',
-      glow: 'shadow-lg shadow-purple-500/20'
+      glow: 'shadow-sm'
     },
   };
 

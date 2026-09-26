@@ -129,7 +129,7 @@ export function AppHeader({
   }, [onClearAll]);
 
   return (
-    <header className="flex items-center justify-between border-b border-rule bg-paper-raised px-4 py-2.5">
+    <header className="flex items-center justify-between border-b border-rule bg-chrome px-4 py-2.5">
       {/* Left Side - Logo & Title */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
