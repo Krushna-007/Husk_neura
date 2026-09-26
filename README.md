@@ -35,10 +35,12 @@ Drag, drop, connect. It's like LEGO but for tensors.
 - **Live Error Checking**: Trying to connect a `(32, 32, 3)` to a Dense layer expecting `(784,)`? We'll politely stop you.
 - **Layer Cheat Sheets**: Hover over any block to see what it actually does *(no PhD required)*
 
-### 🎭 **Retro-Futuristic UI**
-- **"8-Bit from PAST" Cursor**: Because normal cursors are boring
-- **Cyber-Industrial Theme**: True black + gold + cyan = chef's kiss
-- **Zero Eye Strain**: Designed for those 4-hour debugging marathons
+### 🎭 **The Interface**
+- **Custom Pointer**: A drawn cursor that switches to a grab hand over the
+  canvas and tells you what dragging will do
+- **Husk Platinum**: A light theme built on four surface materials, with
+  Departure Mono kept for the technical voice
+- **Readable by default**: Every rendered text pair meets WCAG AA
 
 ### 🔧 **Quality-of-Life Magic**
 - **Export to JSON**: Save your work, share with teammates
@@ -65,7 +67,7 @@ npm install
 # Fire it up
 npm run dev
 
-# Open http://localhost:5173 and start building
+# Open http://localhost:5173 (Vite will pick the next free port if busy)
 ```
 
 **Tech Stack:** React + TypeScript + React Flow + Vite *(the good stuff)*
