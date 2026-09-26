@@ -14,7 +14,7 @@
    * Greys carry a little cool chroma (hue 255) so they read as chosen rather
    * than dead; none of them is pure white or pure grey. */
   --color-sunken:  oklch(84.5% 0.0135 255);  /* canvas well — deepest       */
-  --color-paper:   oklch(94.0% 0.0060 255);  /* recessed: inputs, chips     */
+  --color-paper:   oklch(93.2% 0.0075 255);  /* recessed: inputs, chips     */
   --color-chrome:  oklch(98.4% 0.0030 255);  /* header, sidebar, panels     */
   --color-raised:  oklch(99.4% 0.0020 255);  /* cards, nodes, menus         */
 
@@ -29,8 +29,8 @@
   --color-ink-faint: oklch(64.0% 0.0100 265);
 
   /* ---- Rules ---- */
-  --color-rule:      oklch(85.5% 0.0090 255);
-  --color-rule-soft: oklch(90.5% 0.0070 255);
+  --color-rule:      oklch(84.0% 0.0105 255);
+  --color-rule-soft: oklch(89.5% 0.0085 255);
   --color-grid:      oklch(88.5% 0.0110 255);  /* canvas ruling */
 
   /* ---- Accent ---- */
