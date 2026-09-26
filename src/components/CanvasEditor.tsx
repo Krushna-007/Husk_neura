@@ -41,7 +41,7 @@ const HuskMLAttribution = () => {
       href="https://huskml.maverickspectrum.com"
       target="_blank"
       rel="noopener noreferrer"
-      className="absolute right-2 top-2 select-none font-mono text-xs text-ink-muted transition-colors duration-150 ease-out-soft hover:text-ink"
+      className="absolute right-2 top-2 select-none font-mono text-xs text-ink-2 transition-colors duration-150 ease-out-soft hover:text-ink"
     >
       HuskML
     </a>
