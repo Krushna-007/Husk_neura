@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { AppShell } from "./components/AppShell";
 import { CanvasEditor } from "./components/CanvasEditor";
 import BlockPalette from "./components/BlockPalette";
-import { CodeViewer } from "./components/CodeViewer";
+import { RightPanel } from "./components/RightPanel";
 import { DeviceWarning } from "./components/DeviceWarning";
 import type { Node, Edge } from "@xyflow/react";
 import { useFlowStore } from "./lib/flow-store";
@@ -32,7 +32,7 @@ function App() {
 
   const canvasContent = <CanvasEditor />;
 
-  const codeViewerContent = <CodeViewer />;
+  const codeViewerContent = <RightPanel />;
 
   return (
     <>
