@@ -49,7 +49,7 @@ export function CourseCompletion({ className = "" }: CourseCompletionProps) {
       <div className="flex-1 overflow-y-auto p-6">
         {/* Celebration Header */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-yellow-600 rounded-full mb-4">
             <Trophy className="h-10 w-10 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-ink mb-2">

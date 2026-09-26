@@ -164,9 +164,9 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
         key={task.id}
         className={`p-4 transition-colors duration-150 ${
           isCompleted 
-            ? 'bg-green-50 border-green-300 shadow-lg shadow-green-500/5' 
+            ? 'bg-green-50 border-green-300 shadow-sm' 
             : isValid 
-              ? 'bg-blue-50 border-blue-300 shadow-lg shadow-blue-500/5 animate-pulse' 
+              ? 'bg-blue-50 border-blue-300 shadow-sm animate-pulse' 
               : 'bg-zinc-800/50 border-zinc-700'
         }`}
       >
@@ -314,7 +314,7 @@ export function LessonViewer({ className = "" }: LessonViewerProps) {
           </div>
           <div className="relative w-full bg-zinc-800 rounded-full h-2 overflow-hidden">
             <div 
-              className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-colors duration-150 ease-out relative"
+              className="bg-blue-600 h-2 rounded-full transition-colors duration-150 ease-out relative"
               style={{ width: `${(progress.completed / progress.total) * 100}%` }}
             >
               {progress.completed > 0 && (
