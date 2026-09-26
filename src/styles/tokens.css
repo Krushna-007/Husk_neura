@@ -25,8 +25,8 @@
   /* ---- Ink ---- */
   --color-ink:       oklch(22.0% 0.0120 265);
   --color-ink-2:     oklch(34.0% 0.0110 265);
-  --color-ink-muted: oklch(52.0% 0.0110 265);
-  --color-ink-faint: oklch(54.5% 0.0120 265);
+  --color-ink-muted: oklch(48.5% 0.0120 265);
+  --color-ink-faint: oklch(52.5% 0.0125 265);
 
   /* ---- Rules ---- */
   --color-rule:      oklch(84.0% 0.0105 255);
