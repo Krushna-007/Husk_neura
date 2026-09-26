@@ -95,6 +95,56 @@ npm run dev
 
 ---
 
+## 🎨 Design system — Husk Platinum
+
+The UI runs on a light theme built from four surface materials, each with a
+fixed job. Every colour is an OKLCH token in `src/styles/tokens.css`, wired to
+utility names in `tailwind.config.js`; no component hardcodes a colour.
+
+| Material | Lightness | Used for |
+| --- | --- | --- |
+| `sunken` | 84.5 | the canvas well |
+| `paper` | 93.2 | recessed things: inputs, chips, tab tracks |
+| `chrome` | 98.4 | header, sidebar, right panel |
+| `raised` | 99.4 | cards, nodes, menus |
+
+Greys carry a little cool chroma (hue 255) so they read as chosen rather than
+dead, and nothing is pure `#fff` or `#000`. Type is Geist for the interface and
+Departure Mono for the technical voice — layer parameters, generated code, the
+wordmark.
+
+**Contrast.** Every rendered text node is checked against its effective
+background; the app currently passes WCAG AA on all 83 of them.
+
+**Motion.** Five primitives, all reporting state rather than decorating:
+`pulse`, `fade-in`, `spin`, the canvas grid, and the dialog transitions.
+`prefers-reduced-motion` collapses them.
+
+---
+
+## 🔬 Model Inspector
+
+The right panel has two views: the generated code, and an inspector that shows
+what the architecture on the canvas actually costs.
+
+- Trainable parameters per layer, with the arithmetic shown — a Conv2D reads
+  `5x5 x 32 x 64 + 64 bias`
+- Output shape and activation bytes per layer, from the same shape inference
+  the canvas uses for validation, so the two cannot disagree
+- Model totals: parameters, weight storage and activation memory at float32
+- A tensor glyph per layer, scaled against the largest in the model
+
+Numbers are labelled with their provenance and nothing is invented: a layer
+type the module does not model reports "not modelled", and a layer that shape
+inference never reached reports "not connected". Those are different failures
+and the totals report them separately, so a partial total never reads as a
+complete one.
+
+Verified against LeNet — 832 / 51,264 / 376,440 / 10,164 = **438,700
+parameters**, matching Keras.
+
+---
+
 ## 🙏 Attribution
 
 - **Visual Concept Inspiration**: Shoutout to [blockdl.com](https://blockdl.com) for pioneering the drag-and-drop ML editor concept
